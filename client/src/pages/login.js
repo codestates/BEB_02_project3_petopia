@@ -1,11 +1,9 @@
 import { Button } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 function LoginPage() {
-    const [Email, setEmail] = useState("")
-    const [Password, setPassword] = useState("")
 
     return (
         <div style={{
