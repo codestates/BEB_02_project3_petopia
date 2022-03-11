@@ -36,8 +36,10 @@ function Main() {
             <h1 class="display-4">Welcome to Petopia!</h1>
             <p class="lead">지갑이 없으신가요?</p> 
             <p class="lead">
-            <a class="btn btn-dark" href="#" role="button" onClick={() => {
+            <a class="btn btn-dark connect-wallet" href="#" role="button" onClick={() => {
                     connectWallet();}}>Connect Wallet</a>
+            <a class="btn btn-dark download-wallet" href="#" role="button" onClick={() => {
+                    connectWallet();}}>Download Wallet</a>
              </p>
              <div className="userInfo"><h3>Connected: {account}</h3></div> 
 
@@ -68,4 +70,5 @@ export default Main;
 //할 일 
 //1. web3 에러 해결
 //2. 지갑 연결 버튼을 눌렀을 때 연결되었다는 텍스트와 주소 뜨도록 만들기
-//3. 서버로 전달 후 데이터베이스에 저장하기!
+//3. Disconnect 누르면 지갑 disconnect되기
+//4. 서버로 전달 후 데이터베이스에 저장하기!
