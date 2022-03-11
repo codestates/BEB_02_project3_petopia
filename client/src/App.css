@@ -37,6 +37,31 @@
   }
 }
 
-.UncontrolledCollapse {
-  width: 500px;
+/*--------------------------------------------------------*/
+/*------------------- Mainpage ---------------------------*/
+/*--------------------------------------------------------*/
+
+.w-100,
+.carousel-item {
+  height: 400px;
+}
+.display-4,
+.lead {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.wallet-lead {
+  margin-left: 30px;
+  padding-bottom: 130px;
+}
+
+.userInfo {
+  margin-left: 30px;
+
+}
+
+p {
+  font-size: 15px;
 }
