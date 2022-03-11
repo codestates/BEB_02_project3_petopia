@@ -21,7 +21,7 @@ function LoginPage() {
                         <br>
                         </br>
                         <br>
-                        </br><Link to= "/wallet-download"> 지갑이 없으신가요? 지갑 다운로드</Link>
+                        </br><p>지갑이 없으신가요?</p><Link to= "/wallet-download">지갑 다운로드</Link>
                     </div>
 
                 
