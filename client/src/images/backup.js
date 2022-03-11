@@ -1,14 +1,6 @@
-import { Button } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-
-
-function LoginPage() {
-
-    return (
-        <div style={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center'
-            , width: '100%', height: '100vh'
+<div style={{
+             display: 'flex', justifyContent: 'center', alignItems: 'center'
+             , width: '100%', height: '100vh'
         }}>
             <form style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* <img src="https://media.istockphoto.com/photos/cute-puppy-picture-id598175960" alt="W3Schools.com"></img>                 */}
@@ -27,7 +19,3 @@ function LoginPage() {
                 
             </form>
         </div>
-    );
-}
-
-export default LoginPage;
