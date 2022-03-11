@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Main />} />
         <Route exact path="/mypage" element={<Mypage />} />
-        <Route exact path="/login" element={<LoginPage />} />
+        {/* <Route exact path="/login" element={<LoginPage />} /> */}
       </Routes>
     </BrowserRouter>
   );
