@@ -7,7 +7,6 @@ import Main_Carousel from './Main_Carousel';
 // import { disconnect } from 'process';
 // import { sendStatus } from 'express/lib/response';
 
-
 import { 
     leftStatus,
     statusIconConnected,
@@ -37,24 +36,23 @@ function Main() {
     // }, []);
 
     useEffect(() => {
-        // Setup Listen Handlers on MetaMask change events
         if(typeof window.ethereum !== 'undefined') {
             
             //새로운 web3 객체를 만든다
             try {
-                const web = new Web3(window.ethereum);  // 새로운 web3 객체를 만든다
+                const web = new Web3(window.ethereum);  
                 setWeb3(web);
                 } catch (err) {
                 console.log(err);
                 }
 
-            // Add Listener when accounts switch
+            // when accounts switch
             window.ethereum.on('accountsChanged', (accounts) => {
               console.log('Account changed: ', accounts[0])
               setWalletAccount(accounts[0]) 
             })
             
-            // Do something here when Chain changes
+            // when Chain changes
             window.ethereum.on('chainChanged', (chaindId) => {
               console.log('Chain ID changed: ', chaindId)
               setCurrentChain(chaindId)
@@ -71,8 +69,11 @@ function Main() {
     }, [walletAccount])
 
     const handleConnectWallet = async () => {
-        console.log('Connecting MetaMask...')
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        
+      console.log('Connecting MetaMask...')
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_requestAccounts' 
+        });
         const account = accounts[0]
         console.log('Account: ', account)
         setWalletAccount(account)
@@ -82,32 +83,30 @@ function Main() {
 
         console.log('Disconnecting MetaMask...')
         setIsConnected(false)
+        console.log('Account: ', account)
         setWalletAccount('')
     }
-    // eslint-disable-next-line
-    const connectWallet = async () => {
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
 
-        setAccount(accounts[0]);
-    };
+    // eslint-disable-next-line
+    // const connectWallet = async () => {
+    //     const accounts = await window.ethereum.request({
+    //         method: "eth_requestAccounts",
+    //     });
+
+    //     setAccount(accounts[0]);
+    // };
 
     return (
-
-
     
         <div class="jumbotron">
             <Main_Carousel />
             <h1 class="display-4">Welcome to Petopia!</h1>
-            {/* <p class="lead">지갑이 없으신가요?</p>  */}
             <p class="lead">
                     Click the button again to disconnect
              </p>
-             {visible && <div className="userInfo"><h1>Connected: {account}</h1></div> }
+             {visible && <div className="userInfo"><h1>Connected: {account} </h1></div> }
 
               <div className="btn btn-dark connect-wallet" onClick={!isConnected ? handleConnectWallet : handleDisconnect}>
-
                   <div className="left-status" style={leftStatus}>
                       {
                         isConnected ? (
@@ -128,7 +127,6 @@ function Main() {
 
               {/* <a class="btn btn-dark download-wallet" href="#" role="button" onClick={() => {
                     connectWallet();}}>Download Wallet</a> */}
-
               {/* <a class="btn btn-dark connect-wallet" href="#" role="button" onClick={() => {
                     connectWallet(); setVisible(!visible);}}>{visible ? "Hide Address" : "Show Address"}</a> */}
 
@@ -136,9 +134,7 @@ function Main() {
              <p class="lead">지갑이 없으신가요?</p>
              <Link to= "/wallet-download" class="wallet-lead">지갑 다운로드</Link>
               <p class="lead"></p>
-        </div>
-        
-        
+        </div>     
     );
 }
 
