@@ -1,9 +1,12 @@
+// eslint-disable-next-line
 import { Button, Jumbotron, Carousel } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
 import Web3 from 'web3';
 import { Link } from 'react-router-dom';
-import Main_Carousel from './Main_Carousel.js';
-import { disconnect } from 'process';
+import Main_Carousel from './Main_Carousel';
+// import { disconnect } from 'process';
+// import { sendStatus } from 'express/lib/response';
+
 
 import { 
     leftStatus,
@@ -12,10 +15,13 @@ import {
   } from './styles/styles.js'
 
 function Main() {
+  // eslint-disable-next-line
     const [web3, setWeb3] = useState();
     const [account, setAccount] = useState('');
+    // eslint-disable-next-line
     const [visible, setVisible] = useState(false);
     const [ walletAccount, setWalletAccount ] = useState('')
+    // eslint-disable-next-line
     const [ currentChain, setCurrentChain ] = useState('')
     const [ isConnected, setIsConnected ] = useState(false)
 
@@ -78,7 +84,7 @@ function Main() {
         setIsConnected(false)
         setWalletAccount('')
     }
-
+    // eslint-disable-next-line
     const connectWallet = async () => {
         const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
