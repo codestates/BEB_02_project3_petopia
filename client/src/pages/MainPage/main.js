@@ -37,8 +37,12 @@ function Main() {
     }, [])
 
 
+    //verify if the browser is running MetaMask
+
     useEffect(() => {
-        if(typeof window.ethereum !== 'undefined') {       
+        if(typeof window.ethereum !== 'undefined') {    
+          console.log('MetaMask is installed!');
+
             //새로운 web3 객체를 만든다
             try {
                 const web = new Web3(window.ethereum);  
@@ -72,7 +76,7 @@ function Main() {
 
 
     const handleConnect = async () => {
-        
+
       console.log('Connecting MetaMask...')
         const accounts = await window.ethereum.request({ 
           method: 'eth_requestAccounts' 
@@ -91,19 +95,26 @@ function Main() {
     }
 
     const handleSignToken = async () => {
+      // Connection to MetaMask wallet
       const web3 = new Web3(window.ethereum);
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-
+      
+      // getting address from which we will sign message
       const your_address = (await web3.eth.getAccounts())[0];
 
+      // generating a token with 1 day of expiration time
       const token = await Web3Token.sign(
         (msg) => web3.eth.personal.sign(msg, your_address, ""),
         "id"
       );
         console.log('TOKEN CREATED', token)
 
+        // getting token from authorization header ... for example
+        // const token_server = req.headers['Authorization']
         const { address, body } = await Web3Token.verify(token);
         console.log("ADDRESS RECOVERED", address, body);
+        // req.user = await User.findOne({ address });
+
     };
 
     return (
