@@ -1,19 +1,24 @@
-//Todo 
+ToDo 
+
 //1. web3 에러 해결 (v)
 //2. 지갑 연결 버튼을 눌렀을 때 연결되었다는 텍스트와 주소 뜨도록 만들기 (v)
 //3. Disconnect 누르면 지갑 disconnect되기 (v)
 
-//4. 새로 고침해도 connect 되어있게 하기 ( )
--토큰전달이 중요할 듯. 서버랑 데이터베이스 연결하기. 
--서버 띄우고 어떻게 요청하고 응답받는지 잘 배우기
+//4-a. 토큰 전달 (JWT)
 -a. Front : Connect 버튼을 누르면 Account(Wallet Address)를 클라이언트에서 서버에 포스트 
 -b. Backend : 받아서 데이터베이스에 저장 
--c. Backend : 데이터 베이스 내용과 비교 후 jwt토큰 발행해 주기
+-c. Backend : 데이터 베이스 내용과 비교 후 jwt 토큰 발행해 주기
 -d. Front : jwt 토큰 받기
--e. Backend : 전달받은 토큰 Cookie 또는 local storage 저장  후 Authorization header with JWT inside : Authentificated!
+-e. Backend : 전달받은 토큰 Cookie 또는 Local Storage 저장  후 Authorization Header with JWT inside : Authentificated!
 -f. Disconnect 버튼 누르면 발행한 토큰을 없애기
 
-//5. 서버로 전달 후 데이터베이스에 저장하기!( )
+//4-b. 토큰 전달 (Web3)
+Web3 Token & MetaMask (v)
+토큰 서버/DB로 전달 ( )
 
+
+//5. 서버로 전달 후 데이터베이스에 저장하기!
+-서버랑 데이터베이스 연결하기. (v)
+-서버 띄우고 어떻게 요청하고 응답받는지 잘 배우기 ( )
 
 //6. 메인페이지 네비 없애기 ( )

@@ -2,6 +2,7 @@
 import { Button, Jumbotron, Carousel } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
 import Web3 from 'web3';
+import Web3Token from 'web3-token';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Main_Carousel from './Main_Carousel';
@@ -14,6 +15,7 @@ import {
     statusIconDisconnected,
   } from './styles/styles.js'
 
+
 function Main() {
   // eslint-disable-next-line
     const [ web3, setWeb3 ] = useState();
@@ -24,6 +26,8 @@ function Main() {
     // eslint-disable-next-line
     const [ chain, setChain ] = useState('')
     const [ isConnected, setConnected ] = useState(false)
+
+    
 
     //Server Test
     
@@ -75,7 +79,7 @@ function Main() {
         });
         const account = accounts[0]
         console.log('Account: ', account)
-        setWalletAccount(account)
+        setWalletAccount(account)      
     }
 
     const handleDisconnect = async () => {
@@ -86,6 +90,21 @@ function Main() {
         setWalletAccount('')
     }
 
+    const handleSignToken = async () => {
+      const web3 = new Web3(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      const your_address = (await web3.eth.getAccounts())[0];
+
+      const token = await Web3Token.sign(
+        (msg) => web3.eth.personal.sign(msg, your_address, ""),
+        "id"
+      );
+        console.log('TOKEN CREATED', token)
+
+        const { address, body } = await Web3Token.verify(token);
+        console.log("ADDRESS RECOVERED", address, body);
+    };
 
     return (
     
@@ -99,9 +118,9 @@ function Main() {
                   <div className="left-status" style={leftStatus}>
                       {
                         isConnected ? (
-                          <div className="status-icon connected" style={statusIconConnected}></div>
+                          <div className="status-icon connected" style = {statusIconConnected} ></div>
                         ) : (               
-                          <div className="status-icon disconnected" style={statusIconDisconnected}></div>
+                          <div className="status-icon disconnected" style = {statusIconDisconnected} ></div>
                         )
                       }
                   </div>
@@ -118,14 +137,17 @@ function Main() {
                   href="#" 
                   style={{width: '439px', height: '66px', paddingTop: '20px', fontSize: '15px', fontWeight: '700', marginTop:'20px'}} 
                   role="button" 
-                  onClick={() => {handleConnect(); setVisible(!visible);}}>{visible ? "Logged In" : "Login with Wallet"}</a>
+                  onClick={() => {handleSignToken(); setVisible(!visible);}}>{visible ? "Token Created" : "Login with Wallet"}</a>
 
               { visible && <div className="userInfo"> Your Public Address is <h2 style={{color : "#7BFCCD"}}> {walletAccount} </h2> </div> }
+
+
 
              <hr class="my-4"></hr> 
              <p class="lead">지갑이 없으신가요?</p>
              <Link to= "/wallet-download" class="wallet-lead">지갑 다운로드</Link>
-              <p class="lead"></p>
+              <p class="lead">
+              </p>
         </div>     
     );
 }
