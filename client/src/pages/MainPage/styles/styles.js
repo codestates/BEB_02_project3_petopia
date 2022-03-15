@@ -5,7 +5,7 @@ export const leftStatus = {
     alignItems: 'center', 
     justifyContent: 'center', 
     flexShrink: 0,
-    marginRight: '400px'
+    marginRight: '400px',
 }
 
 export const statusIconConnected = {

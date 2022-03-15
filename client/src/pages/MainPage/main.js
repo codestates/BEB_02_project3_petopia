@@ -2,6 +2,7 @@
 import { Button, Jumbotron, Carousel } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react'
 import Web3 from 'web3';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Main_Carousel from './Main_Carousel';
 // import { disconnect } from 'process';
@@ -64,9 +65,16 @@ function Main() {
         }
       }, [])
 
-      useEffect(() => {
-        setIsConnected(walletAccount ? true : false)
+    useEffect(() => {
+      setIsConnected(walletAccount ? true : false)
     }, [walletAccount])
+
+    //Server Test
+    useEffect(() => {
+      axios.post('http://localhost:4000/api/hello')
+      .then(res => console.log(res))
+    }, [])
+
 
     const handleConnectWallet = async () => {
         
@@ -87,14 +95,13 @@ function Main() {
         setWalletAccount('')
     }
 
-    // eslint-disable-next-line
-    // const connectWallet = async () => {
-    //     const accounts = await window.ethereum.request({
-    //         method: "eth_requestAccounts",
-    //     });
+    const connectWallet = async () => {
+        const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+        });
 
-    //     setAccount(accounts[0]);
-    // };
+        setAccount(accounts[0]);
+    };
 
     return (
     
@@ -105,7 +112,6 @@ function Main() {
                     Click the button again to disconnect
              </p>
              {visible && <div className="userInfo"><h1>Connected: {account} </h1></div> }
-
               <div className="btn btn-dark connect-wallet" onClick={!isConnected ? handleConnectWallet : handleDisconnect}>
                   <div className="left-status" style={leftStatus}>
                       {
@@ -125,8 +131,12 @@ function Main() {
                   }
               </div>
 
-              {/* <a class="btn btn-dark download-wallet" href="#" role="button" onClick={() => {
-                    connectWallet();}}>Download Wallet</a> */}
+              <a class="btn btn-dark download-wallet" 
+                  href="#" 
+                  style={{width: '439px', height: '66px', paddingTop: '20px', fontSize: '15px', fontWeight: '700', marginTop:'20px'}} 
+                  role="button" 
+                  onClick={() => {
+                    connectWallet();}}>Login with Wallet</a>
               {/* <a class="btn btn-dark connect-wallet" href="#" role="button" onClick={() => {
                     connectWallet(); setVisible(!visible);}}>{visible ? "Hide Address" : "Show Address"}</a> */}
 
