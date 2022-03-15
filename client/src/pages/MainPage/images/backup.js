@@ -19,3 +19,33 @@
                 
             </form>
         </div>
+
+
+// useEffect(() => {
+    //     if (typeof window.ethereum !== "undefined") { // window.ethereum이 있다면
+    //         try {
+    //             const web = new Web3(window.ethereum);  // 새로운 web3 객체를 만든다
+    //             setWeb3(web);
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     }
+    // }, []);
+
+    // const connectWallet = async () => {
+    //     const accounts = await window.ethereum.request({
+    //         method: "eth_requestAccounts",
+    //     });
+
+    //     setAccount(accounts[0]);
+    // };
+
+      {/* <a class="btn btn-dark download-wallet" 
+                  href="#" 
+                  style={{width: '439px', height: '66px', paddingTop: '20px', fontSize: '15px', fontWeight: '700', marginTop:'20px'}} 
+                  role="button" 
+                  onClick={() => {}}>Login with Wallet</a> */}
+
+
+                             {/* <a class="btn btn-dark connect-wallet" href="#" role="button" onClick={() => {
+                    connectWallet(); setVisible(!visible);}}>{visible ? "Hide Address" : "Show Address"}</a> */}

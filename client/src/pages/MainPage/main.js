@@ -16,29 +16,25 @@ import {
 
 function Main() {
   // eslint-disable-next-line
-    const [web3, setWeb3] = useState();
-    const [account, setAccount] = useState('');
+    const [ web3, setWeb3 ] = useState();
+    const [ account, setAccount ] = useState('');
     // eslint-disable-next-line
-    const [visible, setVisible] = useState(false);
+    const [ visible, setVisible ] = useState(false);
     const [ walletAccount, setWalletAccount ] = useState('')
     // eslint-disable-next-line
-    const [ currentChain, setCurrentChain ] = useState('')
-    const [ isConnected, setIsConnected ] = useState(false)
+    const [ chain, setChain ] = useState('')
+    const [ isConnected, setConnected ] = useState(false)
 
-    // useEffect(() => {
-    //     if (typeof window.ethereum !== "undefined") { // window.ethereum이 있다면
-    //         try {
-    //             const web = new Web3(window.ethereum);  // 새로운 web3 객체를 만든다
-    //             setWeb3(web);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    // }, []);
+    //Server Test
+    
+    useEffect(() => {
+        axios.post('http://localhost:4000/api/hello')
+        .then(res => console.log(res))
+    }, [])
+
 
     useEffect(() => {
-        if(typeof window.ethereum !== 'undefined') {
-            
+        if(typeof window.ethereum !== 'undefined') {       
             //새로운 web3 객체를 만든다
             try {
                 const web = new Web3(window.ethereum);  
@@ -47,36 +43,31 @@ function Main() {
                 console.log(err);
                 }
 
-            // when accounts switch
+            // accounts switch
             window.ethereum.on('accountsChanged', (accounts) => {
               console.log('Account changed: ', accounts[0])
               setWalletAccount(accounts[0]) 
             })
             
-            // when Chain changes
+            // Chain change
             window.ethereum.on('chainChanged', (chaindId) => {
               console.log('Chain ID changed: ', chaindId)
-              setCurrentChain(chaindId)
+              setChain(chaindId)
             })
     
         } else {
-            alert('Please install MetaMask to use this service!')
+            alert('Please install MetaMask.')
     
         }
       }, [])
 
+      
     useEffect(() => {
-      setIsConnected(walletAccount ? true : false)
+      setConnected(walletAccount ? true : false)
     }, [walletAccount])
 
-    //Server Test
-    useEffect(() => {
-      axios.post('http://localhost:4000/api/hello')
-      .then(res => console.log(res))
-    }, [])
 
-
-    const handleConnectWallet = async () => {
+    const handleConnect = async () => {
         
       console.log('Connecting MetaMask...')
         const accounts = await window.ethereum.request({ 
@@ -90,18 +81,11 @@ function Main() {
     const handleDisconnect = async () => {
 
         console.log('Disconnecting MetaMask...')
-        setIsConnected(false)
+        setConnected(false)
         console.log('Account: ', account)
         setWalletAccount('')
     }
 
-    const connectWallet = async () => {
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
-
-        setAccount(accounts[0]);
-    };
 
     return (
     
@@ -111,8 +95,7 @@ function Main() {
             <p class="lead">
                     Click the button again to disconnect
              </p>
-             {visible && <div className="userInfo"><h1>Connected: {account} </h1></div> }
-              <div className="btn btn-dark connect-wallet" onClick={!isConnected ? handleConnectWallet : handleDisconnect}>
+              <div className="btn btn-dark connect-wallet" onClick={!isConnected ? handleConnect : handleDisconnect}>
                   <div className="left-status" style={leftStatus}>
                       {
                         isConnected ? (
@@ -131,14 +114,13 @@ function Main() {
                   }
               </div>
 
-              <a class="btn btn-dark download-wallet" 
+              <a class="btn btn-dark login-wallet" 
                   href="#" 
                   style={{width: '439px', height: '66px', paddingTop: '20px', fontSize: '15px', fontWeight: '700', marginTop:'20px'}} 
                   role="button" 
-                  onClick={() => {
-                    connectWallet();}}>Login with Wallet</a>
-              {/* <a class="btn btn-dark connect-wallet" href="#" role="button" onClick={() => {
-                    connectWallet(); setVisible(!visible);}}>{visible ? "Hide Address" : "Show Address"}</a> */}
+                  onClick={() => {handleConnect(); setVisible(!visible);}}>{visible ? "Logged In" : "Login with Wallet"}</a>
+
+              {visible && <div className="userInfo"> Your Public Address is <h2 style={{color : "#7BFCCD"}}>{walletAccount}</h2> </div> }
 
              <hr class="my-4"></hr> 
              <p class="lead">지갑이 없으신가요?</p>
