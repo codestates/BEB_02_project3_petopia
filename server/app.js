@@ -15,7 +15,7 @@ const startServer =  app.listen(port, () => {
 
 const mongoose = require('mongoose')
 mongoose.connect(config.databaseUrl, {
-}).then(() => console.log('MongoDB Connected...'))
+}).then(() => console.log('MongoDB Connected!!!'))
 .catch(err => console.log(err));
 
 //Server Test

@@ -61,7 +61,7 @@ function Main() {
         }
       }, [])
 
-      
+
     useEffect(() => {
       setConnected(walletAccount ? true : false)
     }, [walletAccount])
@@ -105,13 +105,13 @@ function Main() {
                         )
                       }
                   </div>
-                  {
-                    isConnected ? (   
-                        <div className="right-status" style={{width: '100%', textOverflow: 'ellipsis', overflow: 'hidden'}}>{walletAccount}</div>      
-                      ) : (
-                        <div className="right-status" style={{width: '100%' }}>Connect Wallet</div>
-                      )
-                  }
+                      {
+                        isConnected ? (   
+                            <div className="right-status" style={{width: '100%', textOverflow: 'ellipsis', overflow: 'hidden'}}>{walletAccount}</div>      
+                          ) : (
+                            <div className="right-status" style={{width: '100%' }}>Connect Wallet</div>
+                          )
+                      }
               </div>
 
               <a class="btn btn-dark login-wallet" 
@@ -120,7 +120,7 @@ function Main() {
                   role="button" 
                   onClick={() => {handleConnect(); setVisible(!visible);}}>{visible ? "Logged In" : "Login with Wallet"}</a>
 
-              {visible && <div className="userInfo"> Your Public Address is <h2 style={{color : "#7BFCCD"}}>{walletAccount}</h2> </div> }
+              { visible && <div className="userInfo"> Your Public Address is <h2 style={{color : "#7BFCCD"}}> {walletAccount} </h2> </div> }
 
              <hr class="my-4"></hr> 
              <p class="lead">지갑이 없으신가요?</p>
