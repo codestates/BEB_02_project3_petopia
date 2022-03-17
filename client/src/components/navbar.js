@@ -46,7 +46,7 @@ function Navigation() {
                         navbarScroll
                     >
                         <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/feerwrite" className="me-2">➕</Nav.Link>
+                        <Nav.Link href="/feedwrite" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
                         <Button onClick={Connecthandler}>
                             {btnText === DISCONNECT_TEXT ? <b>{account}</b> : <span>Wallet Connect</span>} </Button>
