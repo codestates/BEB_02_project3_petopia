@@ -13,4 +13,15 @@ const startServer =  app.listen(port, () => {
     process.exit(1);
 });
 
+const mongoose = require('mongoose')
+mongoose.connect(config.databaseUrl, {
+}).then(() => console.log('MongoDB Connected!!!'))
+.catch(err => console.log(err));
+
+//Server Test
+app.get('/api/hello', (req,res) => {
+    res.send("account!");
+});
+
+
 module.exports = {startServer};

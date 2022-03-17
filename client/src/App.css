@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+/*--------------------------------------------------------*/
+/*------------------- Mainpage ---------------------------*/
+/*--------------------------------------------------------*/
+
+.w-100,
+.carousel-item {
+  height: 400px;
+}
+.display-4,
+.lead {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.wallet-lead {
+  margin-left: 30px;
+  padding-bottom: 130px;
+}
+
+.download-wallet {
+  margin-left: 10px;
+}
+
+.userInfo {
+  margin-top: 30px;
+  margin-left: 30px;
+
+}
+
+p {
+  font-size: 15px;
+}
+
+.btn-dark {
+  margin-left: 30px;
+  margin-top: 20px
+
+}
+
+.right-status {
+  padding-bottom: 15px;
+  font-size: 15px;
+  font-weight: 700;
+
+}

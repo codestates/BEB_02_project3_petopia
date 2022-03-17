@@ -5,8 +5,9 @@ import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
 
 import Mypage from './pages/mypage';
-import Main from './pages/main';
+import Main from './pages/MainPage/main';
 import Navigation from './components/navbar';
+import Carousel from './pages/MainPage/Main_Carousel';
 
 const getLibrary = (provider) => {
   new Web3(provider);
