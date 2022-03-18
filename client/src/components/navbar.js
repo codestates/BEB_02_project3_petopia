@@ -20,7 +20,7 @@ function Navigation() {
         <div className="Navbar">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/">🐻 PETOPIA</Navbar.Brand>
+                    <Navbar.Brand href="/main">🐻 PETOPIA</Navbar.Brand>
                     <Form className="d-flex justify-content-end">
                         <FormControl
                             type="search"
@@ -34,8 +34,8 @@ function Navigation() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/feerwrite" className="me-2">➕</Nav.Link>
+                        <Nav.Link href="/main" className="me-2">🏠</Nav.Link>
+                        <Nav.Link href="/create" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
                         <Button onClick={Connecthandler}>{btnText}</Button>
                     </Nav>
