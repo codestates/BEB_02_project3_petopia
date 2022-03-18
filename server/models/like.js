@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
 const likeSchema = new mongoose.Schema({
-    user_id: String,
-    post_id: String
+    wallet_address: {
+        type:String
+    },
+    post_id: {
+        type:String
+    }
 });
 
 const Like = mongoose.model("Like", likeSchema);

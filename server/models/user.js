@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
     },
     greetings: {
         type: String
+    },
+    profile_image: {
+        type: String
     }
 });
 
