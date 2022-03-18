@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    wallet_address: {
+    username: {
         type: String,
         unique: true,
     },
-    user_name: {
+    address: {
         type: String,
         unique: true,
     },
