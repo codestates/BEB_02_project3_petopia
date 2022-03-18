@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    wallet_address: {
+    address: {
         type: String,
         unique: true,
     },
-    user_name: {
+    username: {
         type: String,
         unique: true,
     },
@@ -17,6 +17,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model("User", userSchema);
+const user = mongoose.model("users", userSchema);
 
-module.exports = User;
+module.exports = user;
