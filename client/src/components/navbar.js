@@ -1,6 +1,11 @@
 import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstrap";
 import { useState } from "react";
 
+import { injected } from "./walletconnect";
+import { useWeb3React } from '@web3-react/core';
+import axios from "axios";
+
+
 function Navigation() {
 
     const CONNECT_TEXT = "Connect Wallet"
@@ -8,13 +13,25 @@ function Navigation() {
 
     const [btnText, setBtnText] = useState(CONNECT_TEXT);
 
-    const Connecthandler = () => {
+    const { account, activate, deactivate } = useWeb3React()
+
+    const Connecthandler = async () => {
         if (btnText === CONNECT_TEXT) {
-            setBtnText(DISCONNECT_TEXT);
+            try {
+                setBtnText(DISCONNECT_TEXT);
+                await activate(injected)
+            } catch (err) {
+                console.log(err);
+            }
         } else {
             setBtnText(CONNECT_TEXT)
+            deactivate()
         }
     }
+
+    axios.post("http://localhost:4000/mypage", {
+        'address': account
+    })
 
     return (
         <div className="Navbar">
@@ -35,9 +52,10 @@ function Navigation() {
                         navbarScroll
                     >
                         <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/feerwrite" className="me-2">➕</Nav.Link>
+                        <Nav.Link href="/feedwrite" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
-                        <Button onClick={Connecthandler}>{btnText}</Button>
+                        <Button onClick={Connecthandler}>
+                            {btnText === DISCONNECT_TEXT ? <b>{account}</b> : <span>Wallet Connect</span>} </Button>
                     </Nav>
                 </Container>
             </Navbar>
