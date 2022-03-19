@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Login() {
@@ -16,15 +16,21 @@ function Login() {
         if (inputId === username) {
             alert('로그인 성공')
             document.location.href = '/'
+            console.log(localStorage.getItem('username'))
         }
-        axios.post("http://localhost:4000/login", {
-            'username': inputId
-        })
+
+        // axios.post("http://localhost:4000/login", {
+        // 'username': inputId
+        // })
     }
 
     const SignupHandler = () => {
         document.location.href = '/signup'
     }
+
+    useEffect(() => {
+        localStorage.setItem('username', JSON.stringify(inputId));
+    }, [inputId]);
 
     return (
         <div>

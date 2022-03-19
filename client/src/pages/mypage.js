@@ -1,32 +1,27 @@
-import React, { useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
-import axios from 'axios';
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
-function Mypage({ username, address }) {
-
-
-    // axios.get('http://localhost:4000/mypage')
-    //     .then((res) =>
-    //         console.log(res.data));
+function Mypage() {
 
 
-
+    const username = localStorage.getItem('username')
+    const address = localStorage.getItem('address')
 
     return (
         <div className='Mypage'>
             <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>Mypage</h1>
 
             <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
-                <div className='Profile' style={{ width: "50%", height: "85%", float: "left" }}>
+                <div className='Profile' style={{ height: "85%", float: "left" }}>
                     <h2>Profile Picture</h2>
                 </div>
 
-                <div className='Info' style={{ padding: "10px", height: "85%" }}>
+                <div className='Info' style={{ height: "85%" }}>
                     <div>
                         <h6>USERNAME : {username} </h6>
                     </div>
                     <div>
-                        <h6>ADDRESS : 0x1234</h6>
+                        <h6>ADDRESS : {address}</h6>
                     </div>
                     <div>
                         <h6>EMAIL : test@test.com</h6>
