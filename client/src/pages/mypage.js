@@ -1,11 +1,29 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import MyNftList from '../components/myNftList';
 
 function Mypage() {
 
-
     const username = localStorage.getItem('username')
     const address = localStorage.getItem('address')
+
+    const [myNftList, setMyNftList] = useState("")
+
+    useEffect(() => {
+        getNftList();
+    }, []);
+
+    const getNftList = () => {
+        axios.get('http://localhost:4000/getNFT', {
+            'username': username
+        })
+            .then(res => res.data)
+            .then(data => {
+                setMyNftList(data.nftList.reverse())
+            })
+            .catch(err => console.log(err));
+    }
 
     return (
         <div className='Mypage'>
@@ -38,19 +56,13 @@ function Mypage() {
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                 <h3>My Post</h3>
                 <hr></hr>
-
-                <div style={{ display: "flex", textAlign: "center" }}>
-                    <div style={{ margin: "20px", padding: "13%", background: "pink" }}>3</div>
-                    <div style={{ margin: "20px", padding: "13%", background: "red" }}>3</div>
-                    <div style={{ margin: "20px", padding: "13%", background: "orange" }}>3</div>
+                <div>
+                    {
+                        myNftList.length === 0 ? '' : myNftList.map((dataInfo) => {
+                            return <MyNftList key={dataInfo.nftId} dataInfo={dataInfo} />
+                        })
+                    }
                 </div>
-
-                <div style={{ display: "flex", textAlign: "center" }}>
-                    <div style={{ margin: "20px", padding: "13%", background: "pink" }}>3</div>
-                    <div style={{ margin: "20px", padding: "13%", background: "red" }}>3</div>
-                    <div style={{ margin: "20px", padding: "13%", background: "orange" }}>3</div>
-                </div>
-
             </div>
         </div >
 
