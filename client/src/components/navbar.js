@@ -1,10 +1,9 @@
 import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { injected } from "./walletconnect";
 import { useWeb3React } from '@web3-react/core';
 import axios from "axios";
-// import axios from "axios";
 
 
 function Navigation() {
@@ -69,7 +68,7 @@ function Navigation() {
                         navbarScroll
                     >
                         <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/write" className="me-2">➕</Nav.Link>
+                        <Nav.Link href="/createcp" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
                         <Button onClick={Connecthandler}>
                             {btnText === DISCONNECT_TEXT ? <b>{account}</b> : <span>{btnText}</span>} </Button>
