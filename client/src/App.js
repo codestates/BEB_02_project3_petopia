@@ -8,10 +8,11 @@ import Main from './pages/main';
 import Navigation from './components/navbar';
 import Login from './pages/login';
 import Signup from './pages/signup';
-import Writefeed from './pages/create';
+// import Writefeed from './pages/create';
 import Transaction from './pages/transaction';
 
-import CreateCP from './pages/create_copy'
+import CreateCP from './pages/create_copy';
+import Userpage from './pages/userpage';
 
 const getLibrary = (provider) => {
   new Web3(provider);
@@ -27,8 +28,9 @@ function App() {
           <Route exact path="/mypage" element={<Mypage />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/write" element={<Writefeed />} />
+          {/* <Route exact path="/write" element={<Writefeed />} /> */}
           <Route exact path="/transaction" element={<Transaction />} />
+          <Route exact path="/user/:username" element={<Userpage />} />
 
           <Route exact path="/createcp" element={<CreateCP />} />
         </Routes>

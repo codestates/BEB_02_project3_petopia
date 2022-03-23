@@ -14,6 +14,8 @@ function Navigation() {
     const CONNECT_TEXT = "Connect Wallet"
     const DISCONNECT_TEXT = "Disconnect"
 
+    const [searchText, setSearchText] = useState("");
+    const [userInfo, setUserInfo] = useState();
     const [btnText, setBtnText] = useState(CONNECT_TEXT);
 
     const { account, active, activate, deactivate } = useWeb3React()
@@ -43,11 +45,21 @@ function Navigation() {
         }
     }
 
-    // console.log(active)
+    const SearchHandler = (e) => {
+        setSearchText(e.target.value)
+    }
 
-    // useEffect(() => {
-    //     localStorage.setItem('address', JSON.stringify(account));
-    // }, [account]);
+    const search = () => {
+        console.log("searchText : " + searchText);
+        axios.post("http://localhost:4000/user/" + searchText, {
+            username: searchText
+        })
+            .then(res => setUserInfo(res.data));
+
+        localStorage.setItem('searchname', searchText)
+
+        document.location.href = '/user/' + searchText;
+    }
 
     return (
         <div className="Navbar">
@@ -60,8 +72,9 @@ function Navigation() {
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
+                            onChange={SearchHandler}
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-success" onClick={search}>Search</Button>
                     </Form>
                     <Nav
                         style={{ maxHeight: '100px' }}
