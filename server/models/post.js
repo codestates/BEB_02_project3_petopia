@@ -5,10 +5,10 @@ const postSchema = new mongoose.Schema({
         type: Number,
         unique: true,
     },
-    user_id: {
+    wallet_address: {
         type: String
     },
-    date: {
+    post_date: {
         type: Date,
         defalut: Date.now,
     }

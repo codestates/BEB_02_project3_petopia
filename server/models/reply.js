@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const commentSchema = new mongoose.Schema({
-    post_id: {
+const replySchema = new mongoose.Schema({
+    comment_id: {
         type: Number,
     },
     wallet_address: {
@@ -16,6 +16,6 @@ const commentSchema = new mongoose.Schema({
     }
 });
 
-const Comment = mongoose.model("Comment", commentSchema);
+const Reply = mongoose.model("Reply", replySchema);
 
-module.exports = Comment;
+module.exports = Reply;
