@@ -4,11 +4,26 @@ import axios from 'axios';
 import erc721Abi from "../abi/erc721Abi.js";
 import Web3 from 'web3';
 
-function Create({account, web3, contractAddress, isLogin}) {
+function Create() {
+    const [web3, setWeb3] = useState();
     const [imageFile, setImageFile] = useState();
     const [uploadImage, setUploadImage] = useState(null);
     const [inputText, setInputText] = useState();
-    // const [isTransacted, setIsTransacted] = useState(false);
+    const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
+    const account = JSON.parse(localStorage.getItem('account'));
+
+    useEffect(() => {
+        if (typeof window.ethereum !== "undefined") {
+            try {
+                const web = new Web3(window.ethereum);
+                setWeb3(web);
+            } catch (err) {
+                console.log(err);
+            }    
+        } else {
+          alert('Please Install MetaMask.')
+        }
+    }, []);
 
     const changedFile = async (e) => {
         setImageFile(e.target.files[0]);
@@ -44,7 +59,7 @@ function Create({account, web3, contractAddress, isLogin}) {
         const ipfs = create("https://ipfs.infura.io:5001/api/v0");
         return (await ipfs.add(file)).path;
     };
-
+    
     const createNFT = async (tokenURI) => {
         const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress, {
             from: account
