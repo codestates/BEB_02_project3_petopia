@@ -8,7 +8,7 @@ function Navigation() {
         localStorage.setItem('account', null);
         localStorage.removeItem('user-token');
         localStorage.removeItem('token-verification');
-        window.location.replace('http://localhost:3001/');
+        window.location.replace('http://localhost:3000/');
       };
 
     return (
@@ -29,7 +29,7 @@ function Navigation() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/main" className="me-2">🏠</Nav.Link>
+                        <Nav.Link href="/" className="me-2">🏠</Nav.Link>
                         <Nav.Link href="/create" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
                         <Button onClick={handleRemoveToken}>Disconnect</Button>
