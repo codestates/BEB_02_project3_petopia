@@ -13,7 +13,7 @@ function Mypage() {
     });
     
     useEffect(async() => {
-        await axios.post('http://localhost:3000/user/getUserInfo', {address:account})
+        await axios.post('http://localhost:4000/user/getUserInfo', {address:account})
         .then((res) => {
             setUserInfo(res.data.data);
         });

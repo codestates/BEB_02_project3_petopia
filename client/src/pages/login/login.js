@@ -49,7 +49,7 @@ function Login() {
     const your_address = (await web3.eth.getAccounts())[0];
     let username = '';
 
-    await axios.post('http://localhost:3000/user/login', {address:your_address})
+    await axios.post('http://localhost:4000/user/login', {address:your_address})
     .then((res) => {
       const userInfo = res.data.data;
       if(userInfo !== null) {
@@ -86,7 +86,7 @@ function Login() {
   };
 
   const signup = async (address) => {
-    await axios.post('http://localhost:3000/user/signup', {address:address});
+    await axios.post('http://localhost:4000/user/signup', {address:address});
   }
         
   return (

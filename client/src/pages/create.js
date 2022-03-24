@@ -73,7 +73,7 @@ function Create() {
             "postDate" : new Date(),
         };
         
-        await axios.post('http://localhost:3000/create', postInfo, {
+        await axios.post('http://localhost:4000/create', postInfo, {
             headers: {
                 "Content-Type": "application/json",
             },
