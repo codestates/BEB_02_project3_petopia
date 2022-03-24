@@ -18,7 +18,19 @@ const insertUser = async (address) => {
     }
 }
 
+const updateUser = async (userInfo) => {
+    const {wallet_address} = userInfo;
+    try {
+        const updateUser = await user.findOneAndUpdate({wallet_address: wallet_address}, userInfo);
+        return updateUser;
+    } catch (error) {
+        throw Error(error);
+    }
+    
+}
+
 module.exports = {
     getUser,
-    insertUser
+    insertUser,
+    updateUser
 }
