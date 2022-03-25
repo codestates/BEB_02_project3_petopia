@@ -1,23 +1,26 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import MyNFTList from '../components/myNFTList';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
+import { create } from "ipfs-http-client";
 
 function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
     const [web3, setWeb3] = useState();
     const [userInfo, setUserInfo] = useState({
-        user_name: null,
-        wallet_address: null,
-        profile_image: null,
-        greetings: null
+        // user_name: null,
+        // wallet_address: null,
+        // profile_image: null,
+        // greetings: null
     });
 
     const [showModal, setShowModal] = useState(false)
     const [username, setUsername] = useState(userInfo.user_name)
     const [email, setEmail] = useState(userInfo.email)
-    const [greetings, setGreetings] = useState(userInfo.greetings);
-
+    const [greetings, setGreetings] = useState(userInfo.greetings)
+    const [image, setImage] = useState(userInfo.profile_image)
+    const [uploadImage, setUploadImage] = useState('')
 
     useEffect(async () => {
         await axios.post('http://localhost:4000/user/getUserInfo', { address: account })
@@ -26,8 +29,9 @@ function Mypage() {
             });
     }, []);
 
-    const changedImg = () => {
-
+    const changeImgae = async (e) => {
+        // setImage(e.target.files[0]);
+        setUploadImage(e.target.files[0])
     }
 
     const changeUsername = (e) => {
@@ -50,19 +54,46 @@ function Mypage() {
         setShowModal(false)
     }
 
-    const SubmitInfo = () => {
+
+
+    const SubmitInfo = async () => {
+
+        let imagePath = '';
+        let profileimage = '';
+
+        if (image !== undefined) {
+            imagePath = await uploadIPFS(uploadImage)
+        } else { //undefined 일때,
+            setImage()
+
+            profileimage = image
+            console.log(image)
+        }
+
+        if (profileimage !== '') {
+            profileimage = 'https://ipfs.infura.io/ipfs/' + imagePath
+        }
+
         axios.post('http://localhost:4000/user/update', {
             'user_name': username,
             'wallet_address': userInfo.wallet_address,
             'email': email,
-            'greetings': greetings
+            'greetings': greetings,
+            'profile_image': profileimage
         })
 
-        console.log(username, userInfo.wallet_address, email, greetings)
+        // console.log(username, userInfo.wallet_address, email, greetings, 'https://ipfs.infura.io/ipfs/' + imagePath)
 
         setShowModal(false)
+
+        // window.location.replace('http://localhost:3000/mypage')
+
     }
 
+    const uploadIPFS = async (file) => {
+        const ipfs = create("https://ipfs.infura.io:5001/api/v0");
+        return (await ipfs.add(file)).path;
+    }
 
 
     return (
@@ -71,13 +102,12 @@ function Mypage() {
             <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
                 <div className='Profile' style={{ height: "85%", float: "left" }}>
                     <label for="file">
-                        {userInfo.profile_image !== null ? <img src={userInfo.profile_image} /> : <img src="ddd" />}
+                        {userInfo.profile_image !== null ? <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
                     </label>
-                    <input type="file" id="file" name="file" style={{ display: "none" }} onchange={changedImg} />
+                    <input type="file" id="file" name="file" style={{ display: "none" }} onchange={changeImgae} />
                 </div>
-                <div className='Greetings'>
-                    {userInfo.greetings !== null ? <p>{userInfo.greetings}</p> : <p>소개글이 없습니다.</p>}
-                </div>
+                <br />
+
                 <div className='Info' style={{ height: "85%" }}>
                     <div>
                         <h6>USERNAME : {userInfo.user_name} </h6>
@@ -102,10 +132,12 @@ function Mypage() {
                                 <Modal.Title>Edit Profile</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name}></input> <br />
+                                <img src={userInfo.profile_image} style={{ width: "200px", height: "200px" }}></img>
+                                <input type="file" onChange={changeImgae} accept="image/png, image/jpeg" /> <br />
+                                Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
                                 Address : <h7>{userInfo.wallet_address}</h7> <br></br>
                                 E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
-                                Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} ></input>
+                                Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={modalClose}>
