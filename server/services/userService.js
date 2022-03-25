@@ -46,7 +46,7 @@ const getUser = async (userName) => {
 }
 
 module.exports = {
-    getUser,
+    getUserInfo,
     insertUser,
     updateUser,
     getUserList,
