@@ -58,7 +58,7 @@ function Mypage() {
 
         let imagePath = '';
         let profileimage = '';
-     
+
         if (uploadImage !== '') {
             imagePath = await uploadIPFS(uploadImage);
             profileimage = 'https://ipfs.infura.io/ipfs/' + imagePath
@@ -78,7 +78,7 @@ function Mypage() {
 
         setShowModal(false)
 
-        // window.location.replace('http://localhost:3000/mypage')
+        window.location.replace('http://localhost:3000/mypage')
 
     }
 
@@ -124,7 +124,7 @@ function Mypage() {
                                 <label for="file">
                                     {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
                                 </label>
-                                <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{display:"none"}}/> <br />
+                                <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
                                 Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
                                 Address : <h7>{userInfo.wallet_address}</h7> <br></br>
                                 E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
