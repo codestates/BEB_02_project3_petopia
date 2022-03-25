@@ -2,7 +2,7 @@ const userService = require('../services/userService.js');
 
 const login = async (req, res) => {
     const {address} = req.body;
-    const user = await userService.getUser(address);
+    const user = await userService.getUserInfo(address);
 
     if(user !== null) {
         return res.status(200).json({ data: user, message: "login success!" });
