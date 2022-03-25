@@ -1,6 +1,6 @@
 const user = require('../models/user');
 
-const getUser = async (address) => {
+const getUserInfo = async (address) => {
     try {
         return user.findOne({wallet_address:address});
     } catch(error) {
@@ -34,6 +34,14 @@ const getUserList = async (userName) => {
         return await user.find({user_name: { $regex: '.*' + userName + '.*' } });
     } catch (error) {
         throw Error(error)
+    }
+}
+
+const getUser = async (userName) => {
+    try {
+        return user.findOne({user_name:userName});
+    } catch(error) {
+        throw Error(error);
     }
 }
 

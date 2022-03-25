@@ -24,7 +24,7 @@ const signup = async (req, res) => {
 
 const getUserInfo = async (req, res) => {
     const {address} = req.body;
-    const user = await userService.getUser(address);
+    const user = await userService.getUserInfo(address);
 
     if(user !== null) {
         return res.status(200).json({ data: user, message: "success!" });
@@ -50,6 +50,17 @@ const getUserList = async (req, res) => {
 
     if(userList !== null) {
         return res.status(200).json({ data: userList, message: "success!" });
+    } else {
+        return res.status(202).json({ data: null, message: "fail!" });
+    }    
+}
+
+const getUserInfo = async (req, res) => {
+    const {userName} = req.body;
+    const user = await userService.getUser(userName);
+
+    if(user !== null) {
+        return res.status(200).json({ data: user, message: "success!" });
     } else {
         return res.status(202).json({ data: null, message: "fail!" });
     }    
