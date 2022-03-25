@@ -4,7 +4,6 @@ import axios from 'axios';
 function Search() {
 
     const searchname = localStorage.getItem('searchName');
-
     const [infoList, setInfoList] = useState([])
 
     useEffect(() => {
@@ -12,19 +11,23 @@ function Search() {
     }, [])
 
     const getInfoList = () => {
-        // setToggle(true);
         axios.get(`http://localhost:4000/user/${searchname}`)
             .then((res) => {
-                console.log(res.data.data)
                 setInfoList(res.data.data)
             })
     }
 
     const SearchHandler = (e) => {
         const user = e.target.getAttribute('data-user')
+        const wallet = e.target.getAttribute('data-wallet')
         localStorage.setItem('selectedUser', user)
 
-        window.location.replace('http://localhost:3000/' + user)
+        if(wallet !== JSON.parse(localStorage.getItem('account'))) {
+            window.location.replace('http://localhost:3000/' + user);
+        } else {
+            window.location.replace('http://localhost:3000/mypage');
+        }
+        
     }
 
     return (
@@ -32,8 +35,8 @@ function Search() {
             {infoList.map(info => {
                 return (
                     <div key={info.wallet_address}>
-                        <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={SearchHandler} data-user={info.user_name} />
-                        <span onClick={SearchHandler} data-user={info.user_name}>{info.user_name}</span>
+                        <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}/>
+                        <span onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}>{info.user_name}</span>
                     </div>
                 )
             })}

@@ -152,7 +152,7 @@ function Mypage() {
                 <h3>My Post</h3>
                 <hr></hr>
                 <div>
-                    <MyNFTList />
+                    <MyNFTList account={account} />
                 </div>
             </div>
         </div >
