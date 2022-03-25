@@ -54,24 +54,16 @@ function Mypage() {
         setShowModal(false)
     }
 
-
-
     const SubmitInfo = async () => {
 
         let imagePath = '';
         let profileimage = '';
-
-        if (image !== undefined) {
-            imagePath = await uploadIPFS(uploadImage)
-        } else { //undefined 일때,
-            setImage()
-
-            profileimage = image
-            console.log(image)
-        }
-
-        if (profileimage !== '') {
+     
+        if (uploadImage !== '') {
+            imagePath = await uploadIPFS(uploadImage);
             profileimage = 'https://ipfs.infura.io/ipfs/' + imagePath
+        } else { //undefined 일때,
+            profileimage = userInfo.profile_image;
         }
 
         axios.post('http://localhost:4000/user/update', {
@@ -101,10 +93,7 @@ function Mypage() {
             <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>Mypage</h1>
             <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
                 <div className='Profile' style={{ height: "85%", float: "left" }}>
-                    <label for="file">
-                        {userInfo.profile_image !== null ? <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
-                    </label>
-                    <input type="file" id="file" name="file" style={{ display: "none" }} onchange={changeImgae} />
+                    {userInfo.profile_image !== null ? <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
                 </div>
                 <br />
 
@@ -132,8 +121,10 @@ function Mypage() {
                                 <Modal.Title>Edit Profile</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <img src={userInfo.profile_image} style={{ width: "200px", height: "200px" }}></img>
-                                <input type="file" onChange={changeImgae} accept="image/png, image/jpeg" /> <br />
+                                <label for="file">
+                                    {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
+                                </label>
+                                <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{display:"none"}}/> <br />
                                 Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
                                 Address : <h7>{userInfo.wallet_address}</h7> <br></br>
                                 E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
@@ -147,18 +138,9 @@ function Mypage() {
                                     Save Changes
                                 </Button>
                             </Modal.Footer>
-
                         </Modal>
-
-
-
-
                     </div>
-
-
                 </div>
-
-
                 <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
                     <h6>ERC20 TOKEN : 2311</h6>
                     {/* <Button sytle={{ marginLeft: "10px" }}>ERC20 Transfer</Button>
