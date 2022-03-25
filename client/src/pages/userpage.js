@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 
 function Userpage() {
 
-    const seletedUser = localStorage.getItem('seletedUser');
-    const [infoList, setInfoList] = useState([]);
+    const selectedUser = localStorage.getItem('selectedUser');
+    const [userInfo, setUserInfo] = useState();
 
     useEffect(() => {
         getInfoList();
@@ -12,15 +12,16 @@ function Userpage() {
 
     const getInfoList = () => {
         // setToggle(true);
-        axios.get('http://localhost:4000/getUser/', {
-            userName: seletedUser
+        axios.post('http://localhost:4000/user/getUser', {
+            userName: selectedUser
         })
             .then((res) => {
-                setInfoList(res.data.data)
+
+                setUserInfo(res.data.data)
             })
     }
 
-    console.log(infoList)
+    console.log(userInfo)
 
     return (
         <div class='Userpage'>
@@ -33,22 +34,16 @@ function Userpage() {
 
                 <div className="Info" style={{ height: "85%" }}>
                     <div>
-                        <h5>USERNAME : {infoList.map(info => {
-                            return (
-                                <div key={info.wallet_address}>
-                                    {info.user_name}
-                                </div>
-                            )
-                        })}</h5>
+                        {/* <h5>USERNAME : {userInfo.user_name}</h5> */}
                     </div>
                     <div>
-                        <h5>ADDRESS : {infoList[0].wallet_address}</h5>
+                        {/* <h5>ADDRESS : {userInfo.wallet_address}</h5> */}
                     </div>
                     <div>
-                        <h5>EMAIL : {infoList[0].email}</h5>
+                        {/* <h5>EMAIL : {userInfo.email}</h5> */}
                     </div>
                     <div>
-                        <h5>Greeting : {infoList[0].greetings}</h5>
+                        {/* <h5>Greeting : {userInfo.greetings}</h5> */}
                     </div>
 
                     {/* <button>follow</button> */}

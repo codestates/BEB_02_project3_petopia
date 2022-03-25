@@ -22,7 +22,7 @@ function Search() {
 
     const SearchHandler = (e) => {
         const user = e.target.getAttribute('data-user')
-        localStorage.setItem('seletedUser', user)
+        localStorage.setItem('selectedUser', user)
 
         window.location.replace('http://localhost:3000/' + user)
     }
@@ -33,7 +33,7 @@ function Search() {
                 return (
                     <div key={info.wallet_address}>
                         <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={SearchHandler} data-user={info.user_name} />
-                        <span onClick={SearchHandler} data-wallet={info.user_name}>{info.user_name}</span>
+                        <span onClick={SearchHandler} data-user={info.user_name}>{info.user_name}</span>
                     </div>
                 )
             })}

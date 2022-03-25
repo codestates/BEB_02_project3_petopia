@@ -6,6 +6,6 @@ router.post('/signup', controller.signup);
 router.post('/getUserInfo', controller.getUserInfo);
 router.post('/update', controller.updateUser);
 router.get('/:name', controller.getUserList);
-router.get('/getUser', controller.getUser);
+router.post('/getUser', controller.getUser);
 
 module.exports = router;
