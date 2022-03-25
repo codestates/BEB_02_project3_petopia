@@ -5,6 +5,7 @@ import erc721Abi from "../abi/erc721Abi.js";
 import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from 'web3';
 import Caver from 'caver-js';
+import noImage from '../css/image/noimage.png';
 
 function Create() {
     const [web3, setWeb3] = useState();
@@ -108,12 +109,14 @@ function Create() {
     return (
         <div className='Create'>
             <div className='input_file'>
-                {uploadImage !== null ? <img src={uploadImage} alt="preview" /> : <i class="image outline icon"></i>}
-                <input type="file" accept='image/*'id="file" name="file" onChange={changedFile} />
-                <button onClick={deleteFile}>delete</button>
+                <label for="file">
+                    {uploadImage !== null ? <img src={uploadImage} alt="preview" style={{width:"300px", height:"300px"}} /> : <img src={noImage} alt="noImage" style={{width:"300px", height:"300px"}} /> }
+                </label>
+                <input type="file" accept='image/*'id="file" name="file" onChange={changedFile} style={{display:"none"}} />
+                {/* <button onClick={deleteFile}>delete</button> */}
             </div>
             <div className='input_text'>
-                <textarea onChange={changedText}></textarea>
+                <textarea onChange={changedText} style={{width:"300px", height:"150px"}} ></textarea>
             </div>
             <div className='submit'>
                 <button onClick={clickedSubmit}>submit</button>
