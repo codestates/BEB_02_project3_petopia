@@ -44,9 +44,21 @@ const updateUser = async (req, res) => {
     }    
 }
 
+const getUserList = async (req, res) => {    
+    const userName = req.params.name;
+    const userList = await userService.getUserList(userName);
+
+    if(userList !== null) {
+        return res.status(200).json({ data: userList, message: "success!" });
+    } else {
+        return res.status(202).json({ data: null, message: "fail!" });
+    }    
+}
+
 module.exports = {
     login,
     signup,
     getUserInfo,
-    updateUser
+    updateUser,
+    getUserList
 }

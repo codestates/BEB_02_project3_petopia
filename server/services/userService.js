@@ -29,8 +29,17 @@ const updateUser = async (userInfo) => {
     
 }
 
+const getUserList = async (userName) => {
+    try {
+        return await user.find({user_name: { $regex: '.*' + userName + '.*' } });
+    } catch (error) {
+        throw Error(error)
+    }
+}
+
 module.exports = {
     getUser,
     insertUser,
-    updateUser
+    updateUser,
+    getUserList
 }
