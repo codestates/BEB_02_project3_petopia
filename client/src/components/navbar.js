@@ -1,65 +1,15 @@
 import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstrap";
-import React, { useState } from "react";
-
-import { injected } from "./walletconnect";
-import { useWeb3React } from '@web3-react/core';
-import axios from "axios";
-
+import { useState } from "react";
 
 function Navigation() {
 
-    const username = localStorage.getItem('username')
-    // const address = localStorage.getItem('address')
-
-    const CONNECT_TEXT = "Connect Wallet"
-    const DISCONNECT_TEXT = "Disconnect"
-
-    const [searchText, setSearchText] = useState("");
-    const [userInfo, setUserInfo] = useState();
-    const [btnText, setBtnText] = useState(CONNECT_TEXT);
-
-    const { account, active, activate, deactivate } = useWeb3React()
-
-    const Connecthandler = async () => {
-        if (btnText === CONNECT_TEXT) {
-            try {
-                setBtnText(DISCONNECT_TEXT);
-                await activate(injected)
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
-            setBtnText(CONNECT_TEXT)
-            await deactivate()
-        }
-
-        if (active) {
-            localStorage.setItem('address', JSON.stringify(account));
-
-            axios.post("http://localhost:4000/connect", {
-                'address': account,
-                'username': username
-            })
-        } else {
-            localStorage.removeItem('address');
-        }
-    }
-
-    const SearchHandler = (e) => {
-        setSearchText(e.target.value)
-    }
-
-    const search = () => {
-        console.log("searchText : " + searchText);
-        axios.post("http://localhost:4000/user/" + searchText, {
-            username: searchText
-        })
-            .then(res => setUserInfo(res.data));
-
-        localStorage.setItem('searchname', searchText)
-
-        document.location.href = '/user/' + searchText;
-    }
+    const handleRemoveToken = async () => {
+        localStorage.setItem('isConnected', false);
+        localStorage.setItem('account', null);
+        localStorage.removeItem('user-token');
+        localStorage.removeItem('token-verification');
+        window.location.replace('http://localhost:3000/');
+    };
 
     return (
         <div className="Navbar">
@@ -72,19 +22,17 @@ function Navigation() {
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
-                            onChange={SearchHandler}
                         />
-                        <Button variant="outline-success" onClick={search}>Search</Button>
+                        <Button variant="outline-success">Search</Button>
                     </Form>
                     <Nav
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
                         <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/createcp" className="me-2">➕</Nav.Link>
+                        <Nav.Link href="/create" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
-                        <Button onClick={Connecthandler}>
-                            {btnText === DISCONNECT_TEXT ? <b>{account}</b> : <span>{btnText}</span>} </Button>
+                        <Button onClick={handleRemoveToken}>Disconnect</Button>
                     </Nav>
                 </Container>
             </Navbar>

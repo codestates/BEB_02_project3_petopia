@@ -1,41 +1,24 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Web3ReactProvider } from '@web3-react/core';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter } from "react-router-dom";
 import Web3 from 'web3';
+import { Web3ReactProvider } from '@web3-react/core';
 
-import Mypage from './pages/mypage';
-import Main from './pages/main';
-import Navigation from './components/navbar';
-import Login from './pages/login';
-import Signup from './pages/signup';
-// import Writefeed from './pages/create';
-import Transaction from './pages/transaction';
-
-import CreateCP from './pages/create_copy';
-import Userpage from './pages/userpage';
-
-const getLibrary = (provider) => {
-  new Web3(provider);
-}
+import Login from "./pages/login/login";
+import Layout from './components/layout';
+import Footer from './footer';
+import useLocalStorage from './storage/useLocalStorage';
 
 function App() {
-  return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route exact path="/" element={<Main />} />
-          <Route exact path="/mypage" element={<Mypage />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
-          {/* <Route exact path="/write" element={<Writefeed />} /> */}
-          <Route exact path="/transaction" element={<Transaction />} />
-          <Route exact path="/user/:username" element={<Userpage />} />
+  const [account, setAccount] = useLocalStorage("account", '');
+  const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x2ead9cc4a6b8da962412e85c71473870c80dab64');
+  const [isConnected, setConnected] = useLocalStorage("isConnected", false);
 
-          <Route exact path="/createcp" element={<CreateCP />} />
-        </Routes>
-      </BrowserRouter>
-    </Web3ReactProvider>
+  return (
+    <BrowserRouter>
+      {isConnected ? <Layout /> : <Login />}
+      <Footer />
+    </BrowserRouter>
   );
 }
 
