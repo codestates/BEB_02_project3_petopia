@@ -58,7 +58,7 @@ function Mypage() {
 
         let imagePath = '';
         let profileimage = '';
-        
+     
         if (uploadImage !== '') {
             imagePath = await uploadIPFS(uploadImage);
             profileimage = 'https://ipfs.infura.io/ipfs/' + imagePath
@@ -141,7 +141,6 @@ function Mypage() {
                         </Modal>
                     </div>
                 </div>
-
                 <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
                     <h6>ERC20 TOKEN : 2311</h6>
                     {/* <Button sytle={{ marginLeft: "10px" }}>ERC20 Transfer</Button>
