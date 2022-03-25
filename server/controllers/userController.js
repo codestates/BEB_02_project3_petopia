@@ -55,7 +55,7 @@ const getUserList = async (req, res) => {
     }    
 }
 
-const getUserInfo = async (req, res) => {
+const getUser = async (req, res) => {
     const {userName} = req.body;
     const user = await userService.getUser(userName);
 
@@ -71,5 +71,6 @@ module.exports = {
     signup,
     getUserInfo,
     updateUser,
-    getUserList
+    getUserList,
+    getUser
 }
