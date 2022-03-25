@@ -2,10 +2,13 @@ import { React, useEffect, useState } from 'react';
 import {create} from "ipfs-http-client";
 import axios from 'axios';
 import erc721Abi from "../abi/erc721Abi.js";
+import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from 'web3';
+import Caver from 'caver-js';
 
 function Create() {
     const [web3, setWeb3] = useState();
+    const [caver, setCaver] = useState();
     const [imageFile, setImageFile] = useState();
     const [uploadImage, setUploadImage] = useState(null);
     const [inputText, setInputText] = useState();
@@ -22,6 +25,15 @@ function Create() {
             }    
         } else {
           alert('Please Install MetaMask.')
+        }
+
+        if (typeof window.klaytn !== "undefined") {
+            try {
+              const caver = new Caver(window.klaytn);
+              setCaver(caver);
+            } catch (err) {
+              console.log(err);
+            }
         }
     }, []);
 
@@ -61,11 +73,15 @@ function Create() {
     };
     
     const createNFT = async (tokenURI) => {
-        const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress, {
+        // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress, {
+        //     from: account
+        // });
+        const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress, {
             from: account
         });
         tokenContract.options.address = contractAddress;
-        const newTokenId = await tokenContract.methods.mintNFT(account, tokenURI).send();
+        // const newTokenId = await tokenContract.methods.mintNFT(account, tokenURI).send();
+        const newTokenId = await tokenContract.methods.mintNFT(tokenURI).send({from: account, gas: 0xf4240});
         
         const postInfo = {
             "postId": newTokenId.events.Transfer.returnValues.tokenId,
@@ -82,6 +98,7 @@ function Create() {
             const postInfo = res.data.data;
             if(postInfo !== null) {
                 alert(res.data.message);
+                window.location.replace('http://localhost:3000/mypage');
             } else {
                 alert(res.data.message);
             }

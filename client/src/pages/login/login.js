@@ -1,14 +1,14 @@
 import React from 'react';
-import NFTList from '../../components/NFTList';
 import Web3 from 'web3';
+import Caver from 'caver-js';
 import Web3Token from 'web3-token';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginCarousel from './loginCarousel';
 
 function Login() {
-  const [web3, setWeb3] = useState('web3', '');
-  const [ chain, setChain ] = useState('')
+  const [web3, setWeb3] = useState('');
+  const [caver, setCaver] = useState('');
 
   useEffect(() => {
       if (typeof window.ethereum !== "undefined") {
@@ -18,31 +18,22 @@ function Login() {
           } catch (err) {
               console.log(err);
           }
-  
-          // // accounts status changed
-          // window.ethereum.on('accountsChanged', (accounts) => {
-          //   //console.log('Account changed: ', accounts[0])
-          //   //localStorage.setItem('account', accounts[0]);
-          //   localStorage.setItem('isConnected', false);
-          //   localStorage.removeItem('user-token')
-          //   localStorage.removeItem('token-verification')
-          //   window.location.reload();
-          // });
-          
-          // // Chain changed
-          // window.ethereum.on('chainChanged', (chaindId) => {
-          //   //console.log('Chain ID changed: ', chaindId)
-          //   setChain(chaindId)
-          // });
-  
       } else {
         alert('Please Install MetaMask.')
+      }
+
+      if (typeof window.klaytn !== "undefined") {
+        try {
+          const web = new Caver(window.klaytn);
+          setCaver(web);
+        } catch (err) {
+          console.log(err);
+        }
       }
   }, []);
   
   const handleSignToken = async () => {
     // Connection to MetaMask wallet
-    //const web3 = new Web3(window.ethereum);
     await window.ethereum.request({ method: 'eth_requestAccounts' });
 
     // getting address from which we will sign message
@@ -88,13 +79,36 @@ function Login() {
   const signup = async (address) => {
     await axios.post('http://localhost:4000/user/signup', {address:address});
   }
-        
+
+  const connectKaikas = async() => {
+    const accounts = await window.klaytn.enable();
+    let username = '';
+
+    await axios.post('http://localhost:4000/user/login', {address:accounts[0]})
+    .then((res) => {
+      const userInfo = res.data.data;
+      if(userInfo !== null) {
+        username = userInfo.user_name;
+      } else {
+        signup(accounts[0]);
+        username = accounts[0];
+      }
+    });
+
+    localStorage.setItem('isConnected', true);
+    localStorage.setItem('account', JSON.stringify(accounts[0]));
+    alert(`Welcome, ${username}!`);
+    window.location.reload();
+  }
+
   return (
       <div class="jumbotron">
           <div style={{width:'400px'}}><LoginCarousel /></div>
           <h1 class="display-4">Welcome to Petopia!</h1>
-          {/* <p class="lead">Click the button again to disconnect</p> */}
-          <div className="btn btn-dark login-wallet" onClick={handleSignToken}>
+          {/* metaMask connect
+            <div className="btn btn-dark login-wallet" onClick={handleSignToken}>
+           */}
+          <div className="btn btn-dark login-wallet" onClick={connectKaikas}>
             <div className="left-status">
               <div className="status-icon disconnected"></div>
             </div>

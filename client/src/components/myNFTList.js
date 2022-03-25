@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import erc721Abi from "../abi/erc721Abi.js";
+import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from "web3";
+import Caver from 'caver-js';
 
-function MyNFTList({account}) {   
+function MyNFTList() {   
     const [NFTList, setNFTList] = useState([]);
     const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
-    // const account = JSON.parse(localStorage.getItem('account'));
+    const account = JSON.parse(localStorage.getItem('account'));
     const web3 = new Web3(window.ethereum);
+    const caver = new Caver(window.klaytn);
 
     useEffect(() => {
         loadNFT();
     }, []);
 
     const loadNFT = async () => {
-        const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
+        // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
+        const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
         const totalSupply = await tokenContract.methods.totalSupply().call();
         
         let arr = [];

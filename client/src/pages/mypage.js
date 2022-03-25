@@ -7,14 +7,7 @@ import { create } from "ipfs-http-client";
 
 function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
-    const [web3, setWeb3] = useState();
-    const [userInfo, setUserInfo] = useState({
-        // user_name: null,
-        // wallet_address: null,
-        // profile_image: null,
-        // greetings: null
-    });
-
+    const [userInfo, setUserInfo] = useState({});
     const [showModal, setShowModal] = useState(false)
     const [username, setUsername] = useState(userInfo.user_name)
     const [email, setEmail] = useState(userInfo.email)
