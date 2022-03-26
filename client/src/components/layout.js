@@ -5,6 +5,7 @@ import Navigation from './navbar';
 import Create from '../pages/create';
 import Search from '../pages/search'
 import View from '../pages/userpage';
+import Hospital from '../pages/hospital';
 
 function layout() {
     return (
@@ -16,6 +17,7 @@ function layout() {
                 <Route exact path="/create" element={<Create />} />
                 <Route exact path="/user/:name" element={<Search />} />
                 <Route exact path="/:wallet" element={<View />} />
+                <Route exact path="/hospital" element={<Hospital />} />
             </Routes>
         </div>
     );

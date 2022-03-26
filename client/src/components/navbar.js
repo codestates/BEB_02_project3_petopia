@@ -56,6 +56,7 @@ function Navigation() {
                         <Nav.Link href="/" className="me-2">🏠</Nav.Link>
                         <Nav.Link href="/create" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
+                        <Nav.Link href="/hospital" className="me-2">🏥</Nav.Link>
                         <Button onClick={handleRemoveToken}>Disconnect</Button>
                     </Nav>
                 </Container>
