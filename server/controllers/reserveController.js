@@ -12,8 +12,8 @@ const insertReserve = async(req, res) => {
 }
 
 const getReserveList = async(req, res) => {
-    const id = req.params.id;
-    const reserveList = await reserveService.getReserveList(id);
+    const reserveInfo = req.body;
+    const reserveList = await reserveService.getReserveList(reserveInfo);
 
     if(reserveList !== null) {
         return res.status(200).json({ data: reserveList, message: "success!" });

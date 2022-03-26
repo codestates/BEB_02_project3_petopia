@@ -12,9 +12,10 @@ const insertReserve = async(reserveInfo) => {
     }
 }
 
-const getReserveList = async(id) => {
+const getReserveList = async(reserveInfo) => {
+    const {reserveDate, hospitalId} = reserveInfo;
     try {
-        return await reserve.find({hospital_id: id});
+        return await reserve.find({reserve_date:reserveDate, hospital_id: hospitalId});
     } catch (error) {
         throw Error(error);
     }
