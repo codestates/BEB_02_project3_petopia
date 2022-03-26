@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const scheduleSchema = new mongoose.Schema({
-	schedule_date:{
+const reserveSchema = new mongoose.Schema({
+	reserve_date:{
         type: Date
     },
-	schedule_time:{
+	reserve_time:{
         type: String
     },
 	user_id:{
@@ -15,6 +15,6 @@ const scheduleSchema = new mongoose.Schema({
     },
 });
 
-const Schedule = mongoose.model("Hospital", scheduleSchema);
+const Reserve = mongoose.model("Reserve", reserveSchema);
 
-module.exports = Schedule;
+module.exports = Reserve;
