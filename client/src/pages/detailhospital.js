@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale"; // 한국어 적용 
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
 import getDay from 'date-fns/getDay'
 
 
+
+
 function DetailHospital() {
 
     const hospital_id = localStorage.getItem('hospital_id')
-    const [infoList, setInfoList] = useState({ 'hospital_dayoff': [] })
+    const [infoList, setInfoList] = useState({ 'hospital_dayoff': [], 'hospital_open': ':', 'hosptial_close': ':' })
     const [startDate, setStartDate] = useState(
         new Date()
     );
@@ -21,6 +23,7 @@ function DetailHospital() {
         new Date()
     )
     const [showModal, setShowModal] = useState(false)
+    const [timeList, setTimeList] = useState([])
 
     useEffect(async () => {
         await axios.get(`http://localhost:4000/hospital/${hospital_id}`)
@@ -42,19 +45,31 @@ function DetailHospital() {
 
     };
 
-    const reserveHandler = () => {
+    // // console.log(infoList)
+    // console.log(infoList.hospital_open.split(':')[0]);
+    // console.log(infoList.hosptial_close.split(':')[0]);
+
+    const SubmitInfo = (event) => {
+        event.preventDefault();
         const reserveDate = startDate.toDateString()
         const reserveTime = startTime.toLocaleTimeString()
-        const userId = JSON.parse(localStorage.getItem('account'))
-        const hospitalId = JSON.parse(localStorage.getItem('hospital_id'))
+        const userId = (localStorage.getItem('account'))
+        const hospitalId = (localStorage.getItem('hospital_id'))
+        const reserveName = event.target.reservename.value
+        const petName = event.target.petname.value
+        const reservePhone = event.target.reservephone.value
+
+        console.log(reserveDate, reserveTime, userId, hospitalId, reserveName, petName, reservePhone)
 
         axios.post('http://localhost:4000/reserve', {
             reserveDate: reserveDate,
             reserveTime: reserveTime,
             userId: userId,
-            hospitalId: hospitalId
+            hospitalId: hospitalId,
+            reserveName: reserveName,
+            petName: petName,
+            reservePhone: reservePhone
         })
-
     }
 
     const modalOpen = () => {
@@ -98,8 +113,7 @@ function DetailHospital() {
                         <DatePicker
                             inline
                             selected={startDate}
-                            onChange={(date) => (setStartDate(date))}
-                            onChage={modalOpen}
+                            onChange={modalOpen}
                             locale={ko}
                             minDate={new Date()}
                             maxDate={addMonths(new Date(), 5)}
@@ -107,33 +121,43 @@ function DetailHospital() {
                             showDisabledMonthNavigation
                         />
 
-                        <DatePicker
-                            selected={startTime}
-                            onChange={(time) => setStartTime(time)}
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={60}
-                            minTime={setHours(setMinutes(new Date(), 0), 10)}
-                            maxTime={setHours(setMinutes(new Date(), 0), 20)}
-                            // includeTimes={[
-                            //     setHours(setMinutes(new Date(), 0), 17),
-                            // ]}
-                            timeCaption="Time"
-                            dateFormat="h:mm aa"
-                        />
-                        <button onClick={reserveHandler}>예약하기</button>
-
                         <Modal show={showModal} onHide={modalClose} size='lg'>
                             <Modal.Header closeButton>
-                                <Modal.Title>Edit Profile</Modal.Title>
+                                <Modal.Title>Reserve</Modal.Title>
                             </Modal.Header>
+                            <Modal.Body>
+                                <form onSubmit={SubmitInfo}>
+                                    예약자명 : <input type="textbox" name="reservename" style={{ width: "400px" }}  ></input> <br />
+                                    반려동물명 : <input type="textbox" name="petname" style={{ width: "400px" }} ></input> <br />
+                                    휴대폰번호 : <input type="textbox" name="reservephone" style={{ width: "400px" }} ></input> <br />
+
+                                    <DatePicker
+                                        selected={startTime}
+                                        onChange={(time) => setStartTime(time)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={60}
+                                        minTime={setHours(setMinutes(new Date(), 0), 10)}
+                                        maxTime={setHours(setMinutes(new Date(), 0), 20)}
+                                        // includeTimes={[
+                                        //     setHours(setMinutes(new Date(), 0), 17),
+                                        // ]}
+                                        timeCaption="Time"
+                                        dateFormat="h:mm aa"
+                                    />
+
+
+                                    <input type="submit" value={'예약하기'}></input>
+
+                                </form>
+                            </Modal.Body>
                         </Modal>
                     </div >
 
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 }
 
