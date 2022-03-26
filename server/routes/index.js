@@ -6,6 +6,7 @@ const hospital = require('./hospital.js');
 const follow = require('./follow.js')
 const like = require('./like.js')
 const comment = require('./comment.js')
+const reserve = require('./reserve.js')
 
 
 router.use('/user', user);
@@ -15,7 +16,7 @@ router.use('/hospital', hospital);
 router.use('/follow', follow);
 router.use('/reserve', reserve);
 router.use('/like', like);
-router.use('/commnet', comment);
+router.use('/comment', comment);
 
 
 module.exports = router;
