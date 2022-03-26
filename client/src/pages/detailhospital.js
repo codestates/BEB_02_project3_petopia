@@ -65,6 +65,7 @@ function DetailHospital() {
 
     const dateChangeHandler = async (date) => {
 
+        setTimeList([]);
         setStartDate(date);
 
         await axios.post('http://localhost:4000/reserve/getReserveList', { reserveDate: moment(date).format().slice(0, 10), hospitalId: hospital_id })
