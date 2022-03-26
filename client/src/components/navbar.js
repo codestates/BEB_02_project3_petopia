@@ -25,6 +25,14 @@ function Navigation() {
         window.location.replace('http://localhost:3000/');
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            searchBtn()
+        }
+    }
+
+
     return (
         <div className="Navbar">
             <Navbar bg="light" expand="lg">
@@ -37,6 +45,7 @@ function Navigation() {
                             className="me-2"
                             aria-label="Search"
                             onChange={searchHandler}
+                            onKeyPress={handleKeyPress}
                         />
                         <Button variant="outline-success" onClick={searchBtn} >Search</Button>
                     </Form>
