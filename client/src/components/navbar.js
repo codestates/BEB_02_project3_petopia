@@ -3,41 +3,61 @@ import { useState } from "react";
 
 function Navigation() {
 
-    const CONNECT_TEXT = "Connect Wallet"
-    const DISCONNECT_TEXT = "Disconnect"
+    const [search, setSearch] = useState('')
 
-    const [btnText, setBtnText] = useState(CONNECT_TEXT);
+    const searchHandler = (e) => {
+        setSearch(e.target.value)
+    }
 
-    const Connecthandler = () => {
-        if (btnText === CONNECT_TEXT) {
-            setBtnText(DISCONNECT_TEXT);
-        } else {
-            setBtnText(CONNECT_TEXT)
+    const searchBtn = () => {
+        // console.log(search)
+        localStorage.setItem('searchName', search);
+        window.location.replace('http://localhost:3000/user/' + search)
+    }
+
+
+    const handleRemoveToken = async () => {
+        localStorage.setItem('isConnected', false);
+        localStorage.setItem('account', null);
+        localStorage.removeItem('user-token');
+        localStorage.removeItem('token-verification');
+        localStorage.removeItem('searchName');
+        window.location.replace('http://localhost:3000/');
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            searchBtn()
         }
     }
+
 
     return (
         <div className="Navbar">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/main">🐻 PETOPIA</Navbar.Brand>
+                    <Navbar.Brand href="/">🐻 PETOPIA</Navbar.Brand>
                     <Form className="d-flex justify-content-end">
                         <FormControl
                             type="search"
                             placeholder="Search"
                             className="me-2"
                             aria-label="Search"
+                            onChange={searchHandler}
+                            onKeyPress={handleKeyPress}
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-success" onClick={searchBtn} >Search</Button>
                     </Form>
                     <Nav
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/main" className="me-2">🏠</Nav.Link>
+                        <Nav.Link href="/" className="me-2">🏠</Nav.Link>
                         <Nav.Link href="/create" className="me-2">➕</Nav.Link>
                         <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
-                        <Button onClick={Connecthandler}>{btnText}</Button>
+                        <Nav.Link href="/hospital" className="me-2">🏥</Nav.Link>
+                        <Button onClick={handleRemoveToken}>Disconnect</Button>
                     </Nav>
                 </Container>
             </Navbar>

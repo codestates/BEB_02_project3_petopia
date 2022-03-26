@@ -1,4 +1,4 @@
-const post = require("../models/post.js")
+const post = require("../models/post.js");
 
 const insertPost = async(postInfo) => {
     const {postId, walletAddress, postDate} = postInfo;
@@ -10,7 +10,6 @@ const insertPost = async(postInfo) => {
         throw Error(error);
     }
 }
-
 
 module.exports = {
     insertPost

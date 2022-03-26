@@ -11,7 +11,6 @@ const insertComment = async(commentInfo) => {
     }
 }
 
-
 module.exports = {
     insertComment
 }

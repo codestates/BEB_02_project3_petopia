@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import erc721Abi from "../abi/erc721Abi.js";
 import axios from "axios";
+import Web3 from "web3";
 
-function NFTList({web3, account, contractAddress, isLogin}) {
+function NFTList({account, contractAddress, isLogin}) {
+    const [web3, setWeb3] = useState();
     const [NFTList, setNFTList] = useState([]);
     
     useEffect(() => {
-        loadNFT(account);
+      if (typeof window.ethereum !== "undefined") {
+        try {
+            const web = new Web3(window.ethereum);
+            setWeb3(web);
+        } catch (err) {
+            console.log(err);
+        }    
+      } else {
+        alert('Please Install MetaMask.')
+      }
+
+      loadNFT(account);
     }, []);
 
     const loadNFT = async(_account) => {
