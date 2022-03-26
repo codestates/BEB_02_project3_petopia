@@ -6,6 +6,7 @@ import Create from '../pages/create';
 import Search from '../pages/search'
 import View from '../pages/userpage';
 import Hospital from '../pages/hospital';
+import DetailHospital from '../pages/detailhospital';
 
 function layout() {
     return (
@@ -18,6 +19,7 @@ function layout() {
                 <Route exact path="/user/:name" element={<Search />} />
                 <Route exact path="/:wallet" element={<View />} />
                 <Route exact path="/hospital" element={<Hospital />} />
+                <Route exact path="/hospital/:id" element={<DetailHospital />} />
             </Routes>
         </div>
     );
