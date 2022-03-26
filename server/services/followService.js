@@ -14,9 +14,9 @@ const insertFollow = async(followInfo) => {
 const deleteFollow = async(followInfo) => {
     const {followee, follower} = followInfo;
     try {
-        const result = false;
-        follow.deleteOne({followee:followee, follower:follower}).then((res) => {
-            result = true;
+        let result = false;
+        await follow.deleteOne({followee:followee, follower:follower}).then((res) => {
+            if(res.deletedCount > 0) result = true;
         });
         return result;
     } catch (error) {
