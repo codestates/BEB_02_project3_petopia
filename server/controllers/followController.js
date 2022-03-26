@@ -13,8 +13,7 @@ const insertFollow = async(req, res) => {
 
 const deleteFollow = async(req, res) => {
     const followInfo = req.body;
-    const result = await followService.insertFollow(followInfo);
-    
+    const result = await followService.deleteFollow(followInfo);
     if(result) {
         return res.status(200).json({ data: result, message: "unfollow success!" });
     } else {
