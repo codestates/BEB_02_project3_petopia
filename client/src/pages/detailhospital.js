@@ -3,13 +3,11 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale"; // 한국어 적용 
-import { Modal } from 'react-bootstrap';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
 import getDay from 'date-fns/getDay'
-
-
+import moment from 'moment';
 
 
 function DetailHospital() {
@@ -20,7 +18,6 @@ function DetailHospital() {
         new Date()
     );
     const [startTime, setStartTime] = useState(
-        new Date()
     )
     const [showModal, setShowModal] = useState(false)
     const [timeList, setTimeList] = useState([])
@@ -45,20 +42,15 @@ function DetailHospital() {
 
     };
 
-    // // console.log(infoList)
-    // console.log(infoList.hospital_open.split(':')[0]);
-    // console.log(infoList.hosptial_close.split(':')[0]);
-
     const SubmitInfo = (event) => {
-        const reserveDate = startDate.toDateString()
-        const reserveTime = startTime.toLocaleTimeString()
+
+        const reserveDate = moment(startDate).format().slice(0, 10)
+        const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
         const userId = (localStorage.getItem('account'))
         const hospitalId = (localStorage.getItem('hospital_id'))
         const reserveName = event.target.reservename.value
         const petName = event.target.petname.value
         const reservePhone = event.target.reservephone.value
-
-        console.log(reserveDate, reserveTime, userId, hospitalId, reserveName, petName, reservePhone)
 
         axios.post('http://localhost:4000/reserve', {
             reserveDate: reserveDate,
@@ -71,12 +63,21 @@ function DetailHospital() {
         })
     }
 
-    const modalOpen = () => {
-        setShowModal(true)
-    }
+    const dateChangeHandler = async (date) => {
 
-    const modalClose = () => {
-        setShowModal(false)
+        setStartDate(date);
+
+        await axios.post('http://localhost:4000/reserve/getReserveList', { reserveDate: moment(date).format().slice(0, 10), hospitalId: hospital_id })
+            .then((res) => {
+                const reserves = res.data.data;
+                reserves.map((reserve) => {
+                    const reserveHour = Number(reserve.reserve_time.split(':')[0]);
+                    const reserveMinute = Number(reserve.reserve_time.split(':')[1]);
+                    setTimeList((prevState) => {
+                        return [...prevState, setHours(setMinutes(new Date(), reserveMinute), reserveHour)];
+                    });
+                })
+            });
     }
 
     return (
@@ -107,12 +108,12 @@ function DetailHospital() {
                 <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                     <h1>Reserve</h1>
 
-                    <div className="Reservation">
+                    <div className="Reservation" style={{ display: "flex" }} >
 
                         <DatePicker
                             inline
-                            selected={startDate}
-                            onChange={modalOpen}
+                            selected={''}
+                            onChange={dateChangeHandler}
                             locale={ko}
                             minDate={new Date()}
                             maxDate={addMonths(new Date(), 5)}
@@ -120,35 +121,28 @@ function DetailHospital() {
                             showDisabledMonthNavigation
                         />
 
-                        <Modal show={showModal} onHide={modalClose} size='lg'>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Reserve</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <form onSubmit={SubmitInfo}>
-                                    예약자명 : <input type="textbox" name="reservename" style={{ width: "400px" }}  ></input> <br />
-                                    반려동물명 : <input type="textbox" name="petname" style={{ width: "400px" }} ></input> <br />
-                                    휴대폰번호 : <input type="textbox" name="reservephone" style={{ width: "400px" }} ></input> <br />
+                        <form onSubmit={SubmitInfo}>
+                            <DatePicker
+                                placeholderText="시간 선택"
+                                selected={startTime}
+                                onChange={(time) => setStartTime(time)}
+                                showTimeSelect
+                                showTimeSelectOnly
+                                timeIntervals={60}
+                                minTime={setHours(setMinutes(new Date(), 0), 10)}
+                                maxTime={setHours(setMinutes(new Date(), 0), 20)}
+                                excludeTimes={timeList}
+                                timeCaption="Time"
+                                dateFormat="h:mm aa"
 
-                                    <DatePicker
-                                        selected={startTime}
-                                        onChange={(time) => setStartTime(time)}
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        timeIntervals={60}
-                                        minTime={setHours(setMinutes(new Date(), 0), 10)}
-                                        maxTime={setHours(setMinutes(new Date(), 0), 20)}
-                                        // includeTimes={[
-                                        //     setHours(setMinutes(new Date(), 0), 17),
-                                        // ]}
-                                        timeCaption="Time"
-                                        dateFormat="h:mm aa"
-                                    />
+                            />
+                            예약자명 : <input type="textbox" name="reservename" style={{ width: "400px" }}  ></input> <br />
+                            반려동물명 : <input type="textbox" name="petname" style={{ width: "400px" }} ></input> <br />
+                            휴대폰번호 : <input type="textbox" name="reservephone" style={{ width: "400px" }} ></input> <br />
 
-                                    <input type="submit" value={'예약하기'}></input>
-                                </form>
-                            </Modal.Body>
-                        </Modal>
+                            <input type="submit" value={'예약하기'}></input>
+                        </form>
+
                     </div >
 
                 </div>
