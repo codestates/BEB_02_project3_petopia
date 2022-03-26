@@ -5,10 +5,10 @@ import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from "web3";
 import Caver from 'caver-js';
 
-function MyNFTList() {   
+function MyNFTList({account}) {   
     const [NFTList, setNFTList] = useState([]);
     const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
-    const account = JSON.parse(localStorage.getItem('account'));
+    // const account = JSON.parse(localStorage.getItem('account'));
     const web3 = new Web3(window.ethereum);
     const caver = new Caver(window.klaytn);
 

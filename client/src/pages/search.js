@@ -21,6 +21,7 @@ function Search() {
         const user = e.target.getAttribute('data-user')
         const wallet = e.target.getAttribute('data-wallet')
         localStorage.setItem('selectedUser', user)
+        localStorage.setItem('selectedUserWallet', wallet)
 
         if(wallet !== JSON.parse(localStorage.getItem('account'))) {
             window.location.replace('http://localhost:3000/' + user);
