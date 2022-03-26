@@ -11,6 +11,19 @@ const insertLike = async(req, res) => {
     }
 }
 
+const readAll = async(req, res) =>{
+    
+    const likeAll = await like.find();
+        
+    if(likeAll !== null){
+        return res.status(200).json({ data: likeAll, message: "Like success!" });
+    } else {
+        return res.status(204).json({ data: null, message: "Like fail!" });
+    }
+
+    
+}
+
 module.exports = {
-    insertLike
+    insertLike, readAll
 }
