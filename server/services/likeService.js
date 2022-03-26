@@ -11,10 +11,6 @@ const insertLike = async(likeInfo) => {
     }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c90051481d1ee0f30acaaf129a54c5ad7b56715
 module.exports = {
     insertLike
 }
