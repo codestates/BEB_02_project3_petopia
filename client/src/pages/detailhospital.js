@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale"; // 한국어 적용 
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
@@ -50,7 +50,6 @@ function DetailHospital() {
     // console.log(infoList.hosptial_close.split(':')[0]);
 
     const SubmitInfo = (event) => {
-        event.preventDefault();
         const reserveDate = startDate.toDateString()
         const reserveTime = startTime.toLocaleTimeString()
         const userId = (localStorage.getItem('account'))
@@ -146,9 +145,7 @@ function DetailHospital() {
                                         dateFormat="h:mm aa"
                                     />
 
-
                                     <input type="submit" value={'예약하기'}></input>
-
                                 </form>
                             </Modal.Body>
                         </Modal>
