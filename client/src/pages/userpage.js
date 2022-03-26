@@ -3,23 +3,55 @@ import React, { useEffect, useState } from "react";
 import MyNFTList from '../components/myNFTList';
 
 function Userpage() {
+    const account = JSON.parse(localStorage.getItem('account'));
     const selectedUser = localStorage.getItem('selectedUser');
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
     
     const [userInfo, setUserInfo] = useState({});
+    const [followList, setFollowList] = useState([]);
 
     useEffect(() => {
         getInfoList();
     }, []);
 
-    const getInfoList = () => {
-        
-        axios.post('http://localhost:4000/user/getUser', {
-            userName: selectedUser
+    const getInfoList = async() => {
+
+        await axios.get(`http://localhost:4000/follow/${account}`)
+        .then((res)=>{
+            setFollowList(res.data.data);
+        });
+
+        await axios.post('http://localhost:4000/user/getUser', {userName: selectedUser})
+        .then((res) => {
+            setUserInfo(res.data.data)
         })
+    }
+
+    const followHandler = async(e) => {
+        const btnText = e.target.textContent;
+        const followInfo = {
+            followee: account,
+            follower: e.target.getAttribute('data-user')
+        };
+
+        if(btnText === 'follow') {
+            const follow = await axios.post('http://localhost:4000/follow/', followInfo)
             .then((res) => {
-                setUserInfo(res.data.data)
-            })
+                const result = res.data.data;
+                if(result !== null){
+                    e.target.textContent = 'unfollow';
+                }
+            });
+            
+        } else {
+            const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+            .then((res) => {
+                const result = res.data.data;
+                if(result){
+                    e.target.textContent = 'follow';
+                }
+            });
+        }
     }
 
     return (
@@ -44,9 +76,9 @@ function Userpage() {
                     <div>
                         <h5>Greeting : {userInfo.greetings}</h5>
                     </div>
-
-                    {/* <button>follow</button> */}
-
+                    <button data-user={userInfo.wallet_address} onClick={followHandler}>
+                        {followList.filter(follow => (follow.follower === userInfo.wallet_address)).length > 0 ? "unfollow" : "follow"}
+                    </button>
                 </div>
 
             </div>
