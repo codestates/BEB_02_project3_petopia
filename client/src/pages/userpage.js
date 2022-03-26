@@ -4,6 +4,8 @@ import MyNFTList from '../components/myNFTList';
 
 function Userpage() {
     const selectedUser = localStorage.getItem('selectedUser');
+    const selectedUserWallet = localStorage.getItem('selectedUserWallet');
+    
     const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
@@ -53,7 +55,7 @@ function Userpage() {
                 <h3>Post</h3>
                 <hr></hr>
                 <div>
-                    <MyNFTList account={userInfo.wallet_address} />
+                    <MyNFTList account={selectedUserWallet} />
                 </div>
             </div>
         </div>
