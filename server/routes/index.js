@@ -6,6 +6,7 @@ const hospital = require('./hospital.js');
 const follow = require('./follow.js')
 const like = require('./like.js')
 const comment = require('./comment.js')
+const reserve = require('./reserve')
 
 
 router.use('/user', user);
