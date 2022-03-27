@@ -9,25 +9,17 @@ import addMonths from 'date-fns/addMonths'
 import getDay from 'date-fns/getDay'
 import moment from 'moment';
 
-
 function DetailHospital() {
 
     const hospital_id = localStorage.getItem('hospital_id')
-    const [infoList, setInfoList] = useState({ 'hospital_dayoff': [], 'hospital_open': ':', 'hosptial_close': ':' })
-    const [startDate, setStartDate] = useState(
-        new Date()
-    );
-    const [startTime, setStartTime] = useState(
-    )
-    const [showModal, setShowModal] = useState(false)
+    const [infoList, setInfoList] = useState(JSON.parse(localStorage.getItem('hospitalInfo')))
+    const [startDate, setStartDate] = useState(new Date());
+    const [startTime, setStartTime] = useState()
     const [timeList, setTimeList] = useState([])
 
-    useEffect(async () => {
-        await axios.get(`http://localhost:4000/hospital/${hospital_id}`)
-            .then((res) => {
-                setInfoList(res.data.data)
-            })
-    }, [])
+    // useEffect(async () => {
+
+    // }, [])
 
     const isWeekday = (date) => {
 
@@ -35,7 +27,7 @@ function DetailHospital() {
         const day = getDay(date);
 
         switch (len) {
-            case 0: return
+            case 0: return 7
             case 1: return day !== infoList.hospital_dayoff[0]
             case 2: return day !== infoList.hospital_dayoff[0] && day !== infoList.hospital_dayoff[1]
         }
@@ -43,7 +35,7 @@ function DetailHospital() {
     };
 
     const SubmitInfo = (event) => {
-
+        const hospitalWallet = infoList.hospital_wallet;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
         const userId = (localStorage.getItem('account'))
@@ -81,6 +73,18 @@ function DetailHospital() {
             });
     }
 
+    const initSetMinTime = () => {
+        const openHour = infoList.hospital_open.split(":")[0];
+        const openMin = infoList.hospital_open.split(":")[1];
+        return setHours(setMinutes(new Date(), openMin), openHour);
+    }
+
+    const initSetMaxTime = () => {
+        const closeHour = infoList.hospital_close.split(":")[0];
+        const closeMin = infoList.hospital_close.split(":")[1];
+        return setHours(setMinutes(new Date(), closeMin), closeHour);  
+    }
+
     return (
         <div className='DetailHospital'>
             <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>DetailHospital</h1>
@@ -95,13 +99,13 @@ function DetailHospital() {
                         <h5>{infoList.hospital_name}</h5>
                     </div>
                     <div>
-                        <h5>진료시간 : {infoList.hospital_open} ~ {infoList.hosptial_close}</h5>
+                        <h5>진료시간 : {infoList.hospital_open} ~ {infoList.hospital_close}</h5>
                     </div>
                     <div>
-                        <h5>전화번호 : {infoList.hosptial_phone}</h5>
+                        <h5>전화번호 : {infoList.hospital_phone}</h5>
                     </div>
                     <div>
-                        <h5>주소 : {infoList.hosptial_address}</h5>
+                        <h5>주소 : {infoList.hospital_address}</h5>
                     </div>
                 </div>
                 <hr></hr>
@@ -130,8 +134,8 @@ function DetailHospital() {
                                 showTimeSelect
                                 showTimeSelectOnly
                                 timeIntervals={60}
-                                minTime={setHours(setMinutes(new Date(), 0), 10)}
-                                maxTime={setHours(setMinutes(new Date(), 0), 20)}
+                                minTime={initSetMinTime()}
+                                maxTime={initSetMaxTime()}
                                 excludeTimes={timeList}
                                 timeCaption="Time"
                                 dateFormat="h:mm aa"

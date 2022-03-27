@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 function HospitalList() {
 
-    const [HospitalList, setHospitalList] = useState([]);
+    const [hospitalList, setHospitalList] = useState([]);
 
     useEffect(() => {
         getHospital()
@@ -16,29 +16,30 @@ function HospitalList() {
             })
     }
 
-
-    const MoveReservePage = (e) => {
-
+    const moveReservePage = async(e) => {
         const id = e.target.getAttribute('data-id')
         localStorage.setItem('hospital_id', id)
-        // console.log(HospitalList)
-        console.log(id)
 
-        // window.location.replace('http://localhost:3000/hospital/' + id)
+        await axios.get(`http://localhost:4000/hospital/${id}`)
+        .then((res) => {
+            localStorage.setItem('hospitalInfo', JSON.stringify(res.data.data));
+        })
+
+        window.location.href = `http://localhost:3000/hospital/${id}`
     }
-
+    
     return (
-        <div className="HospitalList">
+        <div className="hospitalList">
             {
-                HospitalList.map(info => {
+                hospitalList.map(info => {
                     return (
-                        <div key={info._id} className={info._id} onClick={MoveReservePage} style={{ background: "grey", width: "500px" }} data-id={info._id}>
-                            <img src={info.hopsital_profile} style={{ width: "100px", height: "100px" }}></img>
+                        <div key={info._id} className={info._id} style={{ background: "grey", width: "500px" }}>
+                            <img src={info.hopsital_profile} onClick={moveReservePage} data-id={info._id} style={{ width: "100px", height: "100px" }}></img>
                             <h6>{info.hospital_name}</h6>
-                            {/* <p> 전화번호 : {info.hosptial_phone}</p> */}
-                            <p> 위치 : {info.hosptial_address}</p>
+                            {/* <p> 전화번호 : {info.hospital_phone}</p> */}
+                            <p> 위치 : {info.hospital_address}</p>
                             <p>
-                                진료시간 : {info.hospital_open} ~ {info.hosptial_close}&nbsp;
+                                진료시간 : {info.hospital_open} ~ {info.hospital_close}&nbsp;
                                 <span>
                                     (휴무일 : {info.hospital_dayoff.map(data => {
                                         let day = '';

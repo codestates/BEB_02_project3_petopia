@@ -29,7 +29,16 @@ const getReserveList = async(reserveInfo) => {
     }
 }
 
+const getMyReserveList = async(id) => {
+    try {
+        return await reserve.find({user_id:id});
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
 module.exports = {
     insertReserve,
-    getReserveList
+    getReserveList,
+    getMyReserveList
 }

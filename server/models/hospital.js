@@ -27,6 +27,9 @@ const hospitalSchema = new mongoose.Schema({
     },
 	hospital_summary:{
         type:String
+    },
+    is24: {
+        type:Boolean
     }
 });
 
