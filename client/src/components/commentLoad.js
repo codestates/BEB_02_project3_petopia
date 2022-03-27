@@ -12,7 +12,7 @@ const CommentLoad = () =>{
 
     const loadComment = async() =>{
         
-        await axios.get('http://localhost:5000/comment/')
+        await axios.get('http://localhost:4000/comment/')
                 .then((res) => {
                     setComment(res.data.data)
         });

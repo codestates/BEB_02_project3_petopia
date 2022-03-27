@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Heart from "react-animated-heart";
 import axios from 'axios';
+import './NFTList.js'
 
 const LikeButton = () => {
   const [users, setUsers] = useState(null);
@@ -15,12 +16,13 @@ const LikeButton = () => {
   
   const likeCheck = async () =>{
       
-      await axios.get('http://localhost:5000/like/')
+      await axios.get('http://localhost:4000/like/')
             .then((res) => {
                 setUsers(res.data.data)
       });
       
       // 불러 온 데이터에 if wallet_address가 있다면 isClick은 true
+      // postId로 변경 필요
       const filterLike = users.filter(function(value){
         return value.wallet_address === 'Flintstone'
       });
@@ -39,8 +41,8 @@ const LikeButton = () => {
     
     if(isClick==false) // 낙장불입
     {
-      axios.post('http://localhost:5000/like',{       // POST
-      postId: 'Fred321',
+      axios.post('http://localhost:4000/like',{       // POST
+      postId: token.postInfo.userName,
       walletAddress: 'Flintstone'})
       
       setClick(!isClick)
