@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Search() {
+    const userId = JSON.parse(localStorage.getItem('userId'));
     const account = JSON.parse(localStorage.getItem('account'));
     const searchname = localStorage.getItem('searchName');
     const [infoList, setInfoList] = useState([]);
@@ -12,7 +13,7 @@ function Search() {
     }, [])
 
     const getInfoList = async () => {
-        await axios.get(`http://localhost:4000/follow/${account}`)
+        await axios.get(`http://localhost:4000/follow/${userId}`)
         .then((res)=>{
             setFollowList(res.data.data);
         });
@@ -71,7 +72,7 @@ function Search() {
                     <div key={info.wallet_address}>
                         <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}/>
                         <span onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}>{info.user_name}</span>
-                        <button data-user={info.wallet_address} onClick={followHandler}>
+                        <button data-user={info._id} onClick={followHandler}>
                             {followList.filter(follow => (follow.follower === info.wallet_address)).length > 0 ? "unfollow" : "follow"}
                         </button>
                     </div>

@@ -45,6 +45,7 @@ function Login() {
       const userInfo = res.data.data;
       if(userInfo !== null) {
         username = userInfo.user_name;
+        localStorage.setItem('userId', userInfo._id);
       } else {
         signup(your_address);
         username = your_address;
@@ -89,6 +90,7 @@ function Login() {
       const userInfo = res.data.data;
       if(userInfo !== null) {
         username = userInfo.user_name;
+        localStorage.setItem('userId', userInfo._id);
       } else {
         signup(accounts[0]);
         username = accounts[0];
@@ -106,9 +108,9 @@ function Login() {
           <div style={{width:'400px'}}><LoginCarousel /></div>
           <h1 class="display-4">Welcome to Petopia!</h1>
           {/* metaMask connect */}
-            <div className="btn btn-dark login-wallet" onClick={handleSignToken}>
+            {/* <div className="btn btn-dark login-wallet" onClick={handleSignToken}> */}
           {/* kaikas connect */}
-          {/* <div className="btn btn-dark login-wallet" onClick={connectKaikas}> */}
+          <div className="btn btn-dark login-wallet" onClick={connectKaikas}>
             <div className="left-status">
               <div className="status-icon disconnected"></div>
             </div>
