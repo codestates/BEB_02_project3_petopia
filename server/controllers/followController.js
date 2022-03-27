@@ -22,9 +22,9 @@ const deleteFollow = async(req, res) => {
 }
 
 const getFollower = async(req, res) => {
-    const walletAdress = req.params.id;
+    const id = req.params.id;
 
-    const follower = await followService.getFollower(walletAdress);
+    const follower = await followService.getFollower(id);
 
     if(follower !== null) {
         return res.status(200).json({ data: follower, message: "request success!" });

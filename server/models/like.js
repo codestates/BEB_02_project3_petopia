@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
 const likeSchema = new mongoose.Schema({
-    wallet_address: {
-        type:String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    post_id: {
-        type:String
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
     }
 });
 

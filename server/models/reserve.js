@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const ObjectId = require("mongoose").Schema.Types.ObjectId;
 
 const reserveSchema = new mongoose.Schema({
     reserve_date: {
@@ -21,7 +20,7 @@ const reserveSchema = new mongoose.Schema({
         type: String
     },
     hospital: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital'
     }
 });
