@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import MyNFTList from '../components/myNFTList';
+import ReserveList from '../components/ReserveList';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
@@ -61,7 +62,7 @@ function Mypage() {
     const reserveModalClose = () => {
         setShowReserveModal(false)
     }
-    
+
 
     const SubmitInfo = async () => {
 
@@ -159,11 +160,7 @@ function Mypage() {
                             <Modal.Title>My Reservation</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {myReservations.map((reserve) => {
-                                return (
-                                    <div></div>
-                                );
-                            })}
+                            <ReserveList />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={reserveModalClose}>
