@@ -15,7 +15,7 @@ router.use('/hospital', hospital);
 router.use('/follow', follow);
 router.use('/reserve', reserve);
 router.use('/like', like);
-router.use('/commnet', comment);
+router.use('/comment', comment);
 
 
 module.exports = router;

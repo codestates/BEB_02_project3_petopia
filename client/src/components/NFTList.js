@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import erc721Abi from "../abi/erc721Abi.js";
 import axios from "axios";
 import Web3 from "web3";
+import '../components/likebutton.js'
+import '../components/comment.js'
+import '../components/commentLoad.js'
+
+import LikeButton from '../components/likebutton.js';
+import Comment from '../components/comment.js';
+import CommentLoad from '../components/commentLoad.js';
+
 
 function NFTList({account, contractAddress, isLogin}) {
     const [web3, setWeb3] = useState();
@@ -85,7 +93,33 @@ function NFTList({account, contractAddress, isLogin}) {
         <div className="nftList">
             {NFTList.map(token => token).reverse().map((token)=> {
               return (
-                <div key={token.tokenId} className="post">
+                
+                
+                <div class="left-col">
+                  <div key={token.tokenId} className="post">
+                    
+                      <div class = "user">
+                        <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                          < div class="d-flex flex-row align-items-center feed-text px-2">
+                              <img class="rounded-circle" src={token.postInfo.profile} alt={token.postInfo.profile} width="45"/>
+                              <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{token.postInfo.userName}</span></div>
+                          </div>
+                          <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
+                        </div>
+                      </div>
+
+                      <img src={token.metadata.image}  class="post-image" alt={token.tokenId}/>
+                      
+                      <div class="post-content">
+                        <LikeButton/>
+                        
+                        <p class="description"><span>{token.tokenId} </span> {token.metadata.description} </p>
+                        <p class="post-time">{token.postInfo.postDate}</p>
+                        <CommentLoad/>
+                     </div>
+                        <Comment/>
+                        
+                    {/* 
                     <div className="postInfo">
                         <img src={token.postInfo.profile} alt={token.postInfo.profile} style={{width:"50px", height:"50px"}}/>
                         <span>{token.postInfo.userName}</span>
@@ -98,6 +132,7 @@ function NFTList({account, contractAddress, isLogin}) {
                     <div className="description">
                         <span>{token.metadata.description}</span>
                     </div>
+                    
                     <div className="comments">
                         {token.comments.map(comment => comment).reverse().map((comment) => {
                             return (
@@ -121,6 +156,9 @@ function NFTList({account, contractAddress, isLogin}) {
                             );
                         })}
                     </div>
+                    */}
+                    
+                </div>
                 </div>
               );
             })}
