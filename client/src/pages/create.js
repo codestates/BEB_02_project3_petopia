@@ -88,9 +88,10 @@ function Create() {
             "tokenId": newTokenId.events.Transfer.returnValues.tokenId,
             "userId" : localStorage.getItem('userId'),
             "postDate" : new Date(),
+            "networkType" : localStorage.getItem('networkType')
         };
         
-        await axios.post('http://localhost:4000/create/', postInfo)
+        await axios.post('http://localhost:4000/post/', postInfo)
         .then((res) => {
             const postInfo = res.data.data;
             if(postInfo !== null) {

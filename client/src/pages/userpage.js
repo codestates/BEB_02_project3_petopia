@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import MyNFTList from '../components/myNFTList';
 
 function Userpage() {
-    const account = JSON.parse(localStorage.getItem('account'));
+    const userId = localStorage.getItem('userId');
     const selectedUser = localStorage.getItem('selectedUser');
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
     
@@ -16,12 +16,12 @@ function Userpage() {
 
     const getInfoList = async() => {
 
-        await axios.get(`http://localhost:4000/follow/${account}`)
+        await axios.get(`http://localhost:4000/follow/${userId}`)
         .then((res)=>{
             setFollowList(res.data.data);
         });
 
-        await axios.post('http://localhost:4000/user/getUser', {userName: selectedUser})
+        await axios.get(`http://localhost:4000/user/${selectedUser}`)
         .then((res) => {
             setUserInfo(res.data.data)
         })
@@ -30,7 +30,7 @@ function Userpage() {
     const followHandler = async(e) => {
         const btnText = e.target.textContent;
         const followInfo = {
-            followee: account,
+            followee: userId,
             follower: e.target.getAttribute('data-user')
         };
 
@@ -76,8 +76,8 @@ function Userpage() {
                     <div>
                         <h5>Greeting : {userInfo.greetings}</h5>
                     </div>
-                    <button data-user={userInfo.wallet_address} onClick={followHandler}>
-                        {followList.filter(follow => (follow.follower === userInfo.wallet_address)).length > 0 ? "unfollow" : "follow"}
+                    <button data-user={userInfo._id} onClick={followHandler}>
+                        {followList.filter(follow => (follow.follower === userInfo._id)).length > 0 ? "unfollow" : "follow"}
                     </button>
                 </div>
 

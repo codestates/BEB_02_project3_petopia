@@ -10,9 +10,10 @@ import useLocalStorage from './storage/useLocalStorage';
 function App() {
   const [account, setAccount] = useLocalStorage("account", '');
   // const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x2ead9cc4a6b8da962412e85c71473870c80dab64'); // ERC721
-  const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x0be2615488B9319B9301FBeB694cdE1d85d64912'); // KIP17
+  const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x2a07F32867D7152F7E473D39cD3418420129C016'); // KIP17
   const [isConnected, setConnected] = useLocalStorage("isConnected", false);
-
+  const [isAll, setIsAll] = useLocalStorage('isAll', true);
+  
   return (
     <BrowserRouter>
       {isConnected ? <Layout /> : <Login />}

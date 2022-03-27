@@ -1,39 +1,37 @@
 import { useEffect, useState } from "react";
 import erc721Abi from "../abi/erc721Abi.js";
+import kip17Abi from "../abi/kip17Abi.js";
 import axios from "axios";
 import Web3 from "web3";
-import '../components/likebutton.js'
-import '../components/comment.js'
-import '../components/commentLoad.js'
+import Caver from 'caver-js';
 
-import LikeButton from '../components/likebutton.js';
+import LikeButton from './Likebutton.js';
 import Comment from '../components/comment.js';
 import CommentLoad from '../components/commentLoad.js';
 
-
-function NFTList({account, contractAddress, isLogin}) {
-    const [web3, setWeb3] = useState();
+function NFTList({account}) {
     const [NFTList, setNFTList] = useState([]);
-    
-    useEffect(() => {
-      if (typeof window.ethereum !== "undefined") {
-        try {
-            const web = new Web3(window.ethereum);
-            setWeb3(web);
-        } catch (err) {
-            console.log(err);
-        }    
-      } else {
-        alert('Please Install MetaMask.')
-      }
+    const [followList, setFollowList] = useState([]);
+    const userId = localStorage.getItem('userId');
+    const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
+    const networkType = localStorage.getItem('networkType')
+    const web3 = new Web3(window.ethereum);
+    const caver = new Caver(window.klaytn);
+    const isAll = localStorage.getItem('isAll');
 
-      loadNFT(account);
+    useEffect(async() => {
+      // 팔로워 목록 조회
+      await axios.get(`http://localhost:4000/follow/${userId}`)
+      .then((res)=>{
+          setFollowList(res.data.data);
+      });
+
+      loadNFT();
     }, []);
 
-    const loadNFT = async(_account) => {
-        const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
-        // const name = await tokenContract.methods.name().call();
-        // const symbol = await tokenContract.methods.symbol().call();
+    const loadNFT = async() => {
+        // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
+        const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
         const totalSupply = await tokenContract.methods.totalSupply().call();
         
         let arr = [];
@@ -45,124 +43,103 @@ function NFTList({account, contractAddress, isLogin}) {
             let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
             let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
             const metadata = await (await axios.get(`${tokenURI}`)).data;
-            /*
-              TODO : postInfo 좋아요 댓글 DB 요청해서 넣어줘야함
-             */
-            // 포스팅 작성자 정보
-            const postInfo = {
-              userName:"감자맘마",
-              proFile:"",
-              postDate:"2022-03-18"
-            }
-            const likeCnt = 0;
-            const comments = [
-              {
-                profile:"",
-                userName:"감자맘마",
-                content:"안녕",
-                replies:[{
-                  profile:"",
-                  username:"감자파파",
-                  content:"안녕22",
-                }]
-              },
-              {
-                profile:"",
-                userName:"감자파파",
-                content:"하이",
-                replies:[]
-              },
-            ];
-    
-            if(_account !== null) { // 로그인 지갑의 NFT 목록 셋팅
-                if (String(tokenOwner).toLowerCase() === _account) {
-                    setNFTList((prevState) => {
-                      return [...prevState, { postInfo, tokenId, metadata, likeCnt, comments }];
-                    });
-                }
-            } else {    // 전체 NFT 목록 셋팅
+            const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
+
+            console.log(isAll)
+
+            if (String(tokenOwner).toLowerCase() !== account.toLowerCase()) {
+              // isAll이 true면 본인 제외 전체 피드 로드
+              if(isAll) {
                 setNFTList((prevState) => {
-                  return [...prevState, { postInfo, tokenId, metadata, likeCnt, comments }];
+                  return [...prevState, { postInfo, tokenId, metadata }];
                 });
+              } else {  // false면 팔로워 피드만 로드(...정상작동하지 않음 전체 피드만 불러옴)
+                console.log(postInfo.user._id);
+                for(let follow of followList) {
+                  if(postInfo.user._id === follow.follower) {
+                    setNFTList((prevState) => {
+                      return [...prevState, { postInfo, tokenId, metadata }];
+                    });
+                  }
+                }
+              }
             }
-            
+    
         }
       };
+
+      const followHandler = async(e) => {
+        const btnText = e.target.textContent;
+        const targetUser = e.target.getAttribute('data-user');
+        const elements = document.getElementsByClassName(`follow_${targetUser}`);
+        const followInfo = {
+            followee: userId,
+            follower: targetUser
+        };      
+
+        if(btnText === 'follow') {
+            const follow = await axios.post('http://localhost:4000/follow/', followInfo)
+            .then((res) => {
+                const result = res.data.data;
+                if(result !== null){
+                  for (let el of elements){
+                    el.textContent = 'unfollow';
+                  }
+                }
+            });
+        } else {
+            const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+            .then((res) => {
+                const result = res.data.data;
+                if(result){
+                  for (let el of elements){
+                    el.textContent = 'follow';
+                  }
+                }
+            });
+        }
+      }
 
     return(
         <div className="nftList">
             {NFTList.map(token => token).reverse().map((token)=> {
               return (
-                
-                
                 <div class="left-col">
                   <div key={token.tokenId} className="post">
-                    
-                      <div class = "user">
-                        <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                          < div class="d-flex flex-row align-items-center feed-text px-2">
-                              <img class="rounded-circle" src={token.postInfo.profile} alt={token.postInfo.profile} width="45"/>
-                              <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{token.postInfo.userName}</span></div>
+                      <div className="user">
+                        <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                          <div className="d-flex flex-row align-items-center feed-text px-2">
+                              <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45"/>
+                              <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{token.postInfo.user.user_name}</span></div>
                           </div>
-                          <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
+                          <div className="post-time">
+                            <span>{token.postInfo.post_date.split('T')[0]}</span>
+                          </div>
+                          <div className="follow">
+                            <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                              {followList.filter(follow => (follow.follower === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
+                            </button>
+                          </div>
+                          {/* 아래 div 역할? */}
+                          <div className="feed-icon px-2"><i className="fa fa-ellipsis-v text-black-50"></i></div>
                         </div>
                       </div>
-
-                      <img src={token.metadata.image}  class="post-image" alt={token.tokenId}/>
-                      
-                      <div class="post-content">
-                        <LikeButton/>
-                        
-                        <p class="description"><span>{token.tokenId} </span> {token.metadata.description} </p>
-                        <p class="post-time">{token.postInfo.postDate}</p>
-                        <CommentLoad/>
-                     </div>
-                        <Comment/>
-                        
-                    {/* 
-                    <div className="postInfo">
-                        <img src={token.postInfo.profile} alt={token.postInfo.profile} style={{width:"50px", height:"50px"}}/>
-                        <span>{token.postInfo.userName}</span>
-                        <span>{token.postInfo.postDate}</span>
-                    </div>
-                    <img src={token.metadata.image} alt={token.tokenId}/>
-                    <div className="like">
-                        <span>Like {token.likeCnt}</span>
-                    </div>
-                    <div className="description">
-                        <span>{token.metadata.description}</span>
-                    </div>
-                    
-                    <div className="comments">
-                        {token.comments.map(comment => comment).reverse().map((comment) => {
-                            return (
-                                <div className="comment">
-                                    <img src={comment.profile} alt={comment.profile} style={{width:"50px", height:"50px"}}/>
-                                    <span>{comment.userName}</span>
-                                    <span>{comment.content}</span>
-                                    <div className="replies">
-                                        {comment.replies.map((reply) => {
-                                            return (
-                                                <div className="reply">
-                                                    &emsp;
-                                                    <img src={reply.profile} alt={reply.profile} style={{width:"50px", height:"50px"}}/>
-                                                    <span>{reply.userName}</span>
-                                                    <span>{reply.content}</span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    */}
-                    
+                      <div className="post-image">
+                        <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
+                      </div>
+                      <div className="post-content">
+                        <LikeButton postId={token.postInfo._id} userId={userId} />
+                        <p className="description">{token.metadata.description}</p>
+                        <div className="comments" id={`comments_${token.postInfo._id}`}>
+                          <CommentLoad postId={token.postInfo._id}/>
+                        </div>
+                      </div>
+                      <Comment postId={token.postInfo._id} userId={userId}/>
                 </div>
-                </div>
-              );
-            })}
-        </div>
+              </div>
+            );
+         })}
+      </div>
     );
 }
 
