@@ -17,10 +17,6 @@ function DetailHospital() {
     const [startTime, setStartTime] = useState()
     const [timeList, setTimeList] = useState([])
 
-    // useEffect(async () => {
-
-    // }, [])
-
     const isWeekday = (date) => {
 
         const len = infoList.hospital_dayoff.length
@@ -38,7 +34,7 @@ function DetailHospital() {
         const hospitalWallet = infoList.hospital_wallet;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
-        const userId = (localStorage.getItem('account'))
+        const userId = JSON.parse(localStorage.getItem('account'));
         const hospitalId = (localStorage.getItem('hospital_id'))
         const reserveName = event.target.reservename.value
         const petName = event.target.petname.value
