@@ -105,10 +105,10 @@ function Login() {
       <div class="jumbotron">
           <div style={{width:'400px'}}><LoginCarousel /></div>
           <h1 class="display-4">Welcome to Petopia!</h1>
-          {/* metaMask connect
+          {/* metaMask connect */}
             <div className="btn btn-dark login-wallet" onClick={handleSignToken}>
-           */}
-          <div className="btn btn-dark login-wallet" onClick={connectKaikas}>
+          {/* kaikas connect */}
+          {/* <div className="btn btn-dark login-wallet" onClick={connectKaikas}> */}
             <div className="left-status">
               <div className="status-icon disconnected"></div>
             </div>
