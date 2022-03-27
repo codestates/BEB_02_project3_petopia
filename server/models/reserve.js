@@ -1,16 +1,25 @@
 const mongoose = require("mongoose");
 
 const reserveSchema = new mongoose.Schema({
-	reserve_date:{
-        type: Date
-    },
-	reserve_time:{
+    reserve_date: {
         type: String
     },
-	user_id:{
+    reserve_time: {
         type: String
     },
-	hospital_id:{
+    user_id: {
+        type: String
+    },
+    hospital_id: {
+        type: String
+    },
+    reserve_name: {
+        type: String
+    },
+    pet_name: {
+        type: String
+    },
+    reserve_phone: {
         type: String
     },
 });

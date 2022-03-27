@@ -1,16 +1,18 @@
 import { Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import '../components/likebutton.js'
+import '../components/comment.js'
+import '../components/commentLoad.js'
 import React, {useState} from 'react';
 
 import './main.css';
 import LikeButton from '../components/likebutton.js';
 import Comment from '../components/comment.js';
+import CommentLoad from '../components/commentLoad.js';
 
 function Main() {
 
     /* <NFTList account={null} web3={web3} contractAddress={contractAddress} isLogin={isLogin} /> */
-
 
     return (
         <div className='Main'>
@@ -29,22 +31,15 @@ function Main() {
                     <img src="https://i.imgur.com/aoKusnD.jpg" class="post-image" alt=""/>
                     
                     <div class="post-content">
-                        <div class="reaction-wrapper">
-                            <LikeButton/>
-                            <p class="likes">1,012 likes</p>
-                        
-                        </div>
-                        
+                        <LikeButton/>
                         
                         <p class="description"><span>username </span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur tenetur veritatis placeat, molestiae impedit aut provident eum quo natus molestias?</p>
                         <p class="post-time">2 minutes ago</p>
-                    </div>
-                    <div class="comment-wrapper">
-                        <img src="https://i.imgur.com/aoKusnD.jpg" class="icon" alt=""/>
-                        <input type="text" class="comment-box" placeholder="Add a comment"/>
-                        <button class="comment-btn">post</button>
+                            <CommentLoad/>
                         
                     </div>
+                        <Comment/>
+                        
                 </div>
             </div>
             </div>
