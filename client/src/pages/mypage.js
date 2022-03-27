@@ -9,16 +9,23 @@ function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
     const [userInfo, setUserInfo] = useState({});
     const [showModal, setShowModal] = useState(false)
+    const [showReserveModal, setShowReserveModal] = useState(false)
     const [username, setUsername] = useState(userInfo.user_name)
     const [email, setEmail] = useState(userInfo.email)
     const [greetings, setGreetings] = useState(userInfo.greetings)
     const [image, setImage] = useState(userInfo.profile_image)
     const [uploadImage, setUploadImage] = useState('')
+    const [myReservations, setMyReservations] = useState([]);
 
     useEffect(async () => {
         await axios.post('http://localhost:4000/user/getUserInfo', { address: account })
             .then((res) => {
                 setUserInfo(res.data.data);
+            });
+
+        await axios.get(`http://localhost:4000/reserve/${account}`)
+            .then((res) => {
+                setMyReservations(res.data.data);
             });
     }, []);
 
@@ -46,6 +53,15 @@ function Mypage() {
     const modalClose = () => {
         setShowModal(false)
     }
+
+    const reserveModalOpen = () => {
+        setShowReserveModal(true)
+    }
+
+    const reserveModalClose = () => {
+        setShowReserveModal(false)
+    }
+    
 
     const SubmitInfo = async () => {
 
@@ -108,31 +124,53 @@ function Mypage() {
                         <Button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={modalOpen}>
                             EDIT PROFILE
                         </Button>
-
-                        <Modal show={showModal} onHide={modalClose} size='lg'>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Edit Profile</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <label for="file">
-                                    {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
-                                </label>
-                                <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
-                                Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
-                                Address : <h7>{userInfo.wallet_address}</h7> <br></br>
-                                E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
-                                Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={modalClose}>
-                                    Close
-                                </Button>
-                                <Button variant="primary" onClick={SubmitInfo}>
-                                    Save Changes
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>
                     </div>
+                    <div>
+                        <Button type="button" class="btn btn-primary" onClick={reserveModalOpen}>
+                            My Reservation
+                        </Button>
+                    </div>
+                    <Modal show={showModal} onHide={modalClose} size='lg'>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Profile</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <label for="file">
+                                {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
+                            </label>
+                            <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
+                            Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
+                            Address : <h7>{userInfo.wallet_address}</h7> <br></br>
+                            E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
+                            Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={modalClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={SubmitInfo}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+                    <Modal show={showReserveModal} onHide={reserveModalClose} size='lg'>
+                        <Modal.Header closeButton>
+                            <Modal.Title>My Reservation</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {myReservations.map((reserve) => {
+                                return (
+                                    <div></div>
+                                );
+                            })}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={reserveModalClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
                 <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
                     <h6>ERC20 TOKEN : 2311</h6>
