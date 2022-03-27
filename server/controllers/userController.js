@@ -2,7 +2,7 @@ const userService = require('../services/userService.js');
 
 const login = async (req, res) => {
     const {address} = req.body;
-    const user = await userService.getUserInfo(address);
+    const user = await userService.getUserInfoByWallet(address);
 
     if(user !== null) {
         return res.status(200).json({ data: user, message: "login success!" });
@@ -23,8 +23,8 @@ const signup = async (req, res) => {
 }
 
 const getUserInfo = async (req, res) => {
-    const {address} = req.body;
-    const user = await userService.getUserInfo(address);
+    const userId = req.params.id;
+    const user = await userService.getUserInfoById(userId);
 
     if(user !== null) {
         return res.status(200).json({ data: user, message: "success!" });
@@ -55,16 +55,6 @@ const getUserList = async (req, res) => {
     }    
 }
 
-const getUser = async (req, res) => {
-    const {userName} = req.body;
-    const user = await userService.getUser(userName);
-
-    if(user !== null) {
-        return res.status(200).json({ data: user, message: "success!" });
-    } else {
-        return res.status(202).json({ data: null, message: "fail!" });
-    }    
-}
 
 module.exports = {
     login,
@@ -72,5 +62,4 @@ module.exports = {
     getUserInfo,
     updateUser,
     getUserList,
-    getUser
 }

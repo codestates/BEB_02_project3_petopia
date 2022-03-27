@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
 const replySchema = new mongoose.Schema({
-    comment_id: {
-        type: Number,
+    comment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
     },
-    wallet_address: {
-        type: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
     comment_date: {
         type: Date,

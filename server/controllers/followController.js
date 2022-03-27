@@ -23,7 +23,6 @@ const deleteFollow = async(req, res) => {
 
 const getFollower = async(req, res) => {
     const id = req.params.id;
-
     const follower = await followService.getFollower(id);
 
     if(follower !== null) {
