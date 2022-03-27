@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = require("mongoose").Schema.Types.ObjectId;
 
 const reserveSchema = new mongoose.Schema({
     reserve_date: {
@@ -10,9 +11,6 @@ const reserveSchema = new mongoose.Schema({
     user_id: {
         type: String
     },
-    hospital_id: {
-        type: String
-    },
     reserve_name: {
         type: String
     },
@@ -22,6 +20,10 @@ const reserveSchema = new mongoose.Schema({
     reserve_phone: {
         type: String
     },
+    hospital: {
+        type: ObjectId,
+        ref: 'Hospital'
+    }
 });
 
 const Reserve = mongoose.model("Reserve", reserveSchema);

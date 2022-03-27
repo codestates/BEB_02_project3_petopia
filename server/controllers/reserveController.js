@@ -32,8 +32,18 @@ const getMyReserveList = async(req, res) => {
     }
 }
 
+const deleteReservation = async(req, res) => {
+    const result = await reserveService.deleteReservation(req.params.id);
+    if(result) {
+        return res.status(200).json({ data: result, message: "unfollow success!" });
+    } else {
+        return res.status(204).json({ data: null, message: "unfollow fail!" });
+    }
+}
+
 module.exports = {
     insertReserve,
     getReserveList,
-    getMyReserveList
+    getMyReserveList,
+    deleteReservation
 }
