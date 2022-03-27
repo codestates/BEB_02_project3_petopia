@@ -69,6 +69,7 @@ function Login() {
     if(token_data){
       localStorage.setItem('isConnected', true);
       localStorage.setItem('account', JSON.stringify(your_address));
+      localStorage.setItem('networkType', 0);
       alert(`Welcome, ${username}!`);
     } else {
       localStorage.setItem('isConnected', false);
@@ -78,7 +79,10 @@ function Login() {
   };
 
   const signup = async (address) => {
-    await axios.post('http://localhost:4000/user/signup', {address:address});
+    await axios.post('http://localhost:4000/user/signup', {address:address})
+    .then((res) => {
+      localStorage.setItem('userId', res.data.data._id);
+    });
   }
 
   const connectKaikas = async() => {
@@ -99,6 +103,7 @@ function Login() {
 
     localStorage.setItem('isConnected', true);
     localStorage.setItem('account', JSON.stringify(accounts[0]));
+    localStorage.setItem('networkType', 1);
     alert(`Welcome, ${username}!`);
     window.location.reload();
   }

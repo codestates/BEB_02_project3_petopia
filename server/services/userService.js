@@ -1,8 +1,16 @@
-const user = require('../models/user');
+const User = require('../models/user');
 
-const getUserInfo = async (address) => {
+const getUserInfoByWallet = async (address) => {
     try {
-        return user.findOne({ wallet_address: address });
+        return await User.findOne({wallet_address: address});
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
+const getUserInfoById = async (userId) => {
+    try {
+        return await User.findById(userId);
     } catch (error) {
         throw Error(error);
     }
@@ -10,7 +18,7 @@ const getUserInfo = async (address) => {
 
 const insertUser = async (address) => {
     try {
-        const newUser = new user({ wallet_address: address, user_name: address, email: null, greetings: null, profile_image: null });
+        const newUser = new User({ wallet_address: address, user_name: address, email: null, greetings: null, profile_image: null });
         await newUser.save();
         return newUser;
     } catch (error) {
@@ -19,9 +27,9 @@ const insertUser = async (address) => {
 }
 
 const updateUser = async (userInfo) => {
-    const { wallet_address } = userInfo;
+    const { _id } = userInfo;
     try {
-        const updateUser = await user.findOneAndUpdate({ wallet_address: wallet_address }, userInfo);
+        const updateUser = await User.findByIdAndUpdate(_id, userInfo);
         return updateUser;
     } catch (error) {
         throw Error(error);
@@ -31,24 +39,16 @@ const updateUser = async (userInfo) => {
 
 const getUserList = async (userName) => {
     try {
-        return await user.find({ user_name: { $regex: '.*' + userName + '.*' } });
+        return await User.find({ user_name: { $regex: '.*' + userName + '.*' } });
     } catch (error) {
         throw Error(error)
     }
 }
 
-const getUser = async (userName) => {
-    try {
-        return user.findOne({ user_name: userName });
-    } catch (error) {
-        throw Error(error);
-    }
-}
-
 module.exports = {
-    getUserInfo,
+    getUserInfoByWallet,
+    getUserInfoById,
     insertUser,
     updateUser,
-    getUserList,
-    getUser
+    getUserList
 }

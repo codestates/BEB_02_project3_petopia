@@ -16,12 +16,14 @@ function Navigation() {
 
 
     const handleRemoveToken = async () => {
-        localStorage.setItem('isConnected', false);
-        localStorage.setItem('account', null);
-        localStorage.removeItem('user-token');
-        localStorage.removeItem('token-verification');
-        localStorage.removeItem('searchName');
-        localStorage.removeItem('userId');
+        // localStorage.setItem('isConnected', false);
+        // localStorage.setItem('account', null);
+        // localStorage.removeItem('user-token');
+        // localStorage.removeItem('token-verification');
+        // localStorage.removeItem('searchName');
+        // localStorage.removeItem('userId');
+        // localStorage.removeItem('networkType');
+        localStorage.clear();
         window.location.replace('http://localhost:3000/');
     };
 

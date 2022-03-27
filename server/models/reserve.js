@@ -7,8 +7,9 @@ const reserveSchema = new mongoose.Schema({
     reserve_time: {
         type: String
     },
-    user_id: {
-        type: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     reserve_name: {
         type: String

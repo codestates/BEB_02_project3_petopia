@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const create = require('./create.js');
+const post = require('./post.js');
 const user = require('./user.js');
 const contract = require('./contract.js');
 const hospital = require('./hospital.js');
@@ -9,7 +9,7 @@ const comment = require('./comment.js');
 const reserve = require('./reserve.js');
 
 router.use('/user', user);
-router.use('/create', create);
+router.use('/post', post);
 router.use('/contract', contract);
 router.use('/hospital', hospital);
 router.use('/follow', follow);

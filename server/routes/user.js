@@ -3,9 +3,8 @@ const controller = require('../controllers/userController.js');
 
 router.post('/login', controller.login);
 router.post('/signup', controller.signup);
-router.post('/getUserInfo', controller.getUserInfo);
+router.get('/:id', controller.getUserInfo);
 router.post('/update', controller.updateUser);
-router.get('/:name', controller.getUserList);
-router.post('/getUser', controller.getUser);
+router.get('/search/:name', controller.getUserList);
 
 module.exports = router;

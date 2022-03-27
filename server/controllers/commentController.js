@@ -5,8 +5,6 @@ const insertComment = async(req, res) => {
     const commentInfo = req.body;
     const comment = await commentService.insertComment(commentInfo);
     
-    console.log('insert comment');
-
     if(comment !== null) {
         return res.status(200).json({ data: comment, message: "Comment success!" });
     } else {
@@ -14,20 +12,27 @@ const insertComment = async(req, res) => {
     }
 }
 
-const readAllComment = async(req, res) =>{
-    const commentAll = await comment.find();
+const readAllComment = async(req, res) => {
+    const comments = await commentService.getComments(req.params.id)
 
-    console.log('loadAll comment');
-
-    if(commentAll !== null)
+    if(comments !== null)
     {
-        return res.status(200).json({ data: commentAll, message: "Like success!" });
+        return res.status(200).json({ data: comments, message: "success!" });
 
     } else{
-        return res.status(204).json({ data: null, message: "Like fail!" });
+        return res.status(204).json({ data: null, message: "fail!" });
+    }
+}
+
+const deleteComment = async(req, res) => {
+    const result = await commentService.deleteComment(req.params.id);
+    if(result) {
+        return res.status(200).json({ data: result, message: "unfollow success!" });
+    } else {
+        return res.status(204).json({ data: null, message: "unfollow fail!" });
     }
 }
 
 module.exports = {
-    insertComment, readAllComment
+    insertComment, readAllComment, deleteComment
 }

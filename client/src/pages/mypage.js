@@ -8,6 +8,7 @@ import { create } from "ipfs-http-client";
 
 function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
+    const userId = localStorage.getItem('userId');
     const [userInfo, setUserInfo] = useState({});
     const [showModal, setShowModal] = useState(false)
     const [showReserveModal, setShowReserveModal] = useState(false)
@@ -19,12 +20,12 @@ function Mypage() {
     const [myReservations, setMyReservations] = useState([]);
 
     useEffect(async () => {
-        await axios.post('http://localhost:4000/user/getUserInfo', { address: account })
+        await axios.get(`http://localhost:4000/user/${userId}`)
             .then((res) => {
                 setUserInfo(res.data.data);
             });
 
-        await axios.get(`http://localhost:4000/reserve/${account}`)
+        await axios.get(`http://localhost:4000/reserve/${userId}`)
             .then((res) => {
                 setMyReservations(res.data.data);
             });
@@ -77,14 +78,13 @@ function Mypage() {
         }
 
         axios.post('http://localhost:4000/user/update', {
+            '_id': userId,
             'user_name': username,
             'wallet_address': userInfo.wallet_address,
             'email': email,
             'greetings': greetings,
             'profile_image': profileimage
         })
-
-        // console.log(username, userInfo.wallet_address, email, greetings, 'https://ipfs.infura.io/ipfs/' + imagePath)
 
         setShowModal(false)
 

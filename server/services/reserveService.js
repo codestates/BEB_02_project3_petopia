@@ -6,7 +6,7 @@ const insertReserve = async(reserveInfo) => {
         const newReserve = new Reserve({
             reserve_date:reserveDate,
             reserve_time:reserveTime,
-            user_id:userId,
+            user:userId,
             reserve_name:reserveName,
             pet_name:petName,
             reserve_phone: reservePhone,

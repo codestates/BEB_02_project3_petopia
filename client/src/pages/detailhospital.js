@@ -12,29 +12,29 @@ import moment from 'moment';
 function DetailHospital() {
 
     const hospital_id = localStorage.getItem('hospital_id')
-    const [infoList, setInfoList] = useState(JSON.parse(localStorage.getItem('hospitalInfo')))
+    const [hospitalInfo, setHospitalInfo] = useState(JSON.parse(localStorage.getItem('hospitalInfo')))
     const [startDate, setStartDate] = useState(new Date());
     const [startTime, setStartTime] = useState()
     const [timeList, setTimeList] = useState([])
 
     const isWeekday = (date) => {
 
-        const len = infoList.hospital_dayoff.length
+        const len = hospitalInfo.hospital_dayoff.length
         const day = getDay(date);
 
         switch (len) {
             case 0: return 7
-            case 1: return day !== infoList.hospital_dayoff[0]
-            case 2: return day !== infoList.hospital_dayoff[0] && day !== infoList.hospital_dayoff[1]
+            case 1: return day !== hospitalInfo.hospital_dayoff[0]
+            case 2: return day !== hospitalInfo.hospital_dayoff[0] && day !== hospitalInfo.hospital_dayoff[1]
         }
 
     };
 
     const SubmitInfo = (event) => {
-        const hospitalWallet = infoList.hospital_wallet;
+        const hospitalWallet = hospitalInfo.hospital_wallet;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
-        const userId = JSON.parse(localStorage.getItem('account'));
+        const userId = localStorage.getItem('userId');
         const hospitalId = (localStorage.getItem('hospital_id'))
         const reserveName = event.target.reservename.value
         const petName = event.target.petname.value
@@ -70,15 +70,22 @@ function DetailHospital() {
     }
 
     const initSetMinTime = () => {
-        const openHour = infoList.hospital_open.split(":")[0];
-        const openMin = infoList.hospital_open.split(":")[1];
+        const openHour = hospitalInfo.hospital_open.split(":")[0];
+        const openMin = hospitalInfo.hospital_open.split(":")[1];
         return setHours(setMinutes(new Date(), openMin), openHour);
     }
 
     const initSetMaxTime = () => {
-        const closeHour = infoList.hospital_close.split(":")[0];
-        const closeMin = infoList.hospital_close.split(":")[1];
-        return setHours(setMinutes(new Date(), closeMin), closeHour);  
+        let closeHour;
+        let closeMin;
+        
+        if(hospitalInfo.is24) {
+            return setHours(setMinutes(new Date(), 30), 23);
+        } else {
+            closeHour = hospitalInfo.hospital_close.split(":")[0];
+            closeMin = hospitalInfo.hospital_close.split(":")[1];
+        }
+        return setHours(setMinutes(new Date(), closeMin), closeHour);
     }
 
     return (
@@ -87,21 +94,21 @@ function DetailHospital() {
             {/* 병원 정보 */}
             <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
                 <div className="Profile" style={{ height: "85%", float: "left" }}>
-                    <img style={{ width: "250px", height: "250px" }} src={infoList.profile_image}></img>
+                    <img style={{ width: "250px", height: "250px" }} src={hospitalInfo.profile_image}></img>
                 </div>
                 <br />
                 <div className="Info" style={{ height: "85%" }}>
                     <div>
-                        <h5>{infoList.hospital_name}</h5>
+                        <h5>{hospitalInfo.hospital_name}</h5>
                     </div>
                     <div>
-                        <h5>진료시간 : {infoList.hospital_open} ~ {infoList.hospital_close}</h5>
+                        <h5>진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h5>
                     </div>
                     <div>
-                        <h5>전화번호 : {infoList.hospital_phone}</h5>
+                        <h5>전화번호 : {hospitalInfo.hospital_phone}</h5>
                     </div>
                     <div>
-                        <h5>주소 : {infoList.hospital_address}</h5>
+                        <h5>주소 : {hospitalInfo.hospital_address}</h5>
                     </div>
                 </div>
                 <hr></hr>
@@ -129,7 +136,7 @@ function DetailHospital() {
                                 onChange={(time) => setStartTime(time)}
                                 showTimeSelect
                                 showTimeSelectOnly
-                                timeIntervals={60}
+                                timeIntervals={30}
                                 minTime={initSetMinTime()}
                                 maxTime={initSetMaxTime()}
                                 excludeTimes={timeList}

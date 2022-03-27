@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Search() {
-    const userId = JSON.parse(localStorage.getItem('userId'));
+    const userId = localStorage.getItem('userId');
     const account = JSON.parse(localStorage.getItem('account'));
     const searchname = localStorage.getItem('searchName');
     const [infoList, setInfoList] = useState([]);
@@ -15,23 +15,24 @@ function Search() {
     const getInfoList = async () => {
         await axios.get(`http://localhost:4000/follow/${userId}`)
         .then((res)=>{
+            console.log(res);
             setFollowList(res.data.data);
         });
 
-        await axios.get(`http://localhost:4000/user/${searchname}`)
+        await axios.get(`http://localhost:4000/user/search/${searchname}`)
             .then((res) => {
                 setInfoList(res.data.data)
         });
     }
 
-    const SearchHandler = (e) => {
-        const user = e.target.getAttribute('data-user')
+    const clickedHandler = (e) => {
+        const userId = e.target.getAttribute('data-user')
         const wallet = e.target.getAttribute('data-wallet')
-        localStorage.setItem('selectedUser', user)
+        localStorage.setItem('selectedUser', userId)
         localStorage.setItem('selectedUserWallet', wallet)
 
         if(wallet !== localStorage.getItem('account')) {
-            window.location.replace('http://localhost:3000/' + user);
+            window.location.replace(`http://localhost:3000/${userId}`);
         } else {
             window.location.replace('http://localhost:3000/mypage');
         }
@@ -41,7 +42,7 @@ function Search() {
     const followHandler = async(e) => {
         const btnText = e.target.textContent;
         const followInfo = {
-            followee: account,
+            followee: userId,
             follower: e.target.getAttribute('data-user')
         };
 
@@ -70,10 +71,10 @@ function Search() {
             {infoList.filter(info=>(info.wallet_address !== account)).map(info => {
                 return (
                     <div key={info.wallet_address}>
-                        <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}/>
-                        <span onClick={SearchHandler} data-user={info.user_name} data-wallet={info.wallet_address}>{info.user_name}</span>
+                        <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}/>
+                        <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>{info.user_name}</span>
                         <button data-user={info._id} onClick={followHandler}>
-                            {followList.filter(follow => (follow.follower === info.wallet_address)).length > 0 ? "unfollow" : "follow"}
+                            {followList.filter(follow => (follow.follower === info._id)).length > 0 ? "unfollow" : "follow"}
                         </button>
                     </div>
                 )

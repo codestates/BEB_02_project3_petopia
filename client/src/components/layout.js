@@ -17,7 +17,7 @@ function layout() {
                 <Route exact path="/mypage" element={<Mypage />} />
                 <Route exact path="/create" element={<Create />} />
                 <Route exact path="/user/:name" element={<Search />} />
-                <Route exact path="/:wallet" element={<View />} />
+                <Route exact path="/:id" element={<View />} />
                 <Route exact path="/hospital" element={<Hospital />} />
                 <Route exact path="/hospital/:id" element={<DetailHospital />} />
             </Routes>

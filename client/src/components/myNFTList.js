@@ -8,7 +8,6 @@ import Caver from 'caver-js';
 function MyNFTList({account}) {   
     const [NFTList, setNFTList] = useState([]);
     const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
-    // const account = JSON.parse(localStorage.getItem('account'));
     const web3 = new Web3(window.ethereum);
     const caver = new Caver(window.klaytn);
 
