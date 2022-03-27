@@ -85,16 +85,12 @@ function Create() {
         const newTokenId = await tokenContract.methods.mintNFT(tokenURI).send({from: account, gas: 0xf4240});
         
         const postInfo = {
-            "postId": newTokenId.events.Transfer.returnValues.tokenId,
-            "walletAddress" : account,
+            "tokenId": newTokenId.events.Transfer.returnValues.tokenId,
+            "userId" : localStorage.getItem('userId'),
             "postDate" : new Date(),
         };
         
-        await axios.post('http://localhost:4000/create', postInfo, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
+        await axios.post('http://localhost:4000/create/', postInfo)
         .then((res) => {
             const postInfo = res.data.data;
             if(postInfo !== null) {

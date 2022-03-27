@@ -24,9 +24,9 @@ const deleteFollow = async(followInfo) => {
     }
 }
 
-const getFollower = async(walletAdress) => {
+const getFollower = async(id) => {
     try {
-       return follow.find({followee:walletAdress});
+       return follow.find({followee:id});
     } catch (error) {
         throw Error(error);
     }

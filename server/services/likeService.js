@@ -1,4 +1,4 @@
-const like = require("../models/like.js")
+const like = require("../models/like.js");
 
 const insertLike = async (likeInfo) => {
     const { postId, walletAddress } = likeInfo;

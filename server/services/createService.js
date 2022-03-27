@@ -1,9 +1,9 @@
 const post = require("../models/post.js");
 
 const insertPost = async(postInfo) => {
-    const {postId, walletAddress, postDate} = postInfo;
+    const {tokenId, userId, postDate} = postInfo;
     try {
-        const newPost = new post({post_id:postId, wallet_address:walletAddress, post_date:postDate});
+        const newPost = new post({token_id:tokenId, user:userId, post_date:postDate});
         await newPost.save();
         return newPost;
     } catch (error) {

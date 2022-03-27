@@ -10,7 +10,6 @@ function Navigation() {
     }
 
     const searchBtn = () => {
-        // console.log(search)
         localStorage.setItem('searchName', search);
         window.location.replace('http://localhost:3000/user/' + search)
     }
@@ -22,6 +21,7 @@ function Navigation() {
         localStorage.removeItem('user-token');
         localStorage.removeItem('token-verification');
         localStorage.removeItem('searchName');
+        localStorage.removeItem('userId');
         window.location.replace('http://localhost:3000/');
     };
 

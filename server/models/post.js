@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-    post_id: {
+    token_id: {
         type: Number,
         unique: true,
     },
-    wallet_address: {
-        type: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
     post_date: {
         type: Date,
