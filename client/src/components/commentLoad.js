@@ -36,6 +36,30 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         }
     }
     
+    const addReplyhandler = async(e) =>{
+
+        const commentId = e.target.getAttribute('data-id');
+        const parent = document.getElementById(commentId)
+
+        const divEl = document.createElement('div');
+        
+        divEl.className = 'Reply-wrapper'
+        divEl.innerHTML = `<img src=${''} class="icon" alt=${''}/>
+        <input defaultValue=${""} type="text" class="Reply-box" placeholder="Add a Reply" onChange=${''} value= ${''}/>
+        <button className="Reply-btn" onClick=${''}>post</button>`
+
+        parent.appendChild(divEl);
+
+
+        /*
+        <div className="Reply-wrapper">
+            <img src={userInfo.profile_image} class="icon" alt={userInfo._id}/>
+            <input defaultValue={""} type="text" class="Reply-box" placeholder="Add a Reply" onChange={handleChangeMsg} value= {msg}/>
+            <button className="Reply-btn" onClick={ReplyButtonClick}>post</button>
+        </div>
+        */
+
+    }
     
     return(
         <div className="comments">
@@ -48,18 +72,19 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                         <div className="post-time">
                             <span>{comment.comment_date.split('T')[0]}</span>
                         </div>
-                        {/* 
-                            
-                            댓글삭제버튼 필요
-                            댓글작성자 본인이거나 포스트 작성자만 삭제가능하도록 버튼 가변 생성
-                            
-                        */
+                        
                             
                             <button onClick={
                                 deleteButton
-                            } data-user={comment.user._id} data-id={comment._id}> delete </button>
+                            } data-user={comment.user._id} data-id={comment._id}> delete 
+                            </button>
                             
-                        }
+                            <button onClick={
+                                addReplyhandler
+                            } data-user={comment.user._id} data-id={comment._id}> 대댓글 
+                            </button>
+
+                        
                         
                         <ReplyLoad commentId={comment._id} 
                         userId={userId} 
