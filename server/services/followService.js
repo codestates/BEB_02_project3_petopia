@@ -24,9 +24,17 @@ const deleteFollow = async(followInfo) => {
     }
 }
 
+const getFollowing = async(id) => {
+    try {
+       return Follow.find({followee:id}).populate('follower').exec();
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
 const getFollower = async(id) => {
     try {
-       return Follow.find({followee:id});
+       return Follow.find({follower:id}).populate('followee').exec();
     } catch (error) {
         throw Error(error);
     }
@@ -35,5 +43,6 @@ const getFollower = async(id) => {
 module.exports = {
     insertFollow,
     deleteFollow,
+    getFollowing,
     getFollower
 }
