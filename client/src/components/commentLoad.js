@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.js';
+import ReplyLoad from "./replyLoad.js";
 import Button from "@restart/ui/esm/Button";
 
 const CommentLoad = ({postId, userId, postUser}) =>{
@@ -25,7 +26,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const commentUser = e.target.getAttribute('data-user')
         const commentId = e.target.getAttribute('data-id')
         const element = document.getElementById(commentId)
-        
+
         if((commentUser === userId) ||
             (userId === postUser)){
                 
@@ -59,6 +60,11 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                             } data-user={comment.user._id} data-id={comment._id}> delete </button>
                             
                         }
+                        
+                        <ReplyLoad commentId={comment._id} 
+                        userId={userId} 
+                        commentUser={comment.user.user_name}/>
+
                     </div>
                 )
             })}
