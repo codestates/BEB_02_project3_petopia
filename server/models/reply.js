@@ -9,7 +9,7 @@ const replySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    comment_date: {
+    reply_date: {
         type: Date,
         defalut: Date.now,
     },

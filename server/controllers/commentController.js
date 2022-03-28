@@ -1,5 +1,4 @@
 const commentService = require('../services/commentService.js');
-const comment = require('../models/comment')
 
 const insertComment = async(req, res) => {
     const commentInfo = req.body;
@@ -27,9 +26,9 @@ const readAllComment = async(req, res) => {
 const deleteComment = async(req, res) => {
     const result = await commentService.deleteComment(req.params.id);
     if(result) {
-        return res.status(200).json({ data: result, message: "unfollow success!" });
+        return res.status(200).json({ data: result, message: "success!" });
     } else {
-        return res.status(204).json({ data: null, message: "unfollow fail!" });
+        return res.status(204).json({ data: null, message: "fail!" });
     }
 }
 

@@ -7,6 +7,7 @@ const follow = require('./follow.js');
 const like = require('./like.js');
 const comment = require('./comment.js');
 const reserve = require('./reserve.js');
+const reply = require('./reply');
 
 router.use('/user', user);
 router.use('/post', post);
@@ -16,6 +17,7 @@ router.use('/follow', follow);
 router.use('/reserve', reserve);
 router.use('/like', like);
 router.use('/comment', comment);
+router.use('/reply', reply);
 
 
 module.exports = router;
