@@ -8,14 +8,23 @@ import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
 import getDay from 'date-fns/getDay'
 import moment from 'moment';
+import { Button, Modal } from 'react-bootstrap';
+import useLocalStorage from '../storage/useLocalStorage';
 
 function DetailHospital() {
 
     const hospital_id = localStorage.getItem('hospital_id')
     const [hospitalInfo, setHospitalInfo] = useState(JSON.parse(localStorage.getItem('hospitalInfo')))
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState();
     const [startTime, setStartTime] = useState()
     const [timeList, setTimeList] = useState([])
+    const [showModal, setShowModal] = useState(false)
+    const [isReserve, setIsReserve] = useLocalStorage("isReserve", false);
+    const [reserveInfo, setReserveInfo] = useLocalStorage("reserveInfo", {});
+
+    useEffect(()=>{
+        if(isReserve) modalOpen();
+    }, [])
 
     const isWeekday = (date) => {
 
@@ -40,7 +49,7 @@ function DetailHospital() {
         const petName = event.target.petname.value
         const reservePhone = event.target.reservephone.value
 
-        axios.post('http://localhost:4000/reserve', {
+        const reserveInfo = {
             reserveDate: reserveDate,
             reserveTime: reserveTime,
             userId: userId,
@@ -48,13 +57,18 @@ function DetailHospital() {
             reserveName: reserveName,
             petName: petName,
             reservePhone: reservePhone
-        })
+        }
+        axios.post('http://localhost:4000/reserve', reserveInfo)
+
+        setReserveInfo(reserveInfo);
+        setIsReserve(true);
     }
 
     const dateChangeHandler = async (date) => {
 
         setTimeList([]);
         setStartDate(date);
+        setStartTime();
 
         await axios.post('http://localhost:4000/reserve/getReserveList', { reserveDate: moment(date).format().slice(0, 10), hospitalId: hospital_id })
             .then((res) => {
@@ -88,6 +102,16 @@ function DetailHospital() {
         return setHours(setMinutes(new Date(), closeMin), closeHour);
     }
 
+    const modalOpen = () => {
+        setShowModal(true)
+    }
+
+    const modalClose = () => {
+        setReserveInfo({});
+        setIsReserve(false);
+        setShowModal(false);
+    }
+
     return (
         <div className='DetailHospital'>
             <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>DetailHospital</h1>
@@ -115,9 +139,7 @@ function DetailHospital() {
                 {/* 예약하기 */}
                 <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                     <h1>Reserve</h1>
-
                     <div className="Reservation" style={{ display: "flex" }} >
-
                         <DatePicker
                             inline
                             selected={''}
@@ -128,7 +150,6 @@ function DetailHospital() {
                             filterDate={isWeekday}
                             showDisabledMonthNavigation
                         />
-
                         <form onSubmit={SubmitInfo}>
                             <DatePicker
                                 placeholderText="시간 선택"
@@ -142,17 +163,29 @@ function DetailHospital() {
                                 excludeTimes={timeList}
                                 timeCaption="Time"
                                 dateFormat="h:mm aa"
-
                             />
                             예약자명 : <input type="textbox" name="reservename" style={{ width: "400px" }}  ></input> <br />
                             반려동물명 : <input type="textbox" name="petname" style={{ width: "400px" }} ></input> <br />
                             휴대폰번호 : <input type="textbox" name="reservephone" style={{ width: "400px" }} ></input> <br />
-
                             <input type="submit" value={'예약하기'}></input>
                         </form>
-
                     </div >
-
+                    <Modal show={showModal} onHide={modalClose} size='lg'>
+                        <Modal.Header closeButton>
+                            <Modal.Title>예약 완료</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            병원 : {hospitalInfo.hospital_name} <br/>
+                            예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br/>
+                            예약자명 : {reserveInfo.reserveName} <br/>
+                            반려동물명 : {reserveInfo.petName} <br/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={modalClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
 
             </div>
