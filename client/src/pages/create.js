@@ -113,7 +113,7 @@ function Create() {
                 {/* <button onClick={deleteFile}>delete</button> */}
             </div>
             <div className='input_text'>
-                <textarea onChange={changedText} style={{width:"300px", height:"150px"}} ></textarea>
+                <textarea onChange={changedText} style={{width:"300px", height:"150px"}} wrap="hard"></textarea>
             </div>
             <div className='submit'>
                 <button onClick={clickedSubmit}>submit</button>

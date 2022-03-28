@@ -21,6 +21,18 @@ const deleteFollow = async(req, res) => {
     }
 }
 
+const getFollowing = async(req, res) => {
+    const id = req.params.id;
+    const following = await followService.getFollowing(id);
+
+    if(following !== null) {
+        return res.status(200).json({ data: following, message: "request success!" });
+    } else {
+        return res.status(204).json({ data: null, message: "request fail!" });
+    }
+
+}
+
 const getFollower = async(req, res) => {
     const id = req.params.id;
     const follower = await followService.getFollower(id);
@@ -36,5 +48,6 @@ const getFollower = async(req, res) => {
 module.exports = {
     insertFollow,
     deleteFollow,
+    getFollowing,
     getFollower
 }
