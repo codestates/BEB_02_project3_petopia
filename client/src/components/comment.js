@@ -26,7 +26,7 @@ const Comment = ({postId, userId}) => {
             contents : msg })
         .then((res) => {
             console.log(res.data.data)
-            const newCommet = res.data.data;
+            const newComment = res.data.data;
             const parent = document.getElementById(`comments_${postId}`);
             
             /*
