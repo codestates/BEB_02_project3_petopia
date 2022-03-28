@@ -104,13 +104,13 @@ function NFTList({account}) {
         <div className="nftList">
             {NFTList.map(token => token).reverse().map((token)=> {
               return (
-                <div class="left-col">
+                <div class="right-col">
                   <div key={token.tokenId} className="post">
                       <div className="user">
                         <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                           <div className="d-flex flex-row align-items-center feed-text px-2">
                               <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45"/>
-                              <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{token.postInfo.user.user_name}</span></div>
+                              <div className="d-flex flex-column flex-wrap ml-2"><span class="username">{token.postInfo.user.user_name}</span></div>
                           </div>
                           <div className="post-time">
                             <span>{token.postInfo.post_date.split('T')[0]}</span>
@@ -131,7 +131,7 @@ function NFTList({account}) {
                         <LikeButton postId={token.postInfo._id} userId={userId} />
                         <p className="description">{token.metadata.description}</p>
                         <div className="comments" id={`comments_${token.postInfo._id}`}>
-                          <CommentLoad postId={token.postInfo._id}/>
+                          <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id}/>
                         </div>
                       </div>
                       <Comment postId={token.postInfo._id} userId={userId}/>
