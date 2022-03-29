@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Heart from "react-animated-heart";
 import axios from 'axios';
 import './NFTList.js'
+// import useLocalStorage from '../storage/useLocalStorage';
 
 const LikeButton = ({postId, userId}) => {
-  const [isClick, setClick] = useState(false);
+  const [isClick, setClick] = useState();
   const [likeCnt, setlikeCnt] = useState(0);
   const [likes, setLikes] = useState([]);
 
@@ -21,7 +22,7 @@ const LikeButton = ({postId, userId}) => {
         setLikes(data);
         setlikeCnt(data.length);
         // TODO : 데이터 초기 셋팅시 좋아요 하트 셋팅 안됨..아마도 고질적으로 겪었던 useEffect 관련 데이터 읽는 순서인 듯 
-        data.filter(like => (like.user === userId).length > 0 ? setClick(true) : setClick(false));
+        data.filter(like => (like.user._id === userId).length > 0 ? setClick(true) : setClick(false));
       }
     })
   }

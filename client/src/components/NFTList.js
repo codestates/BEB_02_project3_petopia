@@ -4,6 +4,7 @@ import kip17Abi from "../abi/kip17Abi.js";
 import axios from "axios";
 import Web3 from "web3";
 import Caver from 'caver-js';
+import useLocalStorage from '../storage/useLocalStorage';
 
 import LikeButton from './Likebutton.js';
 import Comment from '../components/comment.js';
@@ -17,6 +18,7 @@ function NFTList({account, isAll}) {
     const networkType = localStorage.getItem('networkType')
     const web3 = new Web3(window.ethereum);
     const caver = new Caver(window.klaytn);
+    const isOpenReply = useLocalStorage('isOpenReply', false);
 
     useEffect(async() => {
       // 팔로워 목록 조회
@@ -125,10 +127,10 @@ function NFTList({account, isAll}) {
                         <LikeButton postId={token.postInfo._id} userId={userId} />
                         <p className="description">{token.metadata.description}</p>
                         <div className="comments" id={`comments_${token.postInfo._id}`}>
-                          <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id}/>
+                          <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                         </div>
                       </div>
-                      <Comment postId={token.postInfo._id} userId={userId}/>
+                      <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                 </div>
               </div>
             );
