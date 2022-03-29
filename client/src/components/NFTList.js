@@ -52,7 +52,6 @@ function NFTList({account, isAll}) {
                 });
               } else {  // false면 팔로워 피드만 로드(...정상작동하지 않음 전체 피드만 불러옴)
                 for(let follow of followList) {
-                  
                   if(postInfo.user._id === follow.follower._id) {
                     setNFTList((prevState) => {
                       return [...prevState, { postInfo, tokenId, metadata }];
@@ -117,8 +116,6 @@ function NFTList({account, isAll}) {
                               {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
                             </button>
                           </div>
-                          {/* 아래 div 역할? */}
-                          <div className="feed-icon px-2"><i className="fa fa-ellipsis-v text-black-50"></i></div>
                         </div>
                       </div>
                       <div className="post-image">

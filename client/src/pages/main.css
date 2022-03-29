@@ -1,4 +1,5 @@
 .right-col{
+
     padding: 5px 200px 5px;
 }
 
@@ -93,13 +94,14 @@
 }
 
 .comment-box{
-    width: 80%;
+    width: 70%;
     height: 100%;
     border: none;
     outline: none;
     font-size: 14px;
 }
 
+.deleteButton,
 .comment-btn,
 .action-btn{
     width: 70px;

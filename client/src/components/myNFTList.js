@@ -14,7 +14,7 @@ function MyNFTList({account}) {
     useEffect(() => {
         loadNFT();
     }, []);
-
+    
     const loadNFT = async () => {
         // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
         const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
