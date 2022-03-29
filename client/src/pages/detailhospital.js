@@ -22,8 +22,8 @@ function DetailHospital() {
     const [isReserve, setIsReserve] = useLocalStorage("isReserve", false);
     const [reserveInfo, setReserveInfo] = useLocalStorage("reserveInfo", {});
 
-    useEffect(()=>{
-        if(isReserve) modalOpen();
+    useEffect(() => {
+        if (isReserve) modalOpen();
     }, [])
 
     const isWeekday = (date) => {
@@ -92,8 +92,8 @@ function DetailHospital() {
     const initSetMaxTime = () => {
         let closeHour;
         let closeMin;
-        
-        if(hospitalInfo.is24) {
+
+        if (hospitalInfo.is24) {
             return setHours(setMinutes(new Date(), 30), 23);
         } else {
             closeHour = hospitalInfo.hospital_close.split(":")[0];
@@ -175,10 +175,10 @@ function DetailHospital() {
                             <Modal.Title>예약 완료</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            병원 : {hospitalInfo.hospital_name} <br/>
-                            예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br/>
-                            예약자명 : {reserveInfo.reserveName} <br/>
-                            반려동물명 : {reserveInfo.petName} <br/>
+                            병원 : {hospitalInfo.hospital_name} <br />
+                            예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br />
+                            예약자명 : {reserveInfo.reserveName} <br />
+                            반려동물명 : {reserveInfo.petName} <br />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={modalClose}>
