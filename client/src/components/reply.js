@@ -5,7 +5,7 @@ import '../pages/main.css';
 const Reply = ({replyId, userId}) => {
     const [userInfo, setUserInfo] = useState({})
     const [msg , setMsg] = useState('');
-    
+
     useEffect(async() => {
         await axios.get(`http://localhost:4000/user/${userId}`)
             .then((res) => {
@@ -27,11 +27,9 @@ const Reply = ({replyId, userId}) => {
         .then((res) => {
             const newReply = res.data.data;
             const parent = document.getElementById(`replies_${replyId}`);
-            
             const divElWrapper = document.createElement('div')
             divElWrapper.className = 'ReplyForm_wrapper';
             divElWrapper.id = newReply._id;
-            
             divElWrapper.innerHTML = `
                 <img className="rounded-circle" src="${''}" alt="${''}" width="45"/> 
                 <div className="d-flex flex-column flex-wrap ml-2">

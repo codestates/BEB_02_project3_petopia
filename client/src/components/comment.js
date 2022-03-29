@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.css';
 
+
 const Comment = ({postId, userId}) => {
     const [userInfo, setUserInfo] = useState({})
     const [msg , setMsg] = useState('');
@@ -17,6 +18,7 @@ const Comment = ({postId, userId}) => {
 
         const commentUser = target.getAttribute('data-user')
         const commentId = target.getAttribute('data-id')
+
         const element = document.getElementById(commentId);
 
         if((commentUser === userId)){
@@ -41,7 +43,6 @@ const Comment = ({postId, userId}) => {
             
             const newComment = res.data.data;
             const parent = document.getElementById(`comments_${postId}`);
-            
             const divElWrapper = document.createElement('div')
             divElWrapper.className = 'commentForm_wrapper'
             divElWrapper.id = newComment._id

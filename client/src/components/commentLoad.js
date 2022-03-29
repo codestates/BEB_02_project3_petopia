@@ -29,6 +29,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const commentId = e.target.getAttribute('data-id')
         const element = document.getElementById(commentId)
 
+
         if((commentUser === userId) || (userId === postUser)){
             await axios.post(`http://localhost:4000/comment/${commentId}`)
             element.remove()  
@@ -42,10 +43,52 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         
         if((replyUser === userId) || (userId === postUser)){
             await axios.post(`http://localhost:4000/reply/${replyId}`)
-            element.remove()  
+            element.remove()
+        }
+    }
+
+    const replyDelete = async(target) => {
+
+        const replyUser = target.getAttribute('data-user')
+        const replyId = target.getAttribute('data-id')
+        const element = document.getElementById(replyId)
+        
+        if((replyUser === userId) ||
+            (userId === postUser)){
+                
+                await axios.post(`http://localhost:4000/reply/${replyId}`)
+                element.remove()  
+                                                 
         }
     }
     
+    const addReplyhandler = async(e) =>{
+
+        const commentId = e.target.getAttribute('data-id');
+        const parent = document.getElementById(commentId)
+
+        const divEl = document.createElement('div');
+        divEl.id = `form_${commentId}`
+
+        divEl.className = 'Reply-wrapper'
+        divEl.innerHTML = `<img src="${''}" class="icon" alt="${''}"/>
+        <input id="input_${commentId}" defaultValue="${""}" type="text" class="Reply-box" placeholder="Add a Reply"  />
+        <button id="btn_${commentId}"className="Reply-btn" data-id="${commentId}"">post</button>`
+
+        parent.appendChild(divEl);
+        document.getElementById(`input_${commentId}`).addEventListener('change', function(e){
+            setreplyMsg(e.target.value)
+            
+        })
+
+        document.getElementById(`btn_${commentId}`).addEventListener('click', function(e){
+            insertReply(e.target.getAttribute('data-id'))
+            
+        })
+
+
+    }
+
     const addReplyhandler = async(e) =>{
         setIsOpenReply(true);
 
@@ -98,7 +141,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                     <span>${reply.reply_date.split('T')[0]}</span>
                 </div>
                 <button id="btn_${reply._id}" data-user=${reply.user._id} data-id=${reply._id}> delete </button>`
-                
+            
             parent.append(divEl)
             
             document.getElementById(`btn_${reply._id}`).addEventListener('click', function(e){
@@ -106,7 +149,6 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             });
 
             document.getElementById(`form_${commentId}`).remove();
-
         })
     }
     
