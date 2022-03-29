@@ -5,7 +5,7 @@ const insertReply = async(replyInfo) => {
     try {
         const newReply = new Reply({comment:commentId, user:userId, reply_date:replyDate, contents:contents});
         await newReply.save();
-        return newReply;
+        return await Reply.findById(newReply._id).populate('user').exec();
     } catch (error) {
         throw Error(error);
     }

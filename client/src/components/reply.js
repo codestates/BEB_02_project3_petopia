@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.css';
-import '../components/replyLoadLoad.js'
 
-const  Reply = ({replyId, userId}) => {
+const Reply = ({replyId, userId}) => {
     const [userInfo, setUserInfo] = useState({})
     const [msg , setMsg] = useState('');
-    
-    
+
     useEffect(async() => {
         await axios.get(`http://localhost:4000/user/${userId}`)
             .then((res) => {
                 setUserInfo(res.data.data);
             });
-    
-        
     }, []);
 
     const handleChangeMsg = (event) => {
@@ -29,82 +25,25 @@ const  Reply = ({replyId, userId}) => {
             replyDate: new Date().toLocaleDateString('ko-KR'),
             contents : msg })
         .then((res) => {
-            console.log(res.data.data)
             const newReply = res.data.data;
             const parent = document.getElementById(`replies_${replyId}`);
-            
-            /*
-                inputEl 변수에 아래 주석걸린 엘리먼트 생성하고 값은 newReply에서 꺼내오면 됨.
-             */
-            let inputEl;
-            
-            //     <div className = "ReplyForm_wrapper">
             const divElWrapper = document.createElement('div')
             divElWrapper.className = 'ReplyForm_wrapper';
             divElWrapper.id = newReply._id;
-            
-            //<img className="rounded-circle" src={Reply.user.profile_image} alt={"profile"} width="45"/> 
-            const imgEl = document.createElement('img')
-            imgEl.className = 'rounded-circle';
-            imgEl.src = newReply.user.profile_image;
-            imgEl.alt = 'profile';
-            imgEl.width = '45';
-
-            
-            //<div className="d-flex flex-column flex-wrap ml-2">
-            //<span class="font-weight-bold">{Reply.user.user_name}
-            //</span></div>     
-
-            const divElUser = document.createElement('div')
-            divElUser.className = 'd-flex flex-column flex-wrap ml-2'
-            const spanElUser = document.createElement('span')
-            spanElUser.className = 'font-weight-bold'
-            
-            spanElUser.appendChild(document.createTextNode(newReply.user))
-            divElUser.appendChild(spanElUser)
-
-            //     <p className="ReplyUser">{Reply.contents}</p>
-            const pEl = document.createElement('p')
-            pEl.appendChild(document.createTextNode(newReply.contents))
-            
-            //<div className="post-time">
-            //         <span>{Reply.Reply_date.split('T')[0]}</span>
-            //</div>
-            const divElTime = document.createElement('div')
-            divElTime.className= 'post-time'
-            const spanEltime = document.createElement('span')
-            spanEltime.appendChild(document.createTextNode(newReply.Reply_date.split('T')[0]))
-            //spanEltime.textContent=newReply.Reply_date.split('T')[0]
-            divElTime.appendChild(spanEltime)
-            
-
-            // <button onClick={
-            //     deleteButton
-            // } data-user={Reply.user._id} data-id={Reply._id}> delete </button>
-            const buttonElDelete = document.createElement('button')
-            //buttonElDelete.onclick = deleteButton
-            buttonElDelete.setAttribute('data-user',userId)
-            buttonElDelete.setAttribute('data-id', newReply._id)
-            buttonElDelete.appendChild(document.createTextNode('delete'))
-
-            
-
-            // into wrapper
-            divElWrapper.appendChild(imgEl)
-            divElWrapper.appendChild(divElUser)
-            divElWrapper.appendChild(pEl)
-            divElWrapper.appendChild(divElTime)
-            divElWrapper.appendChild(buttonElDelete)
-        
+            divElWrapper.innerHTML = `
+                <img className="rounded-circle" src="${''}" alt="${''}" width="45"/> 
+                <div className="d-flex flex-column flex-wrap ml-2">
+                    <span class="font-weight-bold">${''}</span>
+                </div>
+                <p className="ReplyUser">${newReply.contents}</p>
+                <div className="post-time">
+                    <span>${newReply.Reply_date.split('T')[0]}</span>
+                </div>
+                <button data-user="${''}" data-id="${newReply._id}"> delete </button>`
            
             parent.append(divElWrapper);
 
-    
-        }
-        
-        
-
-        )
+        });
 
     }
     

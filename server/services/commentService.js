@@ -5,7 +5,7 @@ const insertComment = async(commentInfo) => {
     try {
         const newComment = new Comment({post:postId, user:userId, comment_date:commentDate, contents:contents});
         await newComment.save();
-        return newComment;
+        return await Comment.findById(newComment._id).populate('user').exec();
     } catch (error) {
         throw Error(error);
     }

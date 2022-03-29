@@ -74,7 +74,7 @@ function Search() {
                         <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}/>
                         <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>{info.user_name}</span>
                         <button data-user={info._id} onClick={followHandler}>
-                            {followList.filter(follow => (follow.follower === info._id)).length > 0 ? "unfollow" : "follow"}
+                            {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
                         </button>
                     </div>
                 )
