@@ -79,7 +79,7 @@ function MyFollowList({ userId }) {
         <div className="MyFollowList" >
 
             <span style={{ padding: "10px" }}>
-                게시물 : 7
+                게시물 : {localStorage.getItem('postCnt')}
             </span>
 
             <span style={{ padding: "10px" }} onClick={followerBtn}>

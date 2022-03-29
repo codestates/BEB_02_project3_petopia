@@ -32,6 +32,7 @@ function MyNFTList({ account }) {
             arr.push(i);
         }
         arr = arr.map(el => el).reverse()
+        localStorage.setItem('postCnt', arr.length);
         for (let tokenId of arr) {
             let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
             let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
