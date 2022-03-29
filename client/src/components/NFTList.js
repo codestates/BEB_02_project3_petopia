@@ -9,7 +9,7 @@ import LikeButton from './Likebutton.js';
 import Comment from '../components/comment.js';
 import CommentLoad from '../components/commentLoad.js';
 
-function NFTList({account}) {
+function NFTList({account, isAll}) {
     const [NFTList, setNFTList] = useState([]);
     const [followList, setFollowList] = useState([]);
     const userId = localStorage.getItem('userId');
@@ -17,7 +17,6 @@ function NFTList({account}) {
     const networkType = localStorage.getItem('networkType')
     const web3 = new Web3(window.ethereum);
     const caver = new Caver(window.klaytn);
-    const isAll = localStorage.getItem('isAll');
 
     useEffect(async() => {
       // 팔로워 목록 조회
@@ -27,13 +26,13 @@ function NFTList({account}) {
       });
 
       loadNFT();
-    }, []);
+    }, [isAll]);
 
     const loadNFT = async() => {
         // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
         const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
         const totalSupply = await tokenContract.methods.totalSupply().call();
-        
+        setNFTList([]);
         let arr = [];
     
         for (let i = 1; i <= totalSupply; i++) {
@@ -45,8 +44,6 @@ function NFTList({account}) {
             const metadata = await (await axios.get(`${tokenURI}`)).data;
             const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
 
-            console.log(isAll)
-
             if (String(tokenOwner).toLowerCase() !== account.toLowerCase()) {
               // isAll이 true면 본인 제외 전체 피드 로드
               if(isAll) {
@@ -54,9 +51,9 @@ function NFTList({account}) {
                   return [...prevState, { postInfo, tokenId, metadata }];
                 });
               } else {  // false면 팔로워 피드만 로드(...정상작동하지 않음 전체 피드만 불러옴)
-                console.log(postInfo.user._id);
                 for(let follow of followList) {
-                  if(postInfo.user._id === follow.follower) {
+                  
+                  if(postInfo.user._id === follow.follower._id) {
                     setNFTList((prevState) => {
                       return [...prevState, { postInfo, tokenId, metadata }];
                     });
@@ -117,7 +114,7 @@ function NFTList({account}) {
                           </div>
                           <div className="follow">
                             <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
-                              {followList.filter(follow => (follow.follower === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
+                              {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
                             </button>
                           </div>
                           {/* 아래 div 역할? */}

@@ -82,7 +82,7 @@ const Comment = ({postId, userId}) => {
             //     deleteButton
             // } data-user={comment.user._id} data-id={comment._id}> delete </button>
             const buttonElDelete = document.createElement('button')
-            buttonElDelete.onclick = deleteButton
+            // buttonElDelete.onclick = deleteButton
             buttonElDelete.setAttribute('data-user',userId)
             buttonElDelete.setAttribute('data-id', newComment._id)
             buttonElDelete.appendChild(document.createTextNode('delete'))

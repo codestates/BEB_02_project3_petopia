@@ -4,7 +4,7 @@ import axios from 'axios';
 import './NFTList.js'
 
 const LikeButton = ({postId, userId}) => {
-  const [isClick, setClick] = useState();
+  const [isClick, setClick] = useState(false);
   const [likeCnt, setlikeCnt] = useState(0);
   const [likes, setLikes] = useState([]);
 

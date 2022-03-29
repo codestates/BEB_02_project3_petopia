@@ -12,7 +12,6 @@ function App() {
   // const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x2ead9cc4a6b8da962412e85c71473870c80dab64'); // ERC721
   const [contractAddress, setContractAddress] = useLocalStorage('contractAddress', '0x2a07F32867D7152F7E473D39cD3418420129C016'); // KIP17
   const [isConnected, setConnected] = useLocalStorage("isConnected", false);
-  const [isAll, setIsAll] = useLocalStorage('isAll', true);
   
   return (
     <BrowserRouter>
