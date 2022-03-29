@@ -48,7 +48,6 @@ function DetailHospital() {
         const reserveName = event.target.reservename.value
         const petName = event.target.petname.value
         const reservePhone = event.target.reservephone.value
-        const expireAt = reserveDate + " " + reserveTime
 
         const reserveInfo = {
             reserveDate: reserveDate,
@@ -57,8 +56,7 @@ function DetailHospital() {
             hospitalId: hospitalId,
             reserveName: reserveName,
             petName: petName,
-            reservePhone: reservePhone,
-            expireAt: expireAt
+            reservePhone: reservePhone
         }
         axios.post('http://localhost:4000/reserve', reserveInfo)
 

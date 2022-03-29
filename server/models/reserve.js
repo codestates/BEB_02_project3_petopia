@@ -23,9 +23,6 @@ const reserveSchema = new mongoose.Schema({
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital'
-    },
-    expireAt: {
-        type: String
     }
 });
 

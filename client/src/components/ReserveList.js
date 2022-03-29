@@ -51,13 +51,19 @@ function ReserveList() {
                 <tbody>
                     {
                         reserveList.map((info) => {
+                            let now = new Date().getTime()
+                            let future = new Date(info.reserve_date + " " + info.reserve_time).getTime()
                             return (
                                 <tr key={info._id} id={`tr_${info._id}`}>
                                     <td>{info.reserve_date}</td>
                                     <td>{info.reserve_time}</td>
                                     <td>{info.hospital.hospital_name}</td>
                                     <td>{info.hospital.hospital_phone}</td>
-                                    <td><button onClick={reserveCancle} data-id={info._id}>예약 취소</button></td>
+                                    <td>
+                                        {
+                                            now < future ? <button onClick={reserveCancle} data-id={info._id}>예약 취소</button> : ''
+                                        }
+                                    </td>
                                 </tr>
                             )
                         })
