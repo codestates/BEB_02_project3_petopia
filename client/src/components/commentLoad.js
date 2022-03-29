@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.js';
-import ReplyLoad from "./replyLoad.js";
+// import ReplyLoad from "./replyLoad.js";
 import Button from "@restart/ui/esm/Button";
 
 const CommentLoad = ({postId, userId, postUser}) =>{
     
     const [comments, setComments] = useState([]);
-    
+    const [replyMsg, setreplyMsg] = useState('');
+
     
         useEffect(() => {
             loadComment();
@@ -35,6 +36,21 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                                                  
         }
     }
+
+    const replyDelete = async(target) => {
+
+        const replyUser = target.getAttribute('data-user')
+        const replyId = target.getAttribute('data-id')
+        const element = document.getElementById(replyId)
+
+        if((replyUser === userId) ||
+            (userId === postUser)){
+                
+                await axios.post(`http://localhost:4000/reply/${replyId}`)
+                element.remove()  
+                                                 
+        }
+    }
     
     const addReplyhandler = async(e) =>{
 
@@ -42,23 +58,71 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const parent = document.getElementById(commentId)
 
         const divEl = document.createElement('div');
-        
+        divEl.id = `form_${commentId}`
+
         divEl.className = 'Reply-wrapper'
-        divEl.innerHTML = `<img src=${''} class="icon" alt=${''}/>
-        <input defaultValue=${""} type="text" class="Reply-box" placeholder="Add a Reply" onChange=${''} value= ${''}/>
-        <button className="Reply-btn" onClick=${''}>post</button>`
+        divEl.innerHTML = `<img src="${''}" class="icon" alt="${''}"/>
+        <input id="input_${commentId}" defaultValue="${""}" type="text" class="Reply-box" placeholder="Add a Reply"  />
+        <button id="btn_${commentId}"className="Reply-btn" data-id="${commentId}"">post</button>`
 
         parent.appendChild(divEl);
+        document.getElementById(`input_${commentId}`).addEventListener('change', function(e){
+            setreplyMsg(e.target.value)
+            
+        })
+
+        document.getElementById(`btn_${commentId}`).addEventListener('click', function(e){
+            insertReply(e.target.getAttribute('data-id'))
+            
+        })
 
 
-        /*
-        <div className="Reply-wrapper">
-            <img src={userInfo.profile_image} class="icon" alt={userInfo._id}/>
-            <input defaultValue={""} type="text" class="Reply-box" placeholder="Add a Reply" onChange={handleChangeMsg} value= {msg}/>
-            <button className="Reply-btn" onClick={ReplyButtonClick}>post</button>
-        </div>
-        */
+    }
 
+    
+
+    const insertReply = async(commentId) =>
+    {
+
+            console.log(replyMsg)
+        await axios.post('http://localhost:4000/reply',{       // POST
+            commentId: commentId,
+            userId: userId,
+            replyDate: new Date().toLocaleDateString('ko-KR'),
+            contents : replyMsg })
+        .then((res) =>{
+            setreplyMsg('');
+            
+            const reply = res.data.data;
+            const parent = document.getElementById(`replies_${commentId}`)
+            
+            console.log(parent);
+
+            const divEl = document.createElement('div');
+        
+            divEl.className = 'Reply-wrapper'
+            divEl.id = reply._id;
+            divEl.innerHTML = `<div>대댓글입니다.</div>
+            <img className="rounded-circle" src=${''} alt=${''} width="45"/>
+            <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">${reply.user}</span></div>
+            <p className="replyUser">${reply.contents}</p>
+            <div className="post-time">
+                <span>${reply.reply_date.split('T')[0]}</span>
+            </div>
+            
+            <button id="btn_${reply._id}" data-user=${reply.user} data-id=${reply._id}> delete </button>
+            `
+            parent.append(divEl)
+            
+            document.getElementById(`btn_${reply._id}`).addEventListener('click', function(e){
+                replyDelete(e.target)
+                
+            })
+
+            document.getElementById(`form_${commentId}`).remove();
+
+
+        })
     }
     
     return(
@@ -83,12 +147,13 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                                 addReplyhandler
                             } data-user={comment.user._id} data-id={comment._id}> 대댓글 
                             </button>
-
+                            <div className='replies' id={`replies_${comment._id}`}>
+                            </div>
                         
                         
-                        <ReplyLoad commentId={comment._id} 
+                        {/* <ReplyLoad commentId={comment._id} 
                         userId={userId} 
-                        commentUser={comment.user.user_name}/>
+                        commentUser={comment.user._id}/> */}
 
                     </div>
                 )

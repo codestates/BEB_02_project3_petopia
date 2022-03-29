@@ -1,9 +1,9 @@
 const Reply = require("../models/reply.js")
 
 const insertReply = async(replyInfo) => {
-    const {commenId, userId, replyDate, contents} = replyInfo;
+    const {commentId, userId, replyDate, contents} = replyInfo;
     try {
-        const newReply = new Reply({comment:commenId, user:userId, reply_date:replyDate, contents:contents});
+        const newReply = new Reply({comment:commentId, user:userId, reply_date:replyDate, contents:contents});
         await newReply.save();
         return newReply;
     } catch (error) {
