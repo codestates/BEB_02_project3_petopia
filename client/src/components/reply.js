@@ -95,24 +95,8 @@ const  Reply = ({replyId, userId}) => {
             divElWrapper.appendChild(pEl)
             divElWrapper.appendChild(divElTime)
             divElWrapper.appendChild(buttonElDelete)
-            
-            // */
-            //console.log(document.body.appendChild(divElWrapper))
-
-            //document.body.append();
-
-            // <div className = "ReplyForm_wrapper">
-            // <img className="rounded-circle" src={Reply.user.profile_image} alt={"profile"} width="45"/>
-            // <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{Reply.user.user_name}</span></div>
-            // <p className="ReplyUser">{Reply.contents}</p>
-            // <div className="post-time">
-            //     <span>{Reply.Reply_date.split('T')[0]}</span>
-            // </div>
-            // {/* 
-            //     댓글삭제버튼 필요
-            //     댓글작성자 본인이거나 포스트 작성자만 삭제가능하도록 버튼 가변 생성
-            // */}
-            // </div>
+        
+           
             parent.append(divElWrapper);
 
     

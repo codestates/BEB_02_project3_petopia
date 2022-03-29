@@ -42,7 +42,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const replyUser = target.getAttribute('data-user')
         const replyId = target.getAttribute('data-id')
         const element = document.getElementById(replyId)
-
+        
         if((replyUser === userId) ||
             (userId === postUser)){
                 
