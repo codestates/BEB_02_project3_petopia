@@ -40,6 +40,8 @@ function NFTList({account, isAll}) {
         for (let i = 1; i <= totalSupply; i++) {
           arr.push(i);
         }
+        arr = arr.map(el => el).reverse();
+
         for (let tokenId of arr) {
             let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
             let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
@@ -61,8 +63,7 @@ function NFTList({account, isAll}) {
                   }
                 }
               }
-            }
-    
+            }    
         }
       };
 
@@ -93,48 +94,64 @@ function NFTList({account, isAll}) {
                   for (let el of elements){
                     el.textContent = 'follow';
                   }
+
+                  // only follow 페이지일 경우 언팔로우시 게시물 안 보이도록 처리
+                  if(!isAll) {
+                    for(let el of document.getElementsByName(`post_${targetUser}`)){
+                      el.remove();
+                    }
+                  }
                 }
             });
         }
+
+        // followList 재지정
+        await axios.get(`http://localhost:4000/follow/${userId}`)
+        .then((res)=>{
+            setFollowList(res.data.data);
+        });
+        
       }
 
     return(
         <div className="nftList">
-            {NFTList.map(token => token).reverse().map((token)=> {
-              return (
-                <div class="right-col">
-                  <div key={token.tokenId} className="post">
-                      <div className="user">
-                        <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                          <div className="d-flex flex-row align-items-center feed-text px-2">
-                              <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45"/>
-                              <div className="d-flex flex-column flex-wrap ml-2"><span class="username">{token.postInfo.user.user_name}</span></div>
-                          </div>
-                          <div className="post-time">
-                            <span>{token.postInfo.post_date.split('T')[0]}</span>
-                          </div>
-                          <div className="follow">
-                            <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
-                              {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
-                            </button>
+            {
+              NFTList.map((token)=> {
+                return (
+                  <div class="right-col">
+                    <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`}>
+                        <div className="user">
+                          <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                            <div className="d-flex flex-row align-items-center feed-text px-2">
+                                <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45"/>
+                                <div className="d-flex flex-column flex-wrap ml-2"><span class="username">{token.postInfo.user.user_name}</span></div>
+                            </div>
+                            <div className="post-time">
+                              <span>{token.postInfo.post_date.split('T')[0]}</span>
+                            </div>
+                            <div className="follow">
+                              <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                                {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="post-image">
-                        <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
-                      </div>
-                      <div className="post-content">
-                        <LikeButton postId={token.postInfo._id} userId={userId} />
-                        <p className="description">{token.metadata.description}</p>
-                        <div className="comments" id={`comments_${token.postInfo._id}`}>
-                          <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                        <div className="post-image">
+                          <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
                         </div>
-                      </div>
-                      <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                        <div className="post-content">
+                          <LikeButton postId={token.postInfo._id} userId={userId} />
+                          <p className="description">{token.metadata.description}</p>
+                          <div className="comments" id={`comments_${token.postInfo._id}`}>
+                            <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                          </div>
+                        </div>
+                        <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                    </div>
                 </div>
-              </div>
-            );
-         })}
+                );
+              })
+            }
       </div>
     );
 }
