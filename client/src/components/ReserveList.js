@@ -21,12 +21,19 @@ function ReserveList() {
     }
 
     const reserveCancle = (e) => {
+
         const reverve_id = e.target.getAttribute('data-id')
         const element = document.getElementById(`tr_${reverve_id}`)
-        element.remove();
 
-        axios.post(`http://localhost:4000/reserve/${reverve_id}`)
-            .then((res) => (res.data.data))
+        let confirmAction = window.confirm("예약을 취소하시겠습니까? (토큰 환불 X)");
+        if (confirmAction) {
+            alert("예약이 취소 되었습니다.")
+            element.remove();
+            axios.post(`http://localhost:4000/reserve/${reverve_id}`)
+                .then((res) => (res.data.data))
+        } else {
+            alert("예약을 취소하지 않았습니다.")
+        }
     }
 
     return (

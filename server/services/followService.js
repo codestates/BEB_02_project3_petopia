@@ -1,9 +1,9 @@
 const Follow = require("../models/follow.js");
 
-const insertFollow = async(followInfo) => {
-    const {followee, follower} = followInfo;
+const insertFollow = async (followInfo) => {
+    const { followee, follower } = followInfo;
     try {
-        const newFollow = new Follow({followee: followee, follower: follower});
+        const newFollow = new Follow({ followee: followee, follower: follower });
         await newFollow.save();
         return newFollow;
     } catch (error) {
@@ -11,12 +11,12 @@ const insertFollow = async(followInfo) => {
     }
 }
 
-const deleteFollow = async(followInfo) => {
-    const {followee, follower} = followInfo;
+const deleteFollow = async (followInfo) => {
+    const { followee, follower } = followInfo;
     try {
         let result = false;
-        await Follow.deleteOne({followee:followee, follower:follower}).then((res) => {
-            if(res.deletedCount > 0) result = true;
+        await Follow.deleteOne({ followee: followee, follower: follower }).then((res) => {
+            if (res.deletedCount > 0) result = true;
         });
         return result;
     } catch (error) {
@@ -24,17 +24,17 @@ const deleteFollow = async(followInfo) => {
     }
 }
 
-const getFollowing = async(id) => {
+const getFollowing = async (id) => {
     try {
-       return Follow.find({followee:id}).populate('follower').exec();
+        return Follow.find({ followee: id }).populate('follower').exec();
     } catch (error) {
         throw Error(error);
     }
 }
 
-const getFollower = async(id) => {
+const getFollower = async (id) => {
     try {
-       return Follow.find({follower:id}).populate('followee').exec();
+        return Follow.find({ follower: id }).populate('followee').exec();
     } catch (error) {
         throw Error(error);
     }

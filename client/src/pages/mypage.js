@@ -5,6 +5,7 @@ import ReserveList from '../components/ReserveList';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
+import MyFollowList from "../components/myFollowList";
 
 function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
@@ -97,7 +98,6 @@ function Mypage() {
         return (await ipfs.add(file)).path;
     }
 
-
     return (
         <div className='Mypage'>
             <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>Mypage</h1>
@@ -108,6 +108,9 @@ function Mypage() {
                 <br />
 
                 <div className='Info' style={{ height: "85%" }}>
+                    <div>
+                        <MyFollowList userId={userId} />
+                    </div>
                     <div>
                         <h6>USERNAME : {userInfo.user_name} </h6>
                     </div>

@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MyNFTList from '../components/myNFTList';
+import MyFollowList from "../components/myFollowList";
 
 function Userpage() {
     const userId = localStorage.getItem('userId');
     const selectedUser = localStorage.getItem('selectedUser');
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
-    
+
     const [userInfo, setUserInfo] = useState({});
     const [followList, setFollowList] = useState([]);
 
@@ -14,43 +15,43 @@ function Userpage() {
         getInfoList();
     }, []);
 
-    const getInfoList = async() => {
+    const getInfoList = async () => {
 
         await axios.get(`http://localhost:4000/follow/${userId}`)
-        .then((res)=>{
-            setFollowList(res.data.data);
-        });
+            .then((res) => {
+                setFollowList(res.data.data);
+            });
 
         await axios.get(`http://localhost:4000/user/${selectedUser}`)
-        .then((res) => {
-            setUserInfo(res.data.data)
-        })
+            .then((res) => {
+                setUserInfo(res.data.data)
+            })
     }
 
-    const followHandler = async(e) => {
+    const followHandler = async (e) => {
         const btnText = e.target.textContent;
         const followInfo = {
             followee: userId,
             follower: e.target.getAttribute('data-user')
         };
 
-        if(btnText === 'follow') {
+        if (btnText === 'follow') {
             const follow = await axios.post('http://localhost:4000/follow/', followInfo)
-            .then((res) => {
-                const result = res.data.data;
-                if(result !== null){
-                    e.target.textContent = 'unfollow';
-                }
-            });
-            
+                .then((res) => {
+                    const result = res.data.data;
+                    if (result !== null) {
+                        e.target.textContent = 'unfollow';
+                    }
+                });
+
         } else {
             const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
-            .then((res) => {
-                const result = res.data.data;
-                if(result){
-                    e.target.textContent = 'follow';
-                }
-            });
+                .then((res) => {
+                    const result = res.data.data;
+                    if (result) {
+                        e.target.textContent = 'follow';
+                    }
+                });
         }
     }
 
@@ -64,6 +65,11 @@ function Userpage() {
                 <br />
 
                 <div className="Info" style={{ height: "85%" }}>
+                    <div style={{ display: "flex" }}>
+                        {/* <MyFollowList followlist={followList} /> */}
+                        <MyFollowList userId={selectedUser} />
+                        {/* {userInfo._id} */}
+                    </div>
                     <div>
                         <h5>USERNAME : {userInfo.user_name}</h5>
                     </div>
