@@ -32,7 +32,7 @@ function MyNFTList({ account }) {
             arr.push(i);
         }
         arr = arr.map(el => el).reverse()
-        localStorage.setItem('postCnt', arr.length);
+        let cnt = 0;
         for (let tokenId of arr) {
             let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
             let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
@@ -40,11 +40,13 @@ function MyNFTList({ account }) {
 
             const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
             if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
+                cnt += 1;
                 setNFTList((prevState) => {
                     return [...prevState, { tokenId, metadata, postInfo }];
                 });
             }
         }
+        localStorage.setItem('postCnt', cnt);
     };
 
     const modalOpen = (e) => {
