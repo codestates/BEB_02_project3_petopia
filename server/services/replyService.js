@@ -13,7 +13,6 @@ const insertReply = async(replyInfo) => {
 
 const getReplies = async(id) => {
     try {
-        console.log(await Reply.find({comment:id}).populate('user').exec())
         return await Reply.find({comment:id}).populate('user').exec();
     } catch (error) {
         throw Error(error);
