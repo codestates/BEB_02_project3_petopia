@@ -1,7 +1,9 @@
 const Reserve = require("../models/reserve.js")
 
 const insertReserve = async (reserveInfo) => {
-    const { reserveDate, reserveTime, userId, hospitalId, reserveName, petName, reservePhone } = reserveInfo;
+    const { reserveDate, reserveTime, userId, hospitalId, reserveName, petName, reservePhone, expireAt } = reserveInfo;
+
+    console.log(reserveInfo)
     try {
         const newReserve = new Reserve({
             reserve_date: reserveDate,
@@ -10,7 +12,8 @@ const insertReserve = async (reserveInfo) => {
             reserve_name: reserveName,
             pet_name: petName,
             reserve_phone: reservePhone,
-            hospital: hospitalId
+            hospital: hospitalId,
+            expireAt: new Date(expireAt)
         });
         await newReserve.save();
         return newReserve;
