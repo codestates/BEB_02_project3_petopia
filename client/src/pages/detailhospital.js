@@ -10,6 +10,8 @@ import getDay from 'date-fns/getDay'
 import moment from 'moment';
 import { Button, Modal } from 'react-bootstrap';
 import useLocalStorage from '../storage/useLocalStorage';
+import Web3 from "web3";
+import Caver from "caver-js";
 
 function DetailHospital() {
 
@@ -21,6 +23,8 @@ function DetailHospital() {
     const [showModal, setShowModal] = useState(false)
     const [isReserve, setIsReserve] = useLocalStorage("isReserve", false);
     const [reserveInfo, setReserveInfo] = useLocalStorage("reserveInfo", {});
+    const web3 = new Web3(window.ethereum);
+    const caver = new Caver(window.klaytn);
 
     useEffect(() => {
         if (isReserve) modalOpen();
@@ -39,8 +43,10 @@ function DetailHospital() {
 
     };
 
-    const SubmitInfo = (event) => {
-        const hospitalWallet = hospitalInfo.hospital_wallet;
+    const SubmitInfo = async (event) => {
+        event.preventDefault();
+        
+        const hospitalWallet = hospitalInfo.hospital_wallet_klaytn;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
         const userId = localStorage.getItem('userId');
@@ -56,12 +62,73 @@ function DetailHospital() {
             hospitalId: hospitalId,
             reserveName: reserveName,
             petName: petName,
-            reservePhone: reservePhone
+            reservePhone: reservePhone,
         }
-        axios.post('http://localhost:4000/reserve', reserveInfo)
 
-        setReserveInfo(reserveInfo);
-        setIsReserve(true);
+        const txResult = await sendToken(hospitalWallet);
+
+        if(txResult) {
+            axios.post('http://localhost:4000/reserve', reserveInfo);
+            setReserveInfo(reserveInfo);
+            setIsReserve(true);
+            window.location.reload();
+        } else {
+            alert("예약 실패");
+        }
+
+    }
+
+    const sendToken = async (recipient) => {
+        const kip7CA = '0x70C0327f5A6F2fb72C084055f9E5C05f5a1A4560';
+        const sender = JSON.parse(localStorage.getItem('account'));
+        const amount = 1;
+        const decimal = 18;
+        let txResult = false;
+
+        const data = caver.klay.abi.encodeFunctionCall(
+            {
+              name: 'transfer',
+              type: 'function',
+              inputs: [
+                {
+                  type: 'address',
+                  name: 'recipient'
+                },
+                {
+                  type: 'uint256',
+                  name: 'amount'
+                }
+              ]
+            },
+            [
+              recipient,
+              caver.utils
+                .toBN(amount)
+                .mul(caver.utils.toBN(Number(`1e${decimal}`)))
+                .toString()
+            ]
+          )
+      
+          const txHash = await caver.klay
+            .sendTransaction({
+              type: 'SMART_CONTRACT_EXECUTION',
+              from: sender,
+              to: kip7CA,
+              data: data,
+              gas: '100000'
+            })
+            .on('transactionHash', transactionHash => {
+              console.log('txHash', transactionHash)
+            })
+            .on('receipt', receipt => {
+              console.log('receipt', receipt)
+              txResult = true;
+            })
+            .on('error', error => {
+              console.log('error', error)
+            })
+
+        return txResult;
     }
 
     const dateChangeHandler = async (date) => {
