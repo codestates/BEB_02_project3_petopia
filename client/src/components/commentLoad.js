@@ -90,7 +90,13 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             divEl.innerHTML = `
                 <span>└</span>
                 <img className="rounded-circle" src=${reply.user.profile_image} alt="profile" width="45"/>
-                <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">${reply.user.user_name}</span></div>
+                <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">
+                    ${
+                        reply.user.user_name.length > 10 ?
+                        reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
+                        : reply.user.user_name
+                    }
+                </span></div>
                 <p className="replyUser">${reply.contents}</p>
                 <div className="post-time">
                     <span>${reply.reply_date.split('T')[0]}</span>
@@ -113,15 +119,27 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                 return (
                     <div key={comment._id} className = "commentForm_wrapper" id= {comment._id} >
                         <img className="rounded-circle" src={comment.user.profile_image} alt={"profile"} width="45"/>
-                        <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{comment.user.user_name}</span></div>
+                        <div className="d-flex flex-column flex-wrap ml-2">
+                            <span class="font-weight-bold">
+                            {
+                                comment.user.user_name.length > 10 ?
+                                comment.user.user_name.slice(0, 4) + '···' + comment.user.user_name.slice(-4)
+                                : comment.user.user_name
+                            }
+                            </span>
+                        </div>
                         <p className="commentUser">{comment.contents}</p>
                         <div className="post-time">
                             <span>{comment.comment_date.split('T')[0]}</span>
                         </div>
-                        <button onClick={deleteButton} data-user={comment.user._id} data-id={comment._id}> delete </button>
+                        {   
+                            userId === comment.user._id || userId === postUser ?
+                            <button onClick={deleteButton} data-user={comment.user._id} data-id={comment._id}> delete </button>
+                            : <></>
+                        }
                         <button onClick={addReplyhandler} data-user={comment.user._id} data-id={comment._id}> 대댓글 </button>
                         <div className='replies' id={`replies_${comment._id}`}>
-                            <Reply commentId={comment._id} replyDelete={replyDelete}/>
+                            <Reply userId={userId} postUser={postUser} commentId={comment._id} replyDelete={replyDelete}/>
                         </div>
                     </div>
                 )

@@ -9,6 +9,7 @@ import useLocalStorage from '../storage/useLocalStorage';
 import LikeButton from './Likebutton.js';
 import Comment from '../components/comment.js';
 import CommentLoad from '../components/commentLoad.js';
+import Nodata from '../components/Nodata';
 
 function NFTList({account, isAll}) {
     const [NFTList, setNFTList] = useState([]);
@@ -116,6 +117,8 @@ function NFTList({account, isAll}) {
     return(
         <div className="nftList">
             {
+              NFTList.length > 0
+              ?
               NFTList.map((token)=> {
                 return (
                   <div class="right-col">
@@ -141,7 +144,15 @@ function NFTList({account, isAll}) {
                         </div>
                         <div className="post-content">
                           <LikeButton postId={token.postInfo._id} userId={userId} />
-                          <p className="description">{token.metadata.description}</p>
+                          <p className="description">
+                            {
+                              token.metadata.description.split("\n").map((line) => {
+                                  return (
+                                      <span>{line}<br /></span>
+                                  );
+                              })
+                            }
+                          </p>
                           <div className="comments" id={`comments_${token.postInfo._id}`}>
                             <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                           </div>
@@ -151,6 +162,7 @@ function NFTList({account, isAll}) {
                 </div>
                 );
               })
+              : <Nodata />
             }
       </div>
     );

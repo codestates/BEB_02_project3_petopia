@@ -2,6 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { Table } from 'react-bootstrap';
+import Nodata from "./Nodata";
 
 function ReserveList() {
 
@@ -49,7 +50,8 @@ function ReserveList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {   reserveList.length > 0
+                        ?
                         reserveList.map((info) => {
                             let now = new Date().getTime()
                             let future = new Date(info.reserve_date + " " + info.reserve_time).getTime()
@@ -67,6 +69,7 @@ function ReserveList() {
                                 </tr>
                             )
                         })
+                        : <td colSpan={5}><Nodata /></td>
                     }
                 </tbody>
             </Table>

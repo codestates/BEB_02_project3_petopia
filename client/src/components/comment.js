@@ -76,7 +76,15 @@ const Comment = ({postId, userId, postUser}) => {
             divEl.innerHTML = `
                 <span>└</span>
                 <img className="rounded-circle" src=${reply.user.profile_image} alt="profile" width="45"/>
-                <div className="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">${reply.user.user_name}</span></div>
+                <div className="d-flex flex-column flex-wrap ml-2">
+                    <span class="font-weight-bold">
+                    ${
+                        reply.user.user_name.length > 10 ?
+                        reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
+                        : reply.user.user_name
+                    }
+                    </span>
+                </div>
                 <p className="replyUser">${reply.contents}</p>
                 <div className="post-time">
                     <span>${reply.reply_date.split('T')[0]}</span>
@@ -122,7 +130,14 @@ const Comment = ({postId, userId, postUser}) => {
             divElWrapper.innerHTML = `
                 <img className="rounded-circle" src=${newComment.user.profile_image} alt="profile" width="45"/> 
                 <div className="d-flex flex-column flex-wrap ml-2">
-                <span class="font-weight-bold">${newComment.user.user_name}</span></div>
+                    <span class="font-weight-bold">
+                        ${
+                            newComment.user.user_name.length > 10 ?
+                            newComment.user.user_name.slice(0, 4) + '···' + newComment.user.user_name.slice(-4)
+                            : newComment.user.user_name
+                        }
+                    </span>
+                </div>
                 <p className="commentUser">${newComment.contents}</p>
                 <div className="post-time">
                     <span>${newComment.comment_date.split('T')[0]}</span>

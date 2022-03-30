@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
+import Nodata from "./Nodata";
 
 function HospitalList() {
 
@@ -31,6 +32,8 @@ function HospitalList() {
     return (
         <div className="hospitalList">
             {
+                hospitalList.length > 0
+                ?
                 hospitalList.map(info => {
                     return (
                         <div key={info._id} className={info._id} style={{ background: "grey", width: "500px" }}>
@@ -62,6 +65,7 @@ function HospitalList() {
                         </div>
                     )
                 })
+                : <Nodata />
             }
         </div>
 

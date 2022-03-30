@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Modal } from 'react-bootstrap';
+import erc721Abi from "../abi/erc721Abi.js";
+import kip17Abi from '../abi/kip17Abi.js';
+import Caver from "caver-js";
+import Web3 from "web3";
 
-function MyFollowList({ userId }) {
+function MyFollowList({ userId, account }) {
     const selectedUser = localStorage.getItem('selectedUser');
     const [followerModal, setFollowerModal] = useState(false);
     const [followModal, setFollowModal] = useState(false);
@@ -10,9 +14,13 @@ function MyFollowList({ userId }) {
     const [followList, setFollowList] = useState([]);
     const [followerList, setFollowerList] = useState([]);
     const [userInfo, setUserInfo] = useState({});
-
+    const [postCnt, setPostCnt] = useState(0);
+    const web3 = new Web3(window.ethereum);
+    const caver = new Caver(window.klaytn);
+    const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
+    
     useEffect(async () => {
-
+        await loadNFT();
         // 내가 팔로우하는사람(팔로잉)
         await axios.get(`http://localhost:4000/follow/${userId}`)
             .then((res) => {
@@ -24,8 +32,29 @@ function MyFollowList({ userId }) {
             .then((res) => {
                 setFollowerList(res.data.data);
             });
+        
+    }, [postCnt])
 
-    }, [])
+    const loadNFT = async () => {
+        // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
+        const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
+        const totalSupply = await tokenContract.methods.totalSupply().call();
+
+        let arr = [];
+
+        for (let i = 1; i <= totalSupply; i++) {
+            arr.push(i);
+        }
+        arr = arr.map(el => el).reverse()
+        let cnt = 0;
+        for (let tokenId of arr) {
+            let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
+            if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
+                cnt += 1;
+            }
+        }
+        setPostCnt(cnt);
+    };
 
     const followerBtn = () => {
         setFollowerModal(true)
@@ -79,7 +108,7 @@ function MyFollowList({ userId }) {
         <div className="MyFollowList" >
 
             <span style={{ padding: "10px" }}>
-                게시물 : {localStorage.getItem('postCnt')}
+                게시물 : {postCnt}
             </span>
 
             <span style={{ padding: "10px" }} onClick={followerBtn}>
