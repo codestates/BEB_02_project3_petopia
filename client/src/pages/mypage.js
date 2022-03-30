@@ -19,6 +19,8 @@ function Mypage() {
     const [image, setImage] = useState(userInfo.profile_image)
     const [uploadImage, setUploadImage] = useState('')
     const [myReservations, setMyReservations] = useState([]);
+    const [getName, setGetName] = useState([]);
+    const [isCheck, setIsCheck] = useState(false);
 
     useEffect(async () => {
         await axios.get(`http://localhost:4000/user/${userId}`)
@@ -30,6 +32,12 @@ function Mypage() {
             .then((res) => {
                 setMyReservations(res.data.data);
             });
+
+        await axios.get(`http://localhost:4000/user/getNames/${userId}`)
+            .then((res) => {
+                setGetName(res.data.data)
+            });
+
     }, []);
 
     const changeImgae = async (e) => {
@@ -38,7 +46,16 @@ function Mypage() {
     }
 
     const changeUsername = (e) => {
-        setUsername(e.target.value)
+        const el = document.getElementById('username-check')
+
+        if (getName.filter(name => name.user_name === e.target.value).length > 0) {
+            el.textContent = '이미 사용중인 이름입니다.'
+            setIsCheck(true)
+        } else {
+            setUsername(e.target.value)
+            el.textContent = '사용 가능한 이름입니다.'
+            setIsCheck(false)
+        }
     }
 
     const changeEmail = (e) => {
@@ -66,7 +83,7 @@ function Mypage() {
     }
 
 
-    const SubmitInfo = async () => {
+    const SubmitInfo = async (e) => {
 
         let imagePath = '';
         let profileimage = '';
@@ -78,6 +95,10 @@ function Mypage() {
             profileimage = userInfo.profile_image;
         }
 
+        if (isCheck) {
+            alert('노노');
+            return
+        }
         axios.post('http://localhost:4000/user/update', {
             '_id': userId,
             'user_name': username,
@@ -86,12 +107,12 @@ function Mypage() {
             'greetings': greetings,
             'profile_image': profileimage
         })
-
         setShowModal(false)
 
         window.location.replace('http://localhost:3000/mypage')
-
     }
+
+
 
     const uploadIPFS = async (file) => {
         const ipfs = create("https://ipfs.infura.io:5001/api/v0");
@@ -143,7 +164,7 @@ function Mypage() {
                                 {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
                             </label>
                             <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
-                            Username : <input type="textbox" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name} ></input> <br />
+                            Username : <input type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name}></input> <span id='username-check'></span><br />
                             Address : <h7>{userInfo.wallet_address}</h7> <br></br>
                             E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
                             Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
@@ -152,7 +173,7 @@ function Mypage() {
                             <Button variant="secondary" onClick={modalClose}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={SubmitInfo}>
+                            <Button variant="primary" onClick={SubmitInfo} >
                                 Save Changes
                             </Button>
                         </Modal.Footer>
