@@ -56,7 +56,7 @@ const getUserList = async (req, res) => {
 }
 
 const getUserNames = async (req, res) => {    
-    const userNames = await userService.getUserNames(req.params);
+    const userNames = await userService.getUserNames(req.params.id);
 
     if(userNames !== null) {
         return res.status(200).json({ data: userNames, message: "success!" });
