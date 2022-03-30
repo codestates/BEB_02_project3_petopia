@@ -55,6 +55,16 @@ const getUserList = async (req, res) => {
     }    
 }
 
+const getUserNames = async (req, res) => {    
+    const userNames = await userService.getUserNames(req.params);
+
+    if(userNames !== null) {
+        return res.status(200).json({ data: userNames, message: "success!" });
+    } else {
+        return res.status(202).json({ data: null, message: "fail!" });
+    }    
+}
+
 
 module.exports = {
     login,
@@ -62,4 +72,5 @@ module.exports = {
     getUserInfo,
     updateUser,
     getUserList,
+    getUserNames
 }

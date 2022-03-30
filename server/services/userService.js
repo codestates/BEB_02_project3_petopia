@@ -45,10 +45,19 @@ const getUserList = async (userName) => {
     }
 }
 
+const getUserNames = async (params)  => {
+    try {
+        await User.find({user_name: params.name, _id: {$ne: params._id}}).select('user_name').where({});
+    } catch (error) {
+        throw Error(error)
+    }
+}
+
 module.exports = {
     getUserInfoByWallet,
     getUserInfoById,
     insertUser,
     updateUser,
-    getUserList
+    getUserList,
+    getUserNames
 }
