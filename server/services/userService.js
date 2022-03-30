@@ -39,15 +39,15 @@ const updateUser = async (userInfo) => {
 
 const getUserList = async (userName) => {
     try {
-        return await User.find({ user_name: { $regex: '.*' + userName + '.*' } });
+        return await User.find({ user_name: { $regex: '.*' + userName + '.*' }});
     } catch (error) {
         throw Error(error)
     }
 }
 
-const getUserNames = async (params)  => {
+const getUserNames = async (id)  => {
     try {
-        await User.find({user_name: params.name, _id: {$ne: params._id}}).select('user_name').where({});
+        await User.find({_id: {$ne: id}}).select('user_name');
     } catch (error) {
         throw Error(error)
     }
