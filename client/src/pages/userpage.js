@@ -8,7 +8,7 @@ function Userpage() {
     const selectedUser = localStorage.getItem('selectedUser');
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
 
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({user_name: '', wallet_address:''});
     const [followList, setFollowList] = useState([]);
 
     useEffect(() => {
@@ -66,15 +66,16 @@ function Userpage() {
 
                 <div className="Info" style={{ height: "85%" }}>
                     <div style={{ display: "flex" }}>
-                        {/* <MyFollowList followlist={followList} /> */}
-                        <MyFollowList userId={selectedUser} />
-                        {/* {userInfo._id} */}
+                        <MyFollowList userId={selectedUser} account={userInfo.wallet_address} />
                     </div>
                     <div>
-                        <h5>USERNAME : {userInfo.user_name}</h5>
-                    </div>
-                    <div>
-                        <h5>ADDRESS : {userInfo.wallet_address}</h5>
+                        <h5>USERNAME : 
+                        {
+                            userInfo.user_name.length > 10 ?
+                            userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                            : userInfo.user_name
+                        }
+                        </h5>
                     </div>
                     <div>
                         <h5>EMAIL : {userInfo.email}</h5>

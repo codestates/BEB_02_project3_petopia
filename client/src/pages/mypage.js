@@ -10,7 +10,7 @@ import MyFollowList from "../components/myFollowList";
 function Mypage() {
     const account = JSON.parse(localStorage.getItem('account'));
     const userId = localStorage.getItem('userId');
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({user_name:'', wallet_address:''});
     const [showModal, setShowModal] = useState(false)
     const [showReserveModal, setShowReserveModal] = useState(false)
     const [username, setUsername] = useState(userInfo.user_name)
@@ -130,13 +130,19 @@ function Mypage() {
 
                 <div className='Info' style={{ height: "85%" }}>
                     <div>
-                        <MyFollowList userId={userId} />
+                        <MyFollowList userId={userId} account={account} />
                     </div>
                     <div>
-                        <h6>USERNAME : {userInfo.user_name} </h6>
+                        <h6>USERNAME :
+                        {
+                            userInfo.user_name.length > 10 ?
+                            userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                            : userInfo.user_name
+                        }
+                        </h6>
                     </div>
                     <div>
-                        <h6>ADDRESS : {userInfo.wallet_address}</h6>
+                        <h6>ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
                     </div>
                     <div>
                         <h6>EMAIL : {userInfo.email}</h6>

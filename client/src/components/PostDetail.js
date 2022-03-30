@@ -36,7 +36,15 @@ function PostDetail({ token }) {
                     </div>
                 </div>
                 <div className="post-content">
-                    <p className="description">{token.metadata.description}</p>
+                    <p className="description">
+                        {
+                            token.metadata.description.split("\n").map((line) => {
+                                return (
+                                    <span>{line}<br /></span>
+                                );
+                            })
+                        }
+                    </p>
                     <LikeButton postId={token.postInfo._id} userId={userId} />
                     <div className="comments" id={`comments_${token.postInfo._id}`}>
                         <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />

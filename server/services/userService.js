@@ -16,9 +16,10 @@ const getUserInfoById = async (userId) => {
     }
 }
 
-const insertUser = async (address) => {
+const insertUser = async (userInfo) => {
+    const {address, image} = userInfo;
     try {
-        const newUser = new User({ wallet_address: address, user_name: address, email: null, greetings: null, profile_image: null });
+        const newUser = new User({ wallet_address: address, user_name: address, email: null, greetings: null, profile_image: image });
         await newUser.save();
         return newUser;
     } catch (error) {
@@ -39,7 +40,7 @@ const updateUser = async (userInfo) => {
 
 const getUserList = async (userName) => {
     try {
-        return await User.find({ user_name: { $regex: '.*' + userName + '.*' }});
+        return await User.find({ user_name: { $regex: '.*' + userName + '.*',  $options:'i'}});
     } catch (error) {
         throw Error(error)
     }

@@ -10,8 +10,12 @@ function Navigation() {
     }
 
     const searchBtn = () => {
-        localStorage.setItem('searchName', search);
-        window.location.replace('http://localhost:3000/user/' + search)
+        if(search !== ''){
+            localStorage.setItem('searchName', search);
+            window.location.replace('http://localhost:3000/user/' + search);
+        } else {
+            alert('검색어를 입력해주세요.')
+        }
     }
 
 

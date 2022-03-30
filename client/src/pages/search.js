@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Nodata from '../components/Nodata';
 
 function Search() {
     const userId = localStorage.getItem('userId');
@@ -15,7 +16,6 @@ function Search() {
     const getInfoList = async () => {
         await axios.get(`http://localhost:4000/follow/${userId}`)
         .then((res)=>{
-            console.log(res);
             setFollowList(res.data.data);
         });
 
@@ -68,17 +68,21 @@ function Search() {
 
     return (
         <div className='Search'>
-            {infoList.filter(info=>(info.wallet_address !== account)).map(info => {
-                return (
-                    <div key={info.wallet_address}>
-                        <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}/>
-                        <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>{info.user_name}</span>
-                        <button data-user={info._id} onClick={followHandler}>
-                            {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
-                        </button>
-                    </div>
-                )
-            })}
+            {
+                infoList.filter(info=>(info.wallet_address !== account)).length > 0 ?
+                infoList.filter(info=>(info.wallet_address !== account)).map(info => {
+                    return (
+                        <div key={info.wallet_address}>
+                            <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}/>
+                            <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>{info.user_name}</span>
+                            <button data-user={info._id} onClick={followHandler}>
+                                {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
+                            </button>
+                        </div>
+                    )
+                })
+                : <Nodata />
+            }
         </div>
     );
 }

@@ -5,8 +5,8 @@ import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from "web3";
 import Caver from 'caver-js';
 import { Modal } from "react-bootstrap";
-import PostDetail from "../components/PostDetail"
-
+import PostDetail from "../components/PostDetail";
+import Nodata from "../components/Nodata";
 
 function MyNFTList({ account }) {
     const [NFTList, setNFTList] = useState([]);
@@ -32,7 +32,6 @@ function MyNFTList({ account }) {
             arr.push(i);
         }
         arr = arr.map(el => el).reverse()
-        let cnt = 0;
         for (let tokenId of arr) {
             let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
             let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
@@ -40,13 +39,11 @@ function MyNFTList({ account }) {
 
             const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
             if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
-                cnt += 1;
                 setNFTList((prevState) => {
                     return [...prevState, { tokenId, metadata, postInfo }];
                 });
             }
         }
-        localStorage.setItem('postCnt', cnt);
     };
 
     const modalOpen = (e) => {
@@ -61,13 +58,18 @@ function MyNFTList({ account }) {
 
     return (
         <div className="nftList">
-            {NFTList.map((token) => {
-                return (
-                    <div key={token.tokenId} className="post">
-                        <img src={token.metadata.image} alt={token.tokenId} onClick={modalOpen} data-json={JSON.stringify(token)} />
-                    </div>
-                );
-            })}
+            {
+                NFTList.length > 0
+                ?
+                NFTList.map((token) => {
+                    return (
+                        <div key={token.tokenId} className="post">
+                            <img src={token.metadata.image} alt={token.tokenId} onClick={modalOpen} data-json={JSON.stringify(token)} />
+                        </div>
+                    );
+                })
+                : <Nodata />
+            }
             <Modal show={showDetail} onHide={modalClose} size='lg' >
                 <PostDetail token={selectedToken} />
             </Modal>
