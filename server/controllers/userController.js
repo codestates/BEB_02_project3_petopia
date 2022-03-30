@@ -12,8 +12,8 @@ const login = async (req, res) => {
 }
 
 const signup = async (req, res) => {
-    const {address} = req.body;
-    const user = await userService.insertUser(address);
+    const userInfo = req.body;
+    const user = await userService.insertUser(userInfo);
 
     if(user !== null) {
         return res.status(200).json({ data: user, message: "success sign-up" });
