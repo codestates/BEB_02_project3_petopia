@@ -83,7 +83,7 @@ function Userpage() {
                         <h5>Greeting : {userInfo.greetings}</h5>
                     </div>
                     <button data-user={userInfo._id} onClick={followHandler}>
-                        {followList.filter(follow => (follow.follower === userInfo._id)).length > 0 ? "unfollow" : "follow"}
+                        {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
                     </button>
                 </div>
 
