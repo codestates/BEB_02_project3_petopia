@@ -8,7 +8,11 @@ function Userpage() {
     const selectedUser = localStorage.getItem('selectedUser');
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
 
-    const [userInfo, setUserInfo] = useState({user_name: '', wallet_address:''});
+    const [userInfo, setUserInfo] = useState({
+        user_name: '', 
+        wallet_address:'',
+        profile_image: ''
+    });
     const [followList, setFollowList] = useState([]);
 
     useEffect(() => {
