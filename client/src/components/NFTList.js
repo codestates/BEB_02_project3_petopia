@@ -143,7 +143,7 @@ function NFTList({account, isAll}) {
                           <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
                         </div>
                         <div className="post-content">
-                          <LikeButton postId={token.postInfo._id} userId={userId} />
+                          <LikeButton postId={token.postInfo._id} userId={userId} postAddress={token.postInfo.user.wallet_address} />
                           <p className="description">
                             {
                               token.metadata.description.split("\n").map((line) => {
