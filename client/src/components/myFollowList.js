@@ -73,8 +73,16 @@ function MyFollowList({ userId, account }) {
 
     const userSelect = (e) => {
         const targetId = e.target.getAttribute('data-id');
+        const targetWallet = e.target.getAttribute('data-wallet');
         const loginId = localStorage.getItem('userId');
-        targetId === loginId ? window.location.replace(`http://localhost:3000/mypage`) : window.location.replace(`http://localhost:3000/${targetId}`);
+        
+        if(targetId === loginId) {
+            window.location.replace(`http://localhost:3000/mypage`);
+        } else {
+            localStorage.setItem('selectedUser', targetId)
+            localStorage.setItem('selectedUserWallet', targetWallet);
+            window.location.replace(`http://localhost:3000/${targetId}`);
+        }
     }
 
     const followHandler = async (e) => {
@@ -130,11 +138,11 @@ function MyFollowList({ userId, account }) {
 
                             return (
                                 <div key={info._id} id={`follow_${info._id}`}>
-                                    <img style={{ width: "50px", height: "50px" }} src={info.follower.profile_image} data-id={info._id} onClick={userSelect} />
-                                    <span data-id={info._id} onClick={userSelect}>{info.follower.user_name}</span>
+                                    <img style={{ width: "50px", height: "50px" }} src={info.follower.profile_image} data-id={info.follower._id} data-wallet={info.follower.wallet_address} onClick={userSelect} />
+                                    <span data-id={info.follower._id} onClick={userSelect}>{info.follower.user_name}</span>
                                     {
                                         userId === localStorage.getItem('userId')
-                                            ? <button data-user={info.follower._id} data-id={info._id} onClick={followHandler}>unfollow</button>
+                                            ? <button data-user={info.follower._id} data-id={info._id} data-wallet={info.follower.wallet_address} onClick={followHandler}>unfollow</button>
                                             : ''
                                     }
                                 </div>
@@ -154,8 +162,8 @@ function MyFollowList({ userId, account }) {
                             followerList.map((info) => {
                                 return (
                                     <div key={info._id} id={`follow_${info._id}`}>
-                                        <img style={{ width: "50px", height: "50px" }} src={info.followee.profile_image} data-id={info._id} onClick={userSelect} />
-                                        <span data-id={info._id} onClick={userSelect}>{info.followee.user_name}</span>
+                                        <img style={{ width: "50px", height: "50px" }} src={info.followee.profile_image} data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect} />
+                                        <span data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect}>{info.followee.user_name}</span>
                                         {
                                             userId === localStorage.getItem('userId')
                                                 ? <button data-user={info.followee._id} data-id={info._id} onClick={followHandler}>
