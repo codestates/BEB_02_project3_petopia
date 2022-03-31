@@ -88,6 +88,7 @@ function MyFollowList({ userId, account }) {
     }
 
     const followHandler = async (e) => {
+        const btnName = e.target.getAttribute('name');
         const btnText = e.target.textContent;
         const followInfo = {
             followee: userId,
@@ -99,20 +100,35 @@ function MyFollowList({ userId, account }) {
                 .then((res) => {
                     const result = res.data.data;
                     if (result !== null) {
-                        e.target.textContent = 'unfollow';
+                        // follower 모달이면 팔로우 하면 버튼 삭제 following 모달이면 unfollow로 변경
+                        btnName === 'follower' ? e.target.remove() : e.target.textContent = 'unfollow';
                     }
                 });
-
         } else {
             await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
-                .then((res) => {
-                    const result = res.data.data;
-                    if (result) {
-                        document.getElementById(`follow_${e.target.getAttribute('data-id')}`).remove()
+                .then(async(res) => {
+                    if (res.data.data) {
+                        document.getElementById(`follow_${e.target.getAttribute('data-id')}`).remove();
                     }
-                });
+            });            
         }
     }
+
+    const deleteFollowHandler = async(e) => {
+        const followInfo = {
+            followee: e.target.getAttribute('data-user'),
+            follower: userId
+        };
+
+        await axios.post('http://localhost:4000/follow/delete/', followInfo)
+            .then(async(res) => {
+                if (res.data.data) {
+                    document.getElementById(`follow_${e.target.getAttribute('data-id')}`).remove();
+                }
+        });
+
+    }
+
 
     return (
         <div className="MyFollowList" >
@@ -136,14 +152,13 @@ function MyFollowList({ userId, account }) {
                     {/* user이미지, user이름, follow 상태 */}
                     {
                         followList.map((info) => {
-
                             return (
                                 <div key={info._id} id={`follow_${info._id}`}>
                                     <img style={{ width: "50px", height: "50px" }} src={info.follower.profile_image} data-id={info.follower._id} data-wallet={info.follower.wallet_address} onClick={userSelect} />
                                     <span data-id={info.follower._id} onClick={userSelect}>{info.follower.user_name}</span>
                                     {
                                         userId === localStorage.getItem('userId')
-                                            ? <button data-user={info.follower._id} data-id={info._id} data-wallet={info.follower.wallet_address} onClick={followHandler}>unfollow</button>
+                                            ? <button data-user={info.follower._id} data-id={info._id} name="following" onClick={followHandler}>unfollow</button>
                                             : ''
                                     }
                                 </div>
@@ -165,11 +180,10 @@ function MyFollowList({ userId, account }) {
                                     <div key={info._id} id={`follow_${info._id}`}>
                                         <img style={{ width: "50px", height: "50px" }} src={info.followee.profile_image} data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect} />
                                         <span data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect}>{info.followee.user_name}</span>
+                                        <button data-user={info.followee._id} data-id={info._id} onClick={deleteFollowHandler}>delete</button>
                                         {
-                                            userId === localStorage.getItem('userId')
-                                                ? <button data-user={info.followee._id} data-id={info._id} onClick={followHandler}>
-                                                    {followList.filter(follow => (follow.follower._id === info.followee._id)).length > 0 ? "unfollow" : "follow"}
-                                                </button>
+                                            userId === localStorage.getItem('userId') && followList.filter(follow => (follow.follower._id === info.followee._id)).length === 0
+                                                ? <button data-user={info.followee._id} data-id={info._id} name="follower" onClick={followHandler}>follow</button>
                                                 : ''
                                         }
 
