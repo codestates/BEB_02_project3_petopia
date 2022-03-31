@@ -1,11 +1,12 @@
 import { React, useEffect, useState } from 'react';
-import {create} from "ipfs-http-client";
+import { create } from "ipfs-http-client";
 import axios from 'axios';
 import erc721Abi from "../abi/erc721Abi.js";
 import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from 'web3';
 import Caver from 'caver-js';
 import noImage from '../css/image/noimage.png';
+import Loading from '../components/Loading.js';
 
 function Create() {
     const [web3, setWeb3] = useState();
@@ -15,6 +16,7 @@ function Create() {
     const [inputText, setInputText] = useState();
     const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
     const account = JSON.parse(localStorage.getItem('account'));
+    const [isLoading, setIsLoading] = useState(null);
 
     useEffect(() => {
         if (typeof window.ethereum !== "undefined") {
@@ -23,17 +25,17 @@ function Create() {
                 setWeb3(web);
             } catch (err) {
                 console.log(err);
-            }    
+            }
         } else {
-          alert('Please Install MetaMask.')
+            alert('Please Install MetaMask.')
         }
 
         if (typeof window.klaytn !== "undefined") {
             try {
-              const caver = new Caver(window.klaytn);
-              setCaver(caver);
+                const caver = new Caver(window.klaytn);
+                setCaver(caver);
             } catch (err) {
-              console.log(err);
+                console.log(err);
             }
         }
     }, []);
@@ -52,27 +54,29 @@ function Create() {
         setInputText(e.target.value);
     };
 
-    const clickedSubmit = () => {        
+    const clickedSubmit = () => {
         createMetadata();
     };
 
     const createMetadata = async () => {
+        setIsLoading(true);
         const ipfsUrl = 'https://ipfs.infura.io/ipfs/';
         const imagePath = await uploadIPFS(imageFile);
         const metadata = {
-            "description" :inputText,
-            "image" : `${ipfsUrl}${imagePath}`,
-            "name" :"test_name",
+            "description": inputText,
+            "image": `${ipfsUrl}${imagePath}`,
+            "name": "test_name",
         };
         const metadataPath = await uploadIPFS(JSON.stringify(metadata));
         createNFT(`${ipfsUrl}${metadataPath}`);
+        setIsLoading(false);
     };
 
     const uploadIPFS = async (file) => {
         const ipfs = create("https://ipfs.infura.io:5001/api/v0");
         return (await ipfs.add(file)).path;
     };
-    
+
     const createNFT = async (tokenURI) => {
         // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress, {
         //     from: account
@@ -82,38 +86,42 @@ function Create() {
         });
         tokenContract.options.address = contractAddress;
         // const newTokenId = await tokenContract.methods.mintNFT(account, tokenURI).send();
-        const newTokenId = await tokenContract.methods.mintNFT(tokenURI).send({from: account, gas: 0xf4240});
-        
+        const newTokenId = await tokenContract.methods.mintNFT(tokenURI).send({ from: account, gas: 0xf4240 });
+
         const postInfo = {
             "tokenId": newTokenId.events.Transfer.returnValues.tokenId,
-            "userId" : localStorage.getItem('userId'),
-            "postDate" : new Date(),
-            "networkType" : localStorage.getItem('networkType')
+            "userId": localStorage.getItem('userId'),
+            "postDate": new Date(),
+            "networkType": localStorage.getItem('networkType')
         };
-        
+
         await axios.post('http://localhost:4000/post/', postInfo)
-        .then((res) => {
-            const postInfo = res.data.data;
-            if(postInfo !== null) {
-                alert(res.data.message);
-                window.location.replace('http://localhost:3000/mypage');
-            } else {
-                alert(res.data.message);
-            }
-        });
+            .then((res) => {
+                const postInfo = res.data.data;
+                if (postInfo !== null) {
+                    alert(res.data.message);
+                    window.location.replace('http://localhost:3000/mypage');
+                } else {
+                    alert(res.data.message);
+                }
+            });
     };
+
+    if (isLoading) {
+        return (<Loading />)
+    }
 
     return (
         <div className='Create'>
             <div className='input_file'>
                 <label for="file">
-                    {uploadImage !== null ? <img src={uploadImage} alt="preview" style={{width:"300px", height:"300px"}} /> : <img src={noImage} alt="noImage" style={{width:"300px", height:"300px"}} /> }
+                    {uploadImage !== null ? <img src={uploadImage} alt="preview" style={{ width: "300px", height: "300px" }} /> : <img src={noImage} alt="noImage" style={{ width: "300px", height: "300px" }} />}
                 </label>
-                <input type="file" accept='image/*'id="file" name="file" onChange={changedFile} style={{display:"none"}} />
+                <input type="file" accept='image/*' id="file" name="file" onChange={changedFile} style={{ display: "none" }} />
                 {/* <button onClick={deleteFile}>delete</button> */}
             </div>
             <div className='input_text'>
-                <textarea onChange={changedText} style={{width:"300px", height:"150px"}} wrap="hard"></textarea>
+                <textarea onChange={changedText} style={{ width: "300px", height: "150px" }} wrap="hard"></textarea>
             </div>
             <div className='submit'>
                 <button onClick={clickedSubmit}>submit</button>

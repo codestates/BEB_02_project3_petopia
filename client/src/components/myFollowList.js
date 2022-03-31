@@ -13,12 +13,16 @@ function MyFollowList({ userId, account }) {
     const [followList, setFollowList] = useState([]);
     const [followerList, setFollowerList] = useState([]);
     const [postCnt, setPostCnt] = useState(0);
-    const web3 = new Web3(window.ethereum);
-    const caver = new Caver(window.klaytn);
-    const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
-    
+    // const web3 = new Web3(window.ethereum);
+    // const caver = new Caver(window.klaytn);
+    // const contractAddress = JSON.parse(localStorage.getItem('contractAddress'));
+
+    setTimeout(() => {
+        setPostCnt(localStorage.getItem('postCnt'))
+    }, 3000);
+
     useEffect(async () => {
-        await loadNFT();
+        // await loadNFT();
         // 내가 팔로우하는사람(팔로잉)
         await axios.get(`http://localhost:4000/follow/${userId}`)
             .then((res) => {
@@ -30,29 +34,29 @@ function MyFollowList({ userId, account }) {
             .then((res) => {
                 setFollowerList(res.data.data);
             });
-        
+
     }, [])
 
-    const loadNFT = async () => {
-        // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
-        const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
-        const totalSupply = await tokenContract.methods.totalSupply().call();
+    // const loadNFT = async () => {
+    //     // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
+    //     const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
+    //     const totalSupply = await tokenContract.methods.totalSupply().call();
 
-        let arr = [];
+    //     let arr = [];
 
-        for (let i = 1; i <= totalSupply; i++) {
-            arr.push(i);
-        }
-        arr = arr.map(el => el).reverse()
-        let cnt = 0;
-        for (let tokenId of arr) {
-            let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
-            if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
-                cnt += 1;
-            }
-        }
-        setPostCnt(cnt);
-    };
+    //     for (let i = 1; i <= totalSupply; i++) {
+    //         arr.push(i);
+    //     }
+    //     arr = arr.map(el => el).reverse()
+    //     let cnt = 0;
+    //     for (let tokenId of arr) {
+    //         let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
+    //         if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
+    //             cnt += 1;
+    //         }
+    //     }
+    //     setPostCnt(cnt);
+    // };
 
     const followerBtn = () => {
         setFollowerModal(true)
@@ -73,8 +77,8 @@ function MyFollowList({ userId, account }) {
         const targetId = e.target.getAttribute('data-id');
         const targetWallet = e.target.getAttribute('data-wallet');
         const loginId = localStorage.getItem('userId');
-        
-        if(targetId === loginId) {
+
+        if (targetId === loginId) {
             window.location.replace(`http://localhost:3000/mypage`);
         } else {
             localStorage.setItem('selectedUser', targetId)
@@ -112,7 +116,6 @@ function MyFollowList({ userId, account }) {
 
     return (
         <div className="MyFollowList" >
-            {console.log(postCnt)}
             <span style={{ padding: "10px" }}>
                 게시물 : {postCnt}
             </span>
