@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import Heart from "react-animated-heart";
 import axios from 'axios';
 import './NFTList.js'
-// import useLocalStorage from '../storage/useLocalStorage';
 
-const LikeButton = ({postId, userId}) => {
+const LikeButton = ({postId, userId, postAddress}) => {
   const [isClick, setClick] = useState(false);
   const [likeCnt, setlikeCnt] = useState(0);
 
@@ -21,15 +20,18 @@ const LikeButton = ({postId, userId}) => {
         setlikeCnt(data.length);
         data.filter((like) => like.user === userId).length > 0 ? setClick(true) : setClick(false);
       }
-    })  
+    })
   }
 
   const LikeButtonClick = async() =>{
-    if(!isClick) // 낙장불입
-    {
-      await axios.post('http://localhost:4000/like',{postId: postId, userId: userId});
-      setClick(!isClick);
-      setlikeCnt(likeCnt + 1)      
+    if(!isClick) { // 낙장불입
+      const txResult = await axios.post(('http://localhost:4000/contract/like'), { address : postAddress });
+
+      if(txResult.data.data) {
+          await axios.post('http://localhost:4000/like',{postId: postId, userId: userId});
+          setClick(!isClick);
+          setlikeCnt(likeCnt + 1);
+      }
     }
   }  
 
