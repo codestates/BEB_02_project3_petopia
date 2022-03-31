@@ -124,7 +124,15 @@ function NFTList({ account, isAll }) {
       .then((res) => {
         setFollowList(res.data.data);
       });
+  }
 
+  const UserSelected = (e) => {
+    const targetId = e.target.getAttribute('data-selectuser-id')
+    const targetWallet = e.target.getAttribute('data-selectuser-wallet')
+
+    localStorage.setItem('selectedUser', targetId)
+    localStorage.setItem('selectedUserWallet', targetWallet);
+    window.location.replace(`http://localhost:3000/${targetId}`);
   }
 
   return (
@@ -138,9 +146,9 @@ function NFTList({ account, isAll }) {
                 <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`}>
                   <div className="user">
                     <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                      <div className="d-flex flex-row align-items-center feed-text px-2">
-                        <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" />
-                        <div className="d-flex flex-column flex-wrap ml-2"><span class="username">{token.postInfo.user.user_name}</span></div>
+                      <div className="d-flex flex-row align-items-center feed-text px-2" >
+                        <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}></img>
+                        <div className="d-flex flex-column flex-wrap ml-2"><span class="username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>{token.postInfo.user.user_name}</span></div>
                       </div>
                       <div className="post-time">
                         <span>{token.postInfo.post_date.split('T')[0]}</span>
