@@ -6,8 +6,10 @@ import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
 import MyFollowList from "../components/myFollowList";
+import Caver from 'caver-js';
 
 function Mypage() {
+    const caver = new Caver(window.klaytn);
     const account = JSON.parse(localStorage.getItem('account'));
     const userId = localStorage.getItem('userId');
     const [userInfo, setUserInfo] = useState({user_name:'', wallet_address:''});
@@ -21,6 +23,8 @@ function Mypage() {
     const [myReservations, setMyReservations] = useState([]);
     const [getName, setGetName] = useState([]);
     const [isCheck, setIsCheck] = useState(false);
+    const [ballance, setBallance] = useState(0);
+    const [showHistoryModal, setShowHistoryModal] = useState(false);
 
     useEffect(async () => {
         await axios.get(`http://localhost:4000/user/${userId}`)
@@ -37,6 +41,11 @@ function Mypage() {
             .then((res) => {
                 setGetName(res.data.data)
             });
+
+        const ki7Instance = new caver.kct.kip7('0x70C0327f5A6F2fb72C084055f9E5C05f5a1A4560');
+        await ki7Instance.balanceOf(account).then((res) => {
+            setBallance(res.toNumber()/1E18)
+        });
 
     }, []);
 
@@ -82,7 +91,14 @@ function Mypage() {
         setShowReserveModal(false)
     }
 
+    const historyModalOpen = () => {
+        setShowReserveModal(true)
+    }
 
+    const historyModalClose = () => {
+        setShowHistoryModal(false)
+    }
+    
     const SubmitInfo = async (e) => {
 
         let imagePath = '';
@@ -200,9 +216,7 @@ function Mypage() {
                     </Modal>
                 </div>
                 <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
-                    <h6>ERC20 TOKEN : 2311</h6>
-                    {/* <Button sytle={{ marginLeft: "10px" }}>ERC20 Transfer</Button>
-                    <Button style={{ marginLeft: "10px" }} href="http://localhost:3000/transaction">VIEW TRANSACTION</Button> */}
+                    <h6>ERC20 TOKEN : {ballance} PETO</h6>
                 </div>
             </div>
 
@@ -213,6 +227,19 @@ function Mypage() {
                     <MyNFTList account={account} />
                 </div>
             </div>
+            <Modal show={showHistoryModal} onHide={historyModalClose} size='lg'>
+                <Modal.Header closeButton>
+                    <Modal.Title>Token Histoty</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {""}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={historyModalClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     );
 }
