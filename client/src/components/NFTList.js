@@ -22,6 +22,7 @@ function NFTList({ account, isAll }) {
   const caver = new Caver(window.klaytn);
   const isOpenReply = useLocalStorage('isOpenReply', false);
   const [isLoading, setIsLoading] = useState(null);
+  const [test, setTest] = useState([])
 
   useEffect(async () => {
     // 팔로워 목록 조회
@@ -106,8 +107,12 @@ function NFTList({ account, isAll }) {
 
             // only follow 페이지일 경우 언팔로우시 게시물 안 보이도록 처리
             if (!isAll) {
-              for (let el of document.getElementsByName(`post_${targetUser}`)) {
-                el.remove();
+
+              const el = document.getElementsByName(`post_${targetUser}`)
+
+              while (el.length > 0) {
+                var sidebarAd = el[0];
+                sidebarAd.parentNode.removeChild(sidebarAd);
               }
             }
           }
