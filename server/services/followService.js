@@ -40,9 +40,26 @@ const getFollower = async (id) => {
     }
 }
 
+const bothDeleteFollow = async (followInfo) => {
+    const { followee, follower } = followInfo;
+    try {
+        let result = false;
+        await Follow.deleteOne({ followee: followee, follower: follower }).then(async(res) => {
+            if (res.deletedCount > 0) {
+                await Follow.deleteOne({followee: follower, follower: followee});
+                result = true;
+            }
+        });
+        return result;
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
 module.exports = {
     insertFollow,
     deleteFollow,
     getFollowing,
-    getFollower
+    getFollower,
+    bothDeleteFollow
 }

@@ -45,9 +45,20 @@ const getFollower = async (req, res) => {
 
 }
 
+const bothDeleteFollow = async (req, res) => {
+    const followInfo = req.body;
+    const result = await followService.bothDeleteFollow(followInfo);
+    if (result) {
+        return res.status(200).json({ data: result, message: "unfollow success!" });
+    } else {
+        return res.status(204).json({ data: null, message: "unfollow fail!" });
+    }
+}
+
 module.exports = {
     insertFollow,
     deleteFollow,
     getFollowing,
-    getFollower
+    getFollower,
+    bothDeleteFollow
 }
