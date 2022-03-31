@@ -7,13 +7,11 @@ import Caver from "caver-js";
 import Web3 from "web3";
 
 function MyFollowList({ userId, account }) {
-    const selectedUser = localStorage.getItem('selectedUser');
     const [followerModal, setFollowerModal] = useState(false);
     const [followModal, setFollowModal] = useState(false);
 
     const [followList, setFollowList] = useState([]);
     const [followerList, setFollowerList] = useState([]);
-    const [userInfo, setUserInfo] = useState({});
     const [postCnt, setPostCnt] = useState(0);
     const web3 = new Web3(window.ethereum);
     const caver = new Caver(window.klaytn);
@@ -33,7 +31,7 @@ function MyFollowList({ userId, account }) {
                 setFollowerList(res.data.data);
             });
         
-    }, [postCnt])
+    }, [])
 
     const loadNFT = async () => {
         // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
@@ -114,7 +112,7 @@ function MyFollowList({ userId, account }) {
 
     return (
         <div className="MyFollowList" >
-
+            {console.log(postCnt)}
             <span style={{ padding: "10px" }}>
                 게시물 : {postCnt}
             </span>
