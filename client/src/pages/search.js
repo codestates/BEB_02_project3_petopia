@@ -15,14 +15,14 @@ function Search() {
 
     const getInfoList = async () => {
         await axios.get(`http://localhost:4000/follow/${userId}`)
-        .then((res)=>{
-            setFollowList(res.data.data);
-        });
+            .then((res) => {
+                setFollowList(res.data.data);
+            });
 
         await axios.get(`http://localhost:4000/user/search/${searchname}`)
             .then((res) => {
                 setInfoList(res.data.data)
-        });
+            });
     }
 
     const clickedHandler = (e) => {
@@ -31,57 +31,62 @@ function Search() {
         localStorage.setItem('selectedUser', userId)
         localStorage.setItem('selectedUserWallet', wallet)
 
-        if(wallet !== localStorage.getItem('account')) {
+        if (wallet !== localStorage.getItem('account')) {
             window.location.replace(`http://localhost:3000/${userId}`);
         } else {
             window.location.replace('http://localhost:3000/mypage');
         }
-        
+
     }
 
-    const followHandler = async(e) => {
+    const followHandler = async (e) => {
         const btnText = e.target.textContent;
         const followInfo = {
             followee: userId,
             follower: e.target.getAttribute('data-user')
         };
 
-        if(btnText === 'follow') {
+        if (btnText === 'follow') {
             const follow = await axios.post('http://localhost:4000/follow/', followInfo)
-            .then((res) => {
-                const result = res.data.data;
-                if(result !== null){
-                    e.target.textContent = 'unfollow';
-                }
-            });
-            
+                .then((res) => {
+                    const result = res.data.data;
+                    if (result !== null) {
+                        e.target.textContent = 'unfollow';
+                    }
+                });
+
         } else {
             const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
-            .then((res) => {
-                const result = res.data.data;
-                if(result){
-                    e.target.textContent = 'follow';
-                }
-            });
+                .then((res) => {
+                    const result = res.data.data;
+                    if (result) {
+                        e.target.textContent = 'follow';
+                    }
+                });
         }
     }
 
     return (
         <div className='Search'>
             {
-                infoList.filter(info=>(info.wallet_address !== account)).length > 0 ?
-                infoList.filter(info=>(info.wallet_address !== account)).map(info => {
-                    return (
-                        <div key={info.wallet_address}>
-                            <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}/>
-                            <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>{info.user_name}</span>
-                            <button data-user={info._id} onClick={followHandler}>
-                                {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
-                            </button>
-                        </div>
-                    )
-                })
-                : <Nodata />
+                infoList.filter(info => (info.wallet_address !== account)).length > 0 ?
+                    infoList.filter(info => (info.wallet_address !== account)).map(info => {
+                        return (
+                            <div key={info.wallet_address}>
+                                <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address} />
+                                <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
+                                    {info.user_name.length > 10 ?
+                                        info.user_name.slice(0, 4) + '···' + info.user_name.slice(-4) :
+                                        info.user_name
+                                    }
+                                </span>
+                                <button data-user={info._id} onClick={followHandler}>
+                                    {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
+                                </button>
+                            </div>
+                        )
+                    })
+                    : <Nodata />
             }
         </div>
     );

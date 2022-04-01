@@ -148,7 +148,14 @@ function NFTList({ account, isAll }) {
                     <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                       <div className="d-flex flex-row align-items-center feed-text px-2" >
                         <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}></img>
-                        <div className="d-flex flex-column flex-wrap ml-2"><span class="username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>{token.postInfo.user.user_name}</span></div>
+                        <div className="d-flex flex-column flex-wrap ml-2">
+                          <span class="username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>
+                            {token.postInfo.user.user_name.length > 10 ?
+                              token.postInfo.user.user_name.slice(0, 4) + '···' + token.postInfo.user.user_name.slice(-4) :
+                              token.postInfo.user.user_name
+                            }
+                          </span>
+                        </div>
                       </div>
                       <div className="post-time">
                         <span>{token.postInfo.post_date.split('T')[0]}</span>
