@@ -10,6 +10,17 @@ const transaction = async (req, res) => {
     }
 }
 
+const getTxHistory = async (req, res) => {
+    const txHistoryList = await cotractService.getTxHistory(req.params.id);
+
+    if(txHistoryList) {
+        return res.status(200).json({ data: txHistoryList, message: "success!" });
+    } else {
+        return res.status(204).json({ data: txHistoryList, message: "fail!" });
+    }
+}
+
 module.exports = {
-    transaction
+    transaction,
+    getTxHistory
 }
