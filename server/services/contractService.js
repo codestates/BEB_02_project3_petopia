@@ -1,11 +1,11 @@
-const {kasAccessKey, kasSecretKey, kasTokenAddr} = require('../config/config');
+const {kasAccessKey, kasSecretKey, kasTokenAddr, chainId, accessKeyId, secretAccessKey} = require('../config/config');
 const Caver = require('caver-js');
-
-const caver = new Caver('https://api.baobab.klaytn.net:8651/');
+const CaverExtKAS = require('caver-js-ext-kas');
 
 const transaction = async(toAddress) => {
+    const caver = new Caver('https://api.baobab.klaytn.net:8651/');
     const amount = 0x8ac7230489e80000;
-
+    
     // add admin wallet
     const adminKeyring = caver.wallet.add(caver.wallet.keyring.createFromPrivateKey(kasSecretKey));
 
@@ -20,6 +20,22 @@ const transaction = async(toAddress) => {
     return result.status;
 }
 
+const getTxHistory = async(address) => {
+    const caver = new CaverExtKAS(chainId, accessKeyId, secretAccessKey);
+    const query = {
+        kind : [caver.kas.tokenHistory.queryOptions.kind.FT],
+        size : 100,
+        caFilter : kasTokenAddr
+    }
+    try {
+        return await caver.kas.tokenHistory.getTransferHistoryByAccount(address, query);
+    } catch (error) {
+        throw Error(error);
+    }
+    
+}
+
 module.exports = {
-    transaction
+    transaction,
+    getTxHistory
 }

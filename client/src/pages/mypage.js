@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
 import MyFollowList from "../components/myFollowList";
+import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
 
 function Mypage() {
@@ -25,6 +26,7 @@ function Mypage() {
     const [isCheck, setIsCheck] = useState(false);
     const [ballance, setBallance] = useState(0);
     const [showHistoryModal, setShowHistoryModal] = useState(false);
+    const [txHistoryList, setTxHistoryList] = useState([]);
 
     useEffect(async () => {
         await axios.get(`http://localhost:4000/user/${userId}`)
@@ -46,6 +48,8 @@ function Mypage() {
         await ki7Instance.balanceOf(account).then((res) => {
             setBallance(res.toNumber()/1E18)
         });
+
+        setTxHistoryList(await (await axios.get(`http://localhost:4000/contract/${account}`)).data.data.items);
 
     }, []);
 
@@ -91,12 +95,12 @@ function Mypage() {
         setShowReserveModal(false)
     }
 
-    const historyModalOpen = () => {
-        setShowReserveModal(true)
+    const historyModalOpen = async() => {
+        setShowHistoryModal(true);
     }
 
     const historyModalClose = () => {
-        setShowHistoryModal(false)
+        setShowHistoryModal(false);
     }
     
     const SubmitInfo = async (e) => {
@@ -128,8 +132,6 @@ function Mypage() {
         window.location.replace('http://localhost:3000/mypage')
     }
 
-
-
     const uploadIPFS = async (file) => {
         const ipfs = create("https://ipfs.infura.io:5001/api/v0");
         return (await ipfs.add(file)).path;
@@ -143,7 +145,6 @@ function Mypage() {
                     {userInfo.profile_image !== null ? <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
                 </div>
                 <br />
-
                 <div className='Info' style={{ height: "85%" }}>
                     <div>
                         <MyFollowList userId={userId} account={account} />
@@ -216,7 +217,8 @@ function Mypage() {
                     </Modal>
                 </div>
                 <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
-                    <h6>ERC20 TOKEN : {ballance} PETO</h6>
+                    <button value="history" onClick={historyModalOpen}/>
+                    <h6>{ballance} PETO</h6>
                 </div>
             </div>
 
@@ -232,7 +234,7 @@ function Mypage() {
                     <Modal.Title>Token Histoty</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {""}
+                    <TxHistoryList txHistoryList={txHistoryList} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={historyModalClose}>
