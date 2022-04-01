@@ -45,7 +45,7 @@ function HospitalList() {
                     hospitalList.map(info => {
                         return (
                             <div key={info._id} className={info._id} style={{ background: "grey", width: "500px" }}>
-                                <img src={info.hopsital_profile} onClick={moveReservePage} data-id={info._id} style={{ width: "100px", height: "100px" }}></img>
+                                <img src={info.hospital_profile} onClick={moveReservePage} data-id={info._id} style={{ width: "100px", height: "100px" }}></img>
                                 <h6>{info.hospital_name}</h6>
                                 {/* <p> 전화번호 : {info.hospital_phone}</p> */}
                                 <p> 위치 : {info.hospital_address}</p>
