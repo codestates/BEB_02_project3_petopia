@@ -83,7 +83,7 @@ function Login() {
   const signup = async (address) => {
     await axios.post('http://localhost:4000/user/signup', {
       address: address,
-      image: 'https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/'
+      image: 'https://ipfs.io/ipfs/QmbLqHKBnwSUg6xS7aRUDShjwz34Gj5dg97aQqstM5xFHz?filename=dogdogdog.png'
     })
       .then((res) => {
         localStorage.setItem('userId', res.data.data._id);
