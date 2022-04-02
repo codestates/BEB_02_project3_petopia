@@ -8,7 +8,7 @@ import { create } from "ipfs-http-client";
 import MyFollowList from "../components/myFollowList";
 import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
-// import './mypage.css';
+import './mypage.css';
 
 function Mypage() {
     const caver = new Caver(window.klaytn);
@@ -28,6 +28,8 @@ function Mypage() {
     const [ballance, setBallance] = useState(0);
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [txHistoryList, setTxHistoryList] = useState([]);
+
+    
 
     useEffect(async () => {
         await axios.get(`http://localhost:4000/user/${userId}`)
@@ -143,8 +145,7 @@ function Mypage() {
             <h1 className="header">Mypage</h1>
             
             <div className = "mypage-wrapper">
-                    
-
+                 
                     <div className = "mypage-left-wrapper">    
                         <div className = "profile-img-wrapper">
                                 {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
@@ -153,10 +154,45 @@ function Mypage() {
                         </div>
                         
                         <div className = "profile-left-down-wrapper">
+                            
+                            <h6 className='peto'>{ballance} PETO</h6>
+                            
+                        </div>
+                    </div>
+                    
+                    <div className='Info'>
+                        
+                        <div className="Info-header-wrapper">
+                            <h6 className="Info-header-adress">{ userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+                            <div>
+                                <h6 className="Info-text">USERNAME :
+                                {
+                                    userInfo.user_name.length > 10 ?
+                                    userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                                    : userInfo.user_name
+                                }
+                                </h6>
+                            </div>
+                            <div>
+                                <h6 className="Info-text">ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+                            </div>
+                            <div>
+                                <h6 className="Info-text">EMAIL : {userInfo.email}</h6>
+                            </div>
+                            <div>
+                                <h6 className="Info-text">{userInfo.greetings}</h6>
+                            </div>
+                            
+                            <div>
+                                <MyFollowList userId={userId} account={account} />
+                            </div>
+                        </div>
 
+                        <div className='mypage-btn-wrapper'>
                             <div className='Token' >
-                                <button value="history" onClick={historyModalOpen}/>
-                                <h6 className='peto'>{ballance} PETO</h6>
+
+                                <Button type="button" class="btn btn-primary" value="history" onClick={historyModalOpen}>히스토리</Button>
+                                {/* <button value="history" onClick={historyModalOpen}/> */}
                             </div>
 
                             <div>
@@ -170,7 +206,7 @@ function Mypage() {
                                     나의 예약
                                 </Button>
                             </div>
-                            
+                        </div>
                             {/* Modal 창 */}
                             <Modal show={showModal} onHide={modalClose} size='lg'>
                                 <Modal.Header closeButton>
@@ -209,49 +245,18 @@ function Mypage() {
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
-
-                        </div>
-                    </div>
                     
-                    <div className='Info'>
-                        
-                    <h6>{ userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
 
-                        <div>
-                            <h6>USERNAME :
-                            {
-                                userInfo.user_name.length > 10 ?
-                                userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
-                                : userInfo.user_name
-                            }
-                            </h6>
-                        </div>
-                        <div>
-                            <h6>ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
-                        </div>
-                        <div>
-                            <h6>EMAIL : {userInfo.email}</h6>
-                        </div>
-                        <div>
-                            <h6>GREETINGS : {userInfo.greetings}</h6>
-                        </div>
-                        
-                        <div>
-                            <MyFollowList userId={userId} account={account} />
-                        </div>
-                        
-                    </div>
+                </div>
+                    
                     
 
             </div>
-
-
-            
             
         
             {/* 내 게시물 */}
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
-                <h3>My Post</h3>
+                <h3 className="header">My Post</h3>
                 <hr></hr>
                 <div>
                     <MyNFTList account={account} />

@@ -79,6 +79,7 @@
     width: 300px;
     height: 300px;
     object-fit: cover;
+    border-right : 1px solid #dfdfdf;
 }
 
 .post-content{
@@ -290,3 +291,7 @@ button[class|="follow"]
     height : 16;
 }
 
+.commentUser,
+.replyUser{
+    font-weight: bold;
+}

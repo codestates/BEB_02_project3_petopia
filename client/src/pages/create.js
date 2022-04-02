@@ -115,7 +115,7 @@ function Create() {
     return (
         <div className='Create-Panel'>
             <div className='Create-text'></div>
-            <hr className='Create-Line'></hr>
+            {/* <hr className='Create-Line'></hr> */}
             <div className='Create'>
                 <div className='input_file'>
                     <label for="file">
@@ -125,7 +125,7 @@ function Create() {
                     {/* <button onClick={deleteFile}>delete</button> */}
                 </div>
                 <div className='input_text'>
-                    <textarea onChange={changedText} style={{ width: "858px", height: "411px" }} wrap="hard"></textarea>
+                    <textarea onChange={changedText} style={{ width: "458px", height: "411px" }} wrap="hard" placeholder=' Your Message'></textarea>
                 </div>
             </div>
             <div className='submit'>
