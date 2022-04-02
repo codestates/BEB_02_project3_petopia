@@ -7,9 +7,11 @@ function Main() {
 
     return (
         <div className='main'>
-            <button onClick={()=>{setIsAll(true)}}>전체</button>
-            <button onClick={()=>{setIsAll(false)}}>팔로워</button>
-            {isAll ? <NFTList account={account} isAll={isAll} /> : <NFTList account={account} isAll={isAll} />}
+            <div className = "postSelect-wrapper">
+                <button className="postbtn-All" onClick={()=>{setIsAll(true)}}>전체</button>
+                <button className="postbtn-Follow" onClick={()=>{setIsAll(false)}}>팔로워</button>
+            </div>
+                {isAll ? <NFTList account={account} isAll={isAll} /> : <NFTList account={account} isAll={isAll} />}
         </div>
     );
 }

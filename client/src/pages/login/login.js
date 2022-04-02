@@ -5,6 +5,8 @@ import Web3Token from 'web3-token';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginCarousel from './loginCarousel';
+import './login.css';
+
 
 function Login() {
   const [web3, setWeb3] = useState('');
@@ -115,25 +117,35 @@ function Login() {
 
   return (
     <div class="jumbotron">
-      <div style={{ width: '400px' }}><LoginCarousel /></div>
-      <h1 class="display-4">Welcome to Petopia!</h1>
-      {/* metaMask connect */}
-      {/* <div className="btn btn-dark login-wallet" onClick={handleSignToken}> */}
-      {/* kaikas connect */}
-      <div className="btn btn-dark login-wallet" onClick={connectKaikas}>
-        <div className="left-status">
-          <div className="status-icon disconnected"></div>
-        </div>
-        <div className="right-status" style={{ width: '100%' }}>Login with Wallet</div>
+      <div className = "left-beforeLogin">
+        <div style={{ width: '400px' }}><LoginCarousel /></div>
+        
       </div>
-      <hr class="my-4"></hr>
-      <p class="lead">지갑이 없으신가요?</p>
-      <a class="btn btn-white save-wallet"
-        href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
-        style={{ width: '439px', height: '65px', paddingTop: '17px', fontSize: '15px', fontWeight: '700', marginTop: '20px', borderWidth: '0.5px', border: 'solid', borderColor: 'black' }}
-        role="button"
-        target="_blank" >Create Wallet</a>
-    </div>
+      <div className = "homepage-wrapper">
+          <div className = "right-beforeLogin">
+            <h1 class="display-4">Welcome to Petopia!</h1>
+            {/* metaMask connect */}
+            {/* <div className="btn btn-dark login-wallet" onClick={handleSignToken}> */}
+            {/* kaikas connect */}
+            <div className="btn btn-dark login-wallet" onClick={connectKaikas}>
+              <div className="left-status">
+                <div className="status-icon disconnected"></div>
+              </div>
+              <div className="right-status" style={{ width: '100%' }}>Login with Wallet</div>
+            </div>
+
+            <hr class="my-4"></hr>
+            <p class="lead">지갑이 없으신가요?</p>
+            
+            
+            <a class="btn btn-white save-wallet"
+              href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
+              style={{ width: '439px', height: '65px', paddingTop: '17px', fontSize: '15px', fontWeight: '700', marginTop: '20px', borderWidth: '0.5px', border: 'solid', borderColor: 'black' }}
+              role="button"
+              target="_blank" >Create Wallet</a>
+            </div>
+        </div>  
+      </div>
   );
 }
 

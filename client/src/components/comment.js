@@ -131,22 +131,28 @@ const Comment = ({ postId, userId, postUser }) => {
                 divElWrapper.className = 'commentForm_wrapper'
                 divElWrapper.id = newComment._id
                 divElWrapper.innerHTML = `
-                <img className="rounded-circle" src=${newComment.user.profile_image} alt="profile" width="45"/> 
-                <div className="d-flex flex-column flex-wrap ml-2">
-                    <span class="font-weight-bold">
-                        ${newComment.user.user_name.length > 10 ?
-                        newComment.user.user_name.slice(0, 4) + '···' + newComment.user.user_name.slice(-4)
-                        : newComment.user.user_name
-                    }
-                    </span>
+                <div className = "comment-user-wrapper">    
+            
+                    <img className="rounded-circle" src=${newComment.user.profile_image} alt="profile" width="45"/> 
+                        <span class="font-weight-bold">
+                            ${newComment.user.user_name.length > 10 ?
+                            newComment.user.user_name.slice(0, 4) + '···' + newComment.user.user_name.slice(-4)
+                            : newComment.user.user_name
+                        }
+                        </span>
+                    <p className="commentUser">${newComment.contents}</p>
+                
                 </div>
-                <p className="commentUser">${newComment.contents}</p>
-                <div className="post-time">
-                    <span>${newComment.comment_date.split('T')[0]}</span>
-                </div>
-                <button id="del_btn_${newComment._id}" data-user=${newComment.user._id} data-id=${newComment._id}> delete </button>
-                <button id="add_btn_${newComment._id}" data-user=${newComment.user._id} data-id=${newComment._id}> 대댓글 </button>
-                <div className='replies' id="replies_${newComment._id}"}>`
+                
+                <div className = "comment-btn-wrapper">
+                    <div className="post-time">
+                        <span>${newComment.comment_date.split('T')[0]}</span>
+                    
+                    <button className = "comment-btn-delete" id="del_btn_${newComment._id}" data-user=${newComment.user._id} data-id=${newComment._id}> delete </button>
+                    <button className = "comment-btn-reply" id="add_btn_${newComment._id}" data-user=${newComment.user._id} data-id=${newComment._id}> reply </button>
+                    <div className='replies' id="replies_${newComment._id}"}>
+                    </div>
+                </div>`
 
                 parent.append(divElWrapper);
 

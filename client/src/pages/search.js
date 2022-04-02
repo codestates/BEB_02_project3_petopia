@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Nodata from '../components/Nodata';
+import './search.css'
 
 function Search() {
     const userId = localStorage.getItem('userId');
@@ -72,15 +73,18 @@ function Search() {
                 infoList.filter(info => (info.wallet_address !== account)).length > 0 ?
                     infoList.filter(info => (info.wallet_address !== account)).map(info => {
                         return (
-                            <div key={info.wallet_address}>
-                                <img style={{ width: "50px", height: "50px" }} src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address} />
-                                <span onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
+
+                            <div className="search-component" key={info.wallet_address}>
+                                <img className="search-image" src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address} />
+                                
+                                <span className="search-username"onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
                                     {info.user_name.length > 10 ?
                                         info.user_name.slice(0, 4) + '···' + info.user_name.slice(-4) :
                                         info.user_name
-                                    }
+                                }
                                 </span>
-                                <button data-user={info._id} onClick={followHandler}>
+                                
+                                <button className="follow-btn" data-user={info._id} onClick={followHandler}>
                                     {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
                                 </button>
                             </div>

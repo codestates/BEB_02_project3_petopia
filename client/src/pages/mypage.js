@@ -8,6 +8,7 @@ import { create } from "ipfs-http-client";
 import MyFollowList from "../components/myFollowList";
 import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
+import './mypage.css';
 
 function Mypage() {
     const caver = new Caver(window.klaytn);
@@ -139,89 +140,116 @@ function Mypage() {
 
     return (
         <div className='Mypage'>
-            <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>Mypage</h1>
-            <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
-                <div className='Profile' style={{ height: "85%", float: "left" }}>
-                    {userInfo.profile_image !== null ? <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
-                </div>
-                <br />
-                <div className='Info' style={{ height: "85%" }}>
-                    <div>
-                        <MyFollowList userId={userId} account={account} />
-                    </div>
-                    <div>
-                        <h6>USERNAME :
-                        {
-                            userInfo.user_name.length > 10 ?
-                            userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
-                            : userInfo.user_name
-                        }
-                        </h6>
-                    </div>
-                    <div>
-                        <h6>ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
-                    </div>
-                    <div>
-                        <h6>EMAIL : {userInfo.email}</h6>
-                    </div>
-                    <div>
-                        <h6>GREETINGS : {userInfo.greetings}</h6>
-                    </div>
-                    <div>
-                        {/* <!-- Button trigger modal --> */}
-                        <Button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={modalOpen}>
-                            EDIT PROFILE
-                        </Button>
-                    </div>
-                    <div>
-                        <Button type="button" class="btn btn-primary" onClick={reserveModalOpen}>
-                            My Reservation
-                        </Button>
-                    </div>
-                    <Modal show={showModal} onHide={modalClose} size='lg'>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Edit Profile</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <label for="file">
-                                {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
-                            </label>
-                            <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
-                            Username : <input type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name}></input> <span id='username-check'></span><br />
-                            Address : <h7>{userInfo.wallet_address}</h7> <br></br>
-                            E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
-                            Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={modalClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={SubmitInfo} >
-                                Save Changes
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+            <h1 className="header">Mypage</h1>
+            
+            <div className = "mypage-wrapper">
+                    
 
-                    <Modal show={showReserveModal} onHide={reserveModalClose} size='lg'>
-                        <Modal.Header closeButton>
-                            <Modal.Title>My Reservation</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <ReserveList />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={reserveModalClose}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-                <div className='Token' style={{ float: "left", width: "80%", display: "flex", alignItems: "center" }}>
-                    <button value="history" onClick={historyModalOpen}/>
-                    <h6>{ballance} PETO</h6>
-                </div>
+                    <div className = "mypage-left-wrapper">    
+                        <div className = "profile-img-wrapper">
+                                {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
+                                {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
+                            
+                        </div>
+                        
+                        <div className = "profile-left-down-wrapper">
+
+                            <div className='Token' >
+                                <button value="history" onClick={historyModalOpen}/>
+                                <h6 className='peto'>{ballance} PETO</h6>
+                            </div>
+
+                            <div>
+                                {/* <!-- Button trigger modal --> */}
+                                <Button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={modalOpen}>
+                                    프로필 수정
+                                </Button>
+                            </div>
+                            <div>
+                                <Button type="button" class="btn btn-primary" onClick={reserveModalOpen}>
+                                    나의 예약
+                                </Button>
+                            </div>
+                            
+                            {/* Modal 창 */}
+                            <Modal show={showModal} onHide={modalClose} size='lg'>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Edit Profile</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <label for="file">
+                                        {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
+                                    </label>
+                                    <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
+                                    Username : <input type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name}></input> <span id='username-check'></span><br />
+                                    Address : <h7>{userInfo.wallet_address}</h7> <br></br>
+                                    E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
+                                    Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={modalClose}>
+                                        Close
+                                    </Button>
+                                    <Button variant="primary" onClick={SubmitInfo} >
+                                        Save Changes
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+
+                            <Modal show={showReserveModal} onHide={reserveModalClose} size='lg'>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>My Reservation</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <ReserveList />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={reserveModalClose}>
+                                        Close
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+
+                        </div>
+                    </div>
+                    
+                    <div className='Info'>
+                        
+                    <h6>{ userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+
+                        <div>
+                            <h6>USERNAME :
+                            {
+                                userInfo.user_name.length > 10 ?
+                                userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                                : userInfo.user_name
+                            }
+                            </h6>
+                        </div>
+                        <div>
+                            <h6>ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+                        </div>
+                        <div>
+                            <h6>EMAIL : {userInfo.email}</h6>
+                        </div>
+                        <div>
+                            <h6>GREETINGS : {userInfo.greetings}</h6>
+                        </div>
+                        
+                        <div>
+                            <MyFollowList userId={userId} account={account} />
+                        </div>
+                        
+                    </div>
+                    
+
             </div>
 
+
+            
+            
+        
+            {/* 내 게시물 */}
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                 <h3>My Post</h3>
                 <hr></hr>

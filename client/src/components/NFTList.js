@@ -144,35 +144,42 @@ function NFTList({ account, isAll }) {
             return (
               <div class="right-col">
                 <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`}>
-                  <div className="user">
+                  
+                <div className = "post-wrapper">
+                  <div className="post-image">
+                          <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
+                  </div>
+                  <div class="right-contentWrapper">
+                  
+                  {/* <div className="user"> */}
                     <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                       <div className="d-flex flex-row align-items-center feed-text px-2" >
                         <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}></img>
-                        <div className="d-flex flex-column flex-wrap ml-2">
-                          <span class="username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>
+                          <span class="content-username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>
                             {token.postInfo.user.user_name.length > 10 ?
                               token.postInfo.user.user_name.slice(0, 4) + '···' + token.postInfo.user.user_name.slice(-4) :
                               token.postInfo.user.user_name
                             }
                           </span>
-                        </div>
                       </div>
+
                       <div className="post-time">
                         <span>{token.postInfo.post_date.split('T')[0]}</span>
                       </div>
-                      <div className="follow">
-                        <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                      
+                        {/* <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                          {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
+                        </button> */}
+                      <button class="follow" className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
                           {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
                         </button>
-                      </div>
+
+                      
                     </div>
-                  </div>
-                  <div className="post-image">
-                    <img src={token.metadata.image} className="post-image" alt={token.tokenId} />
-                  </div>
+                  
+                  
                   <div className="post-content">
-                    <LikeButton postId={token.postInfo._id} userId={userId} postAddress={token.postInfo.user.wallet_address} />
-                    <p className="description">
+                  <p className="description">
                       {
                         token.metadata.description.split("\n").map((line) => {
                           return (
@@ -180,12 +187,18 @@ function NFTList({ account, isAll }) {
                           );
                         })
                       }
-                    </p>
-                    <div className="comments" id={`comments_${token.postInfo._id}`}>
-                      <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                  </p>
+                    <LikeButton postId={token.postInfo._id} userId={userId} postAddress={token.postInfo.user.wallet_address} />
                     </div>
                   </div>
+                  </div>
+
+
                   <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                
+                <div className="comments" id={`comments_${token.postInfo._id}`}>
+                      <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                    </div>
                 </div>
               </div>
             );
