@@ -5,7 +5,7 @@ import Web3Token from 'web3-token';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginCarousel from './loginCarousel';
-// import './login.css';
+import './login.css';
 
 
 function Login() {
@@ -123,7 +123,7 @@ function Login() {
       </div>
       <div className = "homepage-wrapper">
           <div className = "right-beforeLogin">
-            <h1 class="display-4">Welcome to Petopia!</h1>
+            <h1 class="display-4" style={{ marginBottom: '50px' }}>Welcome to Petopia!</h1>
             {/* metaMask connect */}
             {/* <div className="btn btn-dark login-wallet" onClick={handleSignToken}> */}
             {/* kaikas connect */}
@@ -131,16 +131,16 @@ function Login() {
               <div className="left-status">
                 <div className="status-icon disconnected"></div>
               </div>
-              <div className="right-status" style={{ width: '100%' }}>Login with Wallet</div>
+              <div className="right-status" style={{ width: '310px' , paddingTop: '9px', paddingBottom: '9px'}}>Login with Wallet</div>
             </div>
 
             <hr class="my-4"></hr>
-            <p class="lead">지갑이 없으신가요?</p>
+            <p class="lead" style={{ fontSize: '14px'}} >지갑이 없으신가요?</p>
             
             
-            <a class="btn btn-white save-wallet"
+            <a class="save-wallet"
               href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
-              style={{ width: '439px', height: '65px', paddingTop: '17px', fontSize: '15px', fontWeight: '700', marginTop: '20px', borderWidth: '0.5px', border: 'solid', borderColor: 'black' }}
+              // style={{ width: '339px', height: '65px', fontSize: '15px', fontWeight: '700', marginTop: '20px', borderWidth: '0.5px', border: 'solid', borderColor: 'black', paddingTop: '15px', paddingBottom:'15px' }}
               role="button"
               target="_blank" >Create Wallet</a>
             </div>
@@ -148,5 +148,6 @@ function Login() {
       </div>
   );
 }
+
 
 export default Login;
