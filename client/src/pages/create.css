@@ -1,7 +1,9 @@
   /* ///////////////////////////////////////////////////// */
   /*                    create.js   CSS                    */
   /* ///////////////////////////////////////////////////// */
-  
+  * {
+    max-width: 1920px;
+  }
   
   .Create-text {
     font-size: 18px ;
@@ -57,6 +59,7 @@
   
   TEXTAREA {
     border: solid 0.5px #5e5e5e;
+    font-size: 30px;
   
   }
   
@@ -71,9 +74,9 @@
   
   .uploader {
   
-    padding-top:80px;
-    padding-left:110px;
-    padding-right:110px;
+    padding-top:100px;
+    padding-left:100px;
+    padding-right:100px;
     width: 100%;
     margin: auto;
     display: flex;
