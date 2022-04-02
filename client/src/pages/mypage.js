@@ -8,7 +8,7 @@ import { create } from "ipfs-http-client";
 import MyFollowList from "../components/myFollowList";
 import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
-import './mypage.css';
+// import './mypage.css';
 
 function Mypage() {
     const caver = new Caver(window.klaytn);

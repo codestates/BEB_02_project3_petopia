@@ -5,7 +5,7 @@ import Web3Token from 'web3-token';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginCarousel from './loginCarousel';
-import './login.css';
+// import './login.css';
 
 
 function Login() {

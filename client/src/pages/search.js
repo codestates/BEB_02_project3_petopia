@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Nodata from '../components/Nodata';
-import './search.css'
+// import './search.css'
 
 function Search() {
     const userId = localStorage.getItem('userId');
