@@ -77,7 +77,7 @@ function MyNFTList({ account }) {
                     NFTList.map((token) => {
                         return (
                             <div key={token.tokenId} className="post">
-                                <img src={token.metadata.image} alt={token.tokenId} onClick={modalOpen} data-json={JSON.stringify(token)} />
+                                <img className="post-img" src={token.metadata.image} alt={token.tokenId} onClick={modalOpen} data-json={JSON.stringify(token)} />
                             </div>
                         );
                     })
