@@ -15,5 +15,4 @@ module.exports ={
     accessKeyId : ACCESS_KEY_ID,
     secretAccessKey : SECRET_ACCESS_KEY
 
-    하하하: 하하하
 }
