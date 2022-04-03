@@ -28,7 +28,7 @@ function PostDetail({ token }) {
                 </div>
                 <div className="post-info">
                     <div className="user">
-                        <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom" style={{ width:"390px"}}>
+                        <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom" style={{ width:"405px"}}>
                             <div className="d-flex flex-row align-items-center feed-text px-2">
                                 <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" height="45"/>
                                 <span class="content-username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>
@@ -57,7 +57,7 @@ function PostDetail({ token }) {
                         </p>
                     </div>
                         <div className="comments" id={`comments_${token.postInfo._id}`}>
-                            <LikeButton postId={token.postInfo._id} userId={userId} />
+                            <LikeButton postId={token.postInfo._id} userId={userId} postDate={token.postInfo.post_date.split('T')[0]}/>
                             {/* <div className="post-time">
                                 <span>{token.postInfo.post_date.split('T')[0]}</span>
                             </div> */}
