@@ -201,23 +201,22 @@ function NFTList({ account, isAll }) {
                         </button>
                         :<></>
                       }
-                      <div className="post-time">
-                        <span>{token.postInfo.post_date.split('T')[0]}</span>
-                      </div>
+                      
                     </div>
 
                   <div className="post-content">
-                  <p className="description">
-                      {
-                        token.metadata.description.split("\n").map((line) => {
-                          return (
-                            <span>{line}<br /></span>
-                          );
-                        })
-                      }
-                  </p>
-                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} />
+                    <p className="description">
+                        {
+                          token.metadata.description.split("\n").map((line) => {
+                            return (
+                              <span>{line}<br /></span>
+                            );
+                          })
+                        }
+                    </p>
+                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} postDate={token.postInfo.post_date.split('T')[0]}/>
                     </div>
+                    
                   </div>
                   </div>
 
