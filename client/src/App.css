@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+/* .follow_6246a62773f5f6507a319efb {
+
+        background-color : rgb(0, 162, 255);
+        width : 60px;
+        height : 25px;
+        border : solid 1px white;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        margin-right: 17px;
+
+         } */
+
+    .follow-button {
+
+         background-color : rgb(0, 162, 255);
+         width : 60px;
+         height : 25px;
+         border : solid 1px white;
+         font-size: 2px;
+         color: white;
+         font-weight: bold;
+         border-radius: 5px;
+         margin-right: 17px;
+
+          }

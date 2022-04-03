@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from "date-fns/esm/locale"; // 한국어 적용 
+import { ko } from "date-fns/esm/locale"; // 한국어 적용
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
@@ -47,7 +47,7 @@ function DetailHospital() {
 
     const SubmitInfo = async (event) => {
         event.preventDefault();
-        
+
         const hospitalWallet = hospitalInfo.hospital_wallet_klaytn;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
@@ -110,7 +110,7 @@ function DetailHospital() {
                 .toString()
             ]
           )
-      
+
           const txHash = await caver.klay
             .sendTransaction({
               type: 'SMART_CONTRACT_EXECUTION',
@@ -186,13 +186,11 @@ function DetailHospital() {
             <h1 className="header">예약하기</h1>
             {/* 병원 정보 */}
             <div class="">
-                
             <div className="hospital-Container">
-                
                     <img className = "hospital-img" src={hospitalInfo.profile_image}></img>
                     <div className = "hospital-contants-Container">
                         <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
-                            <div className = "hospital-contants-contants"> 
+                            <div className = "hospital-contants-contants">
                                 <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h>
                                 <h className = "hospital-text">전화번호 : {hospitalInfo.hospital_phone}</h>
                                 <h className = "hospital-text">주소 : {hospitalInfo.hospital_address}</h>

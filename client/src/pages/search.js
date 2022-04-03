@@ -77,7 +77,6 @@ function Search() {
 
                             <div className="search-component" key={info.wallet_address}>
                                 <img className="search-image" src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address} />
-                                
                                 <div className="search-text-wrapper">
                                     <span className="search-username"onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
                                         {info.user_name.length > 10 ?

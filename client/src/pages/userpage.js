@@ -12,7 +12,7 @@ function Userpage() {
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
 
     const [userInfo, setUserInfo] = useState({
-        user_name: '', 
+        user_name: '',
         wallet_address:'',
         profile_image: ''
     });
@@ -65,23 +65,18 @@ function Userpage() {
     return (
         <div class='Userpage'>
             <h1 className ="header">{userInfo.user_name}</h1>
-            
             <div className = "user-wrapper">
                 <div className = "mypage-left-wrapper">
                     <div className = "profile-img-wrapper">
                             {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
                             {/* <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img> */}
                             {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
-                        
                     </div>
                 </div>
-                        
-            
-            
                 <div className="user-Info">
                     <div className="user-header-wrapper">
                         <h6 className="user-header-greeting">{userInfo.greetings}</h6>
-                      
+
                         <div className = "Info-content-wrapper">
                             <div >
                                 <h6 className="Info-text">USERNAME :
@@ -98,7 +93,7 @@ function Userpage() {
                             <div>
                                 <h6 className="Info-text">EMAIL : {userInfo.email}</h6>
                             </div>
-                        
+
                         </div>
 
                         <div style={{ display: "flex" }}>
@@ -107,8 +102,6 @@ function Userpage() {
                     </div>
                 </div>
             </div>
-
-
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                 <h3 className="header">Post</h3>
                 <hr></hr>

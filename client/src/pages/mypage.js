@@ -29,8 +29,6 @@ function Mypage() {
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [txHistoryList, setTxHistoryList] = useState([]);
 
-    
-
     useEffect(async () => {
         await axios.get(`http://localhost:4000/user/${userId}`)
             .then((res) => {
@@ -105,7 +103,7 @@ function Mypage() {
     const historyModalClose = () => {
         setShowHistoryModal(false);
     }
-    
+
     const SubmitInfo = async (e) => {
 
         let imagePath = '';
@@ -143,17 +141,16 @@ function Mypage() {
     return (
         <div className='Mypage'>
             <h1 className="header">Mypage</h1>
-            
+
             <div className = "mypage-wrapper">
-                 
-                    <div className = "mypage-left-wrapper">    
+                    <div className = "mypage-left-wrapper">
                         <div className = "profile-img-wrapper">
                                 {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
                                 {/* <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img> */}
                                 {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
-                            
+
                         </div>
-                        
+
                         <div className = "profile-left-down-wrapper">
                             
                             <h6 className='peto'>{ballance} PETO</h6>
@@ -185,6 +182,38 @@ function Mypage() {
                                 
                             </div>
                             
+                            <div>
+                                <MyFollowList userId={userId} account={account} />
+                            </div>
+                        </div>
+                            <h6 className='peto'>{ballance} PETO</h6>
+                        </div>
+                    </div>
+
+                    <div className='Info'>
+
+                        <div className="Info-header-wrapper">
+                            <h6 className="Info-header-greeting">{userInfo.greetings}</h6>
+
+                            <div className = "Info-content-wrapper">
+                                <div >
+                                    <h6 className="Info-text">USERNAME :
+                                    {
+                                        userInfo.user_name.length > 10 ?
+                                        userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                                        : userInfo.user_name
+                                    }
+                                    </h6>
+                                </div>
+                                <div>
+                                    <h6 className="Info-text">ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+                                </div>
+                                <div>
+                                    <h6 className="Info-text">EMAIL : {userInfo.email}</h6>
+                                </div>
+
+                            </div>
+
                             <div>
                                 <MyFollowList userId={userId} account={account} />
                             </div>
@@ -246,16 +275,10 @@ function Mypage() {
                                         Close
                                     </Button>
                                 </Modal.Footer>
-                            </Modal>
-                    
-
+                            </Modal>           
                 </div>
-                    
-                    
-
             </div>
-            
-        
+
             {/* 내 게시물 */}
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                 <h3 className="header">My Post</h3>

@@ -5,8 +5,9 @@ import erc721Abi from "../abi/erc721Abi.js";
 import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from 'web3';
 import Caver from 'caver-js';
-import noImage from '../css/image/noimage.png';
+import noImage from '../css/image/PETO.png';
 import Loading from '../components/Loading.js';
+import './create.css';
 
 function Create() {
     const [web3, setWeb3] = useState();
@@ -19,16 +20,16 @@ function Create() {
     const [isLoading, setIsLoading] = useState(null);
 
     useEffect(() => {
-        if (typeof window.ethereum !== "undefined") {
-            try {
-                const web = new Web3(window.ethereum);
-                setWeb3(web);
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
-            alert('Please Install MetaMask.')
-        }
+        // if (typeof window.ethereum !== "undefined") {
+        //     try {
+        //         const web = new Web3(window.ethereum);
+        //         setWeb3(web);
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // } else {
+        //     alert('Please Install MetaMask.')
+        // }
 
         if (typeof window.klaytn !== "undefined") {
             try {
@@ -112,21 +113,26 @@ function Create() {
     }
 
     return (
-        <div className='Create'>
-            <div className='input_file'>
-                <label for="file">
-                    {uploadImage !== null ? <img src={uploadImage} alt="preview" style={{ width: "300px", height: "300px" }} /> : <img src={noImage} alt="noImage" style={{ width: "300px", height: "300px" }} />}
-                </label>
-                <input type="file" accept='image/*' id="file" name="file" onChange={changedFile} style={{ display: "none" }} />
-                {/* <button onClick={deleteFile}>delete</button> */}
-            </div>
-            <div className='input_text'>
-                <textarea onChange={changedText} style={{ width: "300px", height: "150px" }} wrap="hard"></textarea>
+        <div className='Create-Panel'>
+            <div className='Create-text'></div>
+            {/* <hr className='Create-Line'></hr> */}
+            <div className='Create'>
+                <div className='input_file'>
+                    <label for="file">
+                        {uploadImage !== null ? <img src={uploadImage} alt="preview" style={{ width: "300px", height: "300px" }} /> : <div class = 'uploader'><img src={noImage} alt="noImage" style={{ width: "200px", height: "200px" }} /></div>}
+                    </label>
+                    <input type="file" accept='image/*' id="file" name="file" onChange={changedFile} style={{ display: "none" }} />
+                    {/* <button onClick={deleteFile}>delete</button> */}
+                </div>
+                <div className='input_text'>
+                    <textarea onChange={changedText} style={{ width: "458px", height: "411px" }} wrap="hard" placeholder=' Your Message'></textarea>
+                </div>
             </div>
             <div className='submit'>
-                <button onClick={clickedSubmit}>submit</button>
+            <button className = 'create-button' onClick={clickedSubmit}>Create</button>
             </div>
         </div>
+
     );
 }
 
