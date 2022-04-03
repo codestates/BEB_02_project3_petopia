@@ -52,6 +52,7 @@ function Navigation() {
                             type="search"
                             placeholder="Search"
                             className="me-2"
+                            class="search-bar"
                             aria-label="Search"
                             onChange={searchHandler}
                             onKeyPress={handleKeyPress}
