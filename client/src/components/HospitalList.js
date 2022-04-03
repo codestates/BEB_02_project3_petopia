@@ -76,6 +76,7 @@ function HospitalList() {
                                         </div>
                                     </div>
                                 </div>
+
                         )
                     })
                     : <Nodata />

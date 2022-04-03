@@ -19,6 +19,7 @@
     flex-direction: column;
     justify-content : space-evenly;
     align-items: center;
+
 }
 
 .user-header-greeting{
@@ -32,5 +33,5 @@
     margin: 50px;
     width : 600px;
     height : 100%;
-}
 
+}

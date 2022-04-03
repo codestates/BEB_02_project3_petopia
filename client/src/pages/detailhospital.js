@@ -186,7 +186,9 @@ function DetailHospital() {
             <h1 className="header">예약하기</h1>
             {/* 병원 정보 */}
             <div class="">
+
             <div className="hospital-Container">
+
                     <img className = "hospital-img" src={hospitalInfo.profile_image}></img>
                     <div className = "hospital-contants-Container">
                         <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
