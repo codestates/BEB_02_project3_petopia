@@ -7,8 +7,8 @@ import Caver from 'caver-js';
 import useLocalStorage from '../storage/useLocalStorage';
 
 import LikeButton from './Likebutton.js';
-import Comment from '../components/comment.js';
-import CommentLoad from '../components/commentLoad.js';
+import Comment from './Comment.js';
+import CommentLoad from './CommentLoad.js';
 import Nodata from '../components/Nodata';
 import Loading from "./Loading.js";
 
@@ -196,9 +196,9 @@ function NFTList({ account, isAll }) {
 
                   <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
 
-                <div className="comments" id={`comments_${token.postInfo._id}`}>
+                {/* <div className="comments" id={`comments_${token.postInfo._id}`}> */}
                       <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
-                    </div>
+                    {/* </div> */}
                 </div>
               </div>
             );

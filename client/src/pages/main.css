@@ -175,7 +175,7 @@
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #dfdfdf;
-
+    border-bottom: 1px solid #dfdfdf;
 
 }
 
@@ -264,7 +264,7 @@ button[class|="follow"]
 
 }
 
-
+.reply-btn,
 .comment-btn,
 .action-btn{
     width: 70px;
