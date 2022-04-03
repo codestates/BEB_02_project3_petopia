@@ -146,15 +146,11 @@ function NFTList({ account, isAll }) {
     localStorage.setItem('selectedUser', targetId)
     localStorage.setItem('selectedUserWallet', targetWallet);
 
-    console.log(host)
-    console.log(domain)
-    console.log(targetId)
-    console.log(userId)
-    // if(targetId === userId) {
-    //   window.location.href = `${domain}/mypage`;  
-    // } else {
-    //   window.location.href = `${domain}/${targetId}`;  
-    // }
+    if(targetId === userId) {
+      window.location.href = `${domain}/mypage`;  
+    } else {
+      window.location.href = `${domain}/${targetId}`;  
+    }
   }
 
   const modalOpen = () => {
