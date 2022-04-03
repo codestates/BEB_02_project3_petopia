@@ -2,9 +2,12 @@ import {Spinner} from 'react-bootstrap';
 
 function loading () {
     return (
-        <Spinner animation="border" role="status" size="sm">
-            <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <div className="spinner-wrapper">
+            <Spinner className="loading-spinner" animation="border" role="status" size="sm">
+
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
     )
 }
 

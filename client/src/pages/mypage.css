@@ -6,11 +6,14 @@
     margin-top : 36px;
     margin-bottom: 36px;
 }
-.Info-header-adress{
+.Info-header-greeting{
     font-size: 28px;
     font-family: 'Roboto';
     font-weight: bold;
+    margin-bottom: 20px;
 }
+
+
 
 .Info-text{
     font-size: 20px;
@@ -31,6 +34,7 @@
     height : 380px;
     width : 900px;
     border: 1px solid #dfdfdf;
+    background-color: white;
 }
 
 
@@ -39,7 +43,7 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid #dfdfdf;
-    
+
 }
 
 .Info,
@@ -47,14 +51,14 @@
     display: flex;
     flex-direction: column;
     margin : 50px;
-    height :300px;
+    height : 300px;
 }
 
 
 
 .profile-img-wrapper{
 
-    
+
 }
 
 
@@ -83,17 +87,23 @@
     height: 50px;
     width: 300px;
     justify-content : space-evenly;
-    
+
 }
+
 
 .Info-header-wrapper{
     display : flex;
     flex-direction: column;
-    align-items: center;
     height: 300px;
     width: 540 px;
     justify-content : space-evenly;
     margin-bottom: 10px;
+    align-items: center;
+
+}
+
+.Info-content-wrapper{
+    /* margin-right : 100px; */
 }
 
 .peto{
@@ -113,7 +123,19 @@
     width: 200px;
 }
 
+.MynftList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width : 960px;
+    /* border: 1px solid #dfdfdf; */
+
+}
+
 .post-img{
+    margin: 10px;
     height: 300px;
     width: 300px;
+    border: 1px solid #dfdfdf;
+    background-color: #ebebeb;
 }

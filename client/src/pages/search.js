@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Nodata from '../components/Nodata';
-// import './search.css'
+import './search.css'
+import './mypage.css'
 
 function Search() {
     const userId = localStorage.getItem('userId');
@@ -76,15 +77,20 @@ function Search() {
 
                             <div className="search-component" key={info.wallet_address}>
                                 <img className="search-image" src={info.profile_image} onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address} />
-                                
-                                <span className="search-username"onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
-                                    {info.user_name.length > 10 ?
-                                        info.user_name.slice(0, 4) + '···' + info.user_name.slice(-4) :
-                                        info.user_name
-                                }
-                                </span>
-                                
-                                <button className="follow-btn" data-user={info._id} onClick={followHandler}>
+
+                                <div className="search-text-wrapper">
+                                    <span className="search-username"onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
+                                        {info.user_name.length > 10 ?
+                                            info.user_name.slice(0, 4) + '···' + info.user_name.slice(-4) :
+                                            info.user_name
+                                    }
+                                    </span>
+                                    <span className="search-greeting" onClick={clickedHandler} data-user={info._id} data-wallet={info.wallet_address}>
+                                        {info.greetings}
+                                        </span>
+                                </div>
+
+                                <button className="search-follow-btn" data-user={info._id} onClick={followHandler}>
                                     {followList.filter(follow => (follow.follower._id === info._id)).length > 0 ? "unfollow" : "follow"}
                                 </button>
                             </div>

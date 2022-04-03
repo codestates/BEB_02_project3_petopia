@@ -70,15 +70,17 @@ function MyNFTList({ account }) {
     }
 
     return (
-        <div className="nftList">
+        <div className="MynftList">
             {
                 NFTList.length > 0
                     ?
                     NFTList.map((token) => {
                         return (
-                            <div key={token.tokenId} className="post">
+                            <div key={token.tokenId} className="Mypost">
                                 <img className="post-img" src={token.metadata.image} alt={token.tokenId} onClick={modalOpen} data-json={JSON.stringify(token)} />
+
                             </div>
+
                         );
                     })
                     : <Nodata />

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from "date-fns/esm/locale"; // 한국어 적용 
+import { ko } from "date-fns/esm/locale"; // 한국어 적용
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import addMonths from 'date-fns/addMonths'
@@ -12,6 +12,8 @@ import { Button, Modal } from 'react-bootstrap';
 import useLocalStorage from '../storage/useLocalStorage';
 import Web3 from "web3";
 import Caver from "caver-js";
+import './detailhospital.css';
+import './hospital.css';
 
 function DetailHospital() {
 
@@ -45,7 +47,7 @@ function DetailHospital() {
 
     const SubmitInfo = async (event) => {
         event.preventDefault();
-        
+
         const hospitalWallet = hospitalInfo.hospital_wallet_klaytn;
         const reserveDate = moment(startDate).format().slice(0, 10)
         const reserveTime = startTime.toLocaleTimeString('ko', { hour12: false, hour: '2-digit', minute: '2-digit' })
@@ -108,7 +110,7 @@ function DetailHospital() {
                 .toString()
             ]
           )
-      
+
           const txHash = await caver.klay
             .sendTransaction({
               type: 'SMART_CONTRACT_EXECUTION',
@@ -181,28 +183,23 @@ function DetailHospital() {
 
     return (
         <div className='DetailHospital'>
-            <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>DetailHospital</h1>
+            <h1 className="header">예약하기</h1>
             {/* 병원 정보 */}
-            <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
-                <div className="Profile" style={{ height: "85%", float: "left" }}>
-                    <img style={{ width: "250px", height: "250px" }} src={hospitalInfo.profile_image}></img>
-                </div>
-                <br />
-                <div className="Info" style={{ height: "85%" }}>
-                    <div>
-                        <h5>{hospitalInfo.hospital_name}</h5>
-                    </div>
-                    <div>
-                        <h5>진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h5>
-                    </div>
-                    <div>
-                        <h5>전화번호 : {hospitalInfo.hospital_phone}</h5>
-                    </div>
-                    <div>
-                        <h5>주소 : {hospitalInfo.hospital_address}</h5>
+            <div class="">
+
+            <div className="hospital-Container">
+
+                    <img className = "hospital-img" src={hospitalInfo.profile_image}></img>
+                    <div className = "hospital-contants-Container">
+                        <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
+                            <div className = "hospital-contants-contants">
+                                <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h>
+                                <h className = "hospital-text">전화번호 : {hospitalInfo.hospital_phone}</h>
+                                <h className = "hospital-text">주소 : {hospitalInfo.hospital_address}</h>
+                            </div>
                     </div>
                 </div>
-                <hr></hr>
+            </div>
                 {/* 예약하기 */}
                 <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
                     <h1>Reserve</h1>
@@ -216,7 +213,7 @@ function DetailHospital() {
                             maxDate={addMonths(new Date(), 5)}
                             filterDate={isWeekday}
                             showDisabledMonthNavigation
-                        />
+                         />
                         <form onSubmit={SubmitInfo}>
                             <DatePicker
                                 placeholderText="시간 선택"
@@ -256,7 +253,6 @@ function DetailHospital() {
                 </div>
 
             </div>
-        </div >
     );
 }
 

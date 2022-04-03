@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MyNFTList from '../components/myNFTList';
 import MyFollowList from "../components/myFollowList";
+import './mypage.css'
+import './userpage.css'
+
 
 function Userpage() {
     const userId = localStorage.getItem('userId');
@@ -9,7 +12,7 @@ function Userpage() {
     const selectedUserWallet = localStorage.getItem('selectedUserWallet');
 
     const [userInfo, setUserInfo] = useState({
-        user_name: '', 
+        user_name: '',
         wallet_address:'',
         profile_image: ''
     });
@@ -61,41 +64,53 @@ function Userpage() {
 
     return (
         <div class='Userpage'>
-            <h1 style={{ marginLeft: "10%", marginTop: "20px" }}>Username</h1>
-            <div style={{ marginLeft: "20%", marginRight: "20%", marginTop: "30px", height: "300px" }} class="p-3 mb-2 bg-light text-dark">
-                <div className="Profile" style={{ height: "85%", float: "left" }}>
-                    <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img>
-                </div>
-                <br />
+            <h1 className ="header">{userInfo.user_name}</h1>
 
-                <div className="Info" style={{ height: "85%" }}>
-                    <div style={{ display: "flex" }}>
-                        <MyFollowList userId={selectedUser} account={userInfo.wallet_address} />
+            <div className = "user-wrapper">
+                <div className = "mypage-left-wrapper">
+                    <div className = "profile-img-wrapper">
+                            {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
+                            {/* <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img> */}
+                            {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
+
                     </div>
-                    <div>
-                        <h5>USERNAME : 
-                        {
-                            userInfo.user_name.length > 10 ?
-                            userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
-                            : userInfo.user_name
-                        }
-                        </h5>
-                    </div>
-                    <div>
-                        <h5>EMAIL : {userInfo.email}</h5>
-                    </div>
-                    <div>
-                        <h5>Greeting : {userInfo.greetings}</h5>
-                    </div>
-                    <button data-user={userInfo._id} onClick={followHandler}>
-                        {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
-                    </button>
                 </div>
 
+
+
+                <div className="user-Info">
+                    <div className="user-header-wrapper">
+                        <h6 className="user-header-greeting">{userInfo.greetings}</h6>
+
+                        <div className = "Info-content-wrapper">
+                            <div >
+                                <h6 className="Info-text">USERNAME :
+                                {
+                                    userInfo.user_name.length > 10 ?
+                                    userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                                    : userInfo.user_name
+                                }
+                                </h6>
+                            </div>
+                            <div>
+                                <h6 className="Info-text">ADDRESS : { userInfo.wallet_address.slice(0, 4) + '···' + userInfo.wallet_address.slice(-4) }</h6>
+                            </div>
+                            <div>
+                                <h6 className="Info-text">EMAIL : {userInfo.email}</h6>
+                            </div>
+
+                        </div>
+
+                        <div style={{ display: "flex" }}>
+                            <MyFollowList userId={selectedUser} account={userInfo.wallet_address} />
+                        </div>
+                    </div>
+                </div>
             </div>
 
+
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
-                <h3>Post</h3>
+                <h3 className="header">Post</h3>
                 <hr></hr>
                 <div>
                     <MyNFTList account={selectedUserWallet} />

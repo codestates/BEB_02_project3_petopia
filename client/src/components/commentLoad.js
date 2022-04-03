@@ -21,7 +21,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             setComments(res.data.data);
         });
     }
-    
+
     const deleteButton = async(e) => {
         const commentUser = e.target.getAttribute('data-user')
         const commentId = e.target.getAttribute('data-id')
@@ -29,7 +29,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
 
         if((commentUser === userId) || (userId === postUser)){
             await axios.post(`http://localhost:4000/comment/${commentId}`)
-            element.remove()  
+            element.remove()
         }
     }
 
@@ -37,13 +37,13 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const replyUser = target.getAttribute('data-user')
         const replyId = target.getAttribute('data-id')
         const element = document.getElementById(replyId)
-        
+
         if((replyUser === userId) || (userId === postUser)){
             await axios.post(`http://localhost:4000/reply/${replyId}`)
             element.remove()
         }
     }
-    
+
     const addReplyhandler = async(e) =>{
         if(!JSON.parse(localStorage.getItem('isOpenReply'))) {
             const commentId = e.target.getAttribute('data-id');
@@ -81,24 +81,24 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             localStorage.setItem('isOpenReply', false);
             const reply = res.data.data;
             const parent = document.getElementById(`replies_${commentId}`)
-            
+
             const divEl = document.createElement('div');
             divEl.className = 'reply-wrapper'
             divEl.id = reply._id;
             divEl.innerHTML = `
-
             <div className = "reply-user-wrapper">
                     <span>└</span>
                     <img className="rounded-circle" src=${reply.user.profile_image} alt="profile" width="45"/>
                     <div className="reply-comment-wrapper">
-                        ${
-                            reply.user.user_name.length > 10 ?
-                            reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
-                            : reply.user.user_name
-                        }
-                    </span>
-                    <p className="replyUser">${reply.contents}</p>
-                </div>  
+                        <span class="reply-user">
+                            ${
+                                reply.user.user_name.length > 10 ?
+                                reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
+                                : reply.user.user_name
+                            }
+                        </span>
+                    <p className="reply-contents">${reply.contents}</p>
+                </div>
             </div>
             <div className = "reply-btn-wrapper">
                     <div className="post-time">
@@ -106,9 +106,9 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                     </div>
                     <button id="btn_${reply._id}" data-user=${reply.user._id} data-id=${reply._id}> delete </button>
                 </div>`
-            
+
             parent.append(divEl)
-            
+
             document.getElementById(`btn_${reply._id}`).addEventListener('click', function(e){
                 replyDelete(e.target)
             });
@@ -116,7 +116,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             document.getElementById(`form_${commentId}`).remove();
         })
     }
-    
+
     return(
         <div className="comments">
             {comments.map((comment) => {
@@ -124,26 +124,26 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                     <div key={comment._id} className = "commentForm_wrapper" id= {comment._id} >
 
                         <div className = "comment-user-wrapper">
-                        
+
                         <img className="rounded-circle" src={comment.user.profile_image} alt={"profile"} width="45"/>
                             <div className = "comment-comment-wrapper">
-                                <span class="font-weight-bold">
+                                <span class="comment-user">
                                 {
                                     comment.user.user_name.length > 10 ?
                                     comment.user.user_name.slice(0, 4) + '···' + comment.user.user_name.slice(-4)
                                     : comment.user.user_name
                                 }
                                 </span>
-                                <p className="comment-content">{comment.contents}</p>
+                                <p className="comment-contents">{comment.contents}</p>
                             </div>
 
                         </div>
-                        
+
                         <div className = "comment-btn-wrapper">
                             <div className="post-time">
                                 <span>{comment.comment_date.split('T')[0]}</span>
-                            
-                            {   
+
+                            {
                                 userId === comment.user._id || userId === postUser ?
                                 <button className = "comment-btn-delete" onClick={deleteButton} data-user={comment.user._id} data-id={comment._id}> delete </button>
                                 : <></>
@@ -151,7 +151,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                             <button className = "comment-btn-reply" onClick={addReplyhandler} data-user={comment.user._id} data-id={comment._id}> reply </button>
                             </div>
                         </div>
-                        
+
                         <div className='replies' id={`replies_${comment._id}`}>
                             <Reply userId={userId} postUser={postUser} commentId={comment._id} replyDelete={replyDelete}/>
                         </div>
