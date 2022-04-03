@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 
 import Login from "./pages/login/login";
-import Layout from './components/layout';
+import Layout from './components/Layout';
 import Footer from './footer';
 import useLocalStorage from './storage/useLocalStorage';
 

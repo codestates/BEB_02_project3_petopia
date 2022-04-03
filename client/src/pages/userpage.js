@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import MyNFTList from '../components/myNFTList';
-import MyFollowList from "../components/myFollowList";
+import MyNFTList from '../components/MyNFTList';
+import MyFollowList from "../components/MyFollowList";
 import './mypage.css'
 import './userpage.css'
 

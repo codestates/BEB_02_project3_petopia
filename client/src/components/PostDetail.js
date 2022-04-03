@@ -1,6 +1,6 @@
 import LikeButton from "./Likebutton"
-import CommentLoad from "./commentLoad"
-import Comment from "./comment"
+import CommentLoad from "./CommentLoad"
+import Comment from "./Comment"
 import { useState, useEffect } from "react"
 import axios from "axios"
 

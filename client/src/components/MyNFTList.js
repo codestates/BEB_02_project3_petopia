@@ -5,8 +5,8 @@ import kip17Abi from "../abi/kip17Abi.js";
 import Web3 from "web3";
 import Caver from 'caver-js';
 import { Modal } from "react-bootstrap";
-import PostDetail from "../components/PostDetail";
-import Nodata from "../components/Nodata";
+import PostDetail from "./PostDetail";
+import Nodata from "./Nodata";
 import Loading from "./Loading.js";
 
 function MyNFTList({ account }) {

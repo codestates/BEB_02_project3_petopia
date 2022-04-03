@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import MyNFTList from '../components/myNFTList';
+import MyNFTList from '../components/MyNFTList';
 import ReserveList from '../components/ReserveList';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
-import MyFollowList from "../components/myFollowList";
+import MyFollowList from "../components/MyFollowList";
 import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
 import './mypage.css';
