@@ -50,7 +50,7 @@ function PostDetail({ token }) {
                         <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                     </div>
                 </div>
-                 {/* <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} /> */}
+                 <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
             </div>
         </div>
         // </div>
