@@ -1,6 +1,7 @@
 import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstrap";
 import { useState } from "react";
 import petopia from '../css/image/petopia.png';
+import petopiadog from '../css/image/dog.png';
 
 
 function Navigation() {
