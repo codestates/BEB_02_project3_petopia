@@ -211,7 +211,7 @@ button[class|="follow"]
     color: rgb(0, 162, 255);
     opacity: 0.5; */
     background-color : rgb(0, 162, 255);
-    width : 65px;
+    width : 60px;
     height : 25px;
     border : solid 1px white;
     font-size: 12px;
@@ -228,12 +228,10 @@ button[class|="follow"]
     background-color: rgba(var(--b3f,250,250,250),1);
 }
 
-.postbtn-All,
-.postbtn-Follow
+.postbtn-All
 {
     font-family: 'Roboto';
     font-size: 18px;
-    /* font-style: Roboto; */
     background: none;
     border: none;
     outline: none;
@@ -245,8 +243,74 @@ button[class|="follow"]
 }
 
 
-.comment-username{
+.postbtn-Follow
+{
+    font-family: 'Roboto';
+    font-size: 18px;
+    background: none;
+    border: none;
+    outline: none;
     font-weight: bold;
+    margin: 0px 40px;
+    color: rgb(0, 162, 255);
+    opacity: 0.8;
+    font-family: 'Roboto';
+}
+
+.postbtn-All:hover
+{
+    font-family: 'Roboto';
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    margin: 0px 40px;
+    color:  rgb(0, 162, 255);;
+    opacity: 0.8;
+    font-family: 'Roboto';
+}
+
+.postbtn-Follow:hover
+{
+    font-family: 'Roboto';
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    margin: 0px 40px;
+    color:  rgb(0, 162, 255);
+    opacity: 0.8;
+    font-family: 'Roboto';
+}
+
+
+.postbtn-Follow:focus{
+    font-family: 'Roboto';
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    margin: 0px 40px;
+    color: cornflowerblue;
+    opacity: 0.8;
+    font-family: 'Roboto';
+}
+
+.postbtn-All:focus
+{
+  font-family: 'Roboto';
+  font-size: 20px;
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  margin: 0px 40px;
+  color: cornflowerblue;
+  opacity: 0.8;
+  font-family: 'Roboto';
 
 }
 

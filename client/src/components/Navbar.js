@@ -2,6 +2,9 @@ import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstr
 import { useState } from "react";
 import petopia from '../css/image/petopia_text.png';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faStethoscope, faUser } from '@fortawesome/free-solid-svg-icons'
+
 
 function Navigation() {
 
@@ -12,7 +15,7 @@ function Navigation() {
     }
 
     const searchBtn = () => {
-        if(search !== ''){
+        if (search !== '') {
             localStorage.setItem('searchName', search);
             window.location.replace('http://localhost:3000/user/' + search);
         } else {
@@ -45,12 +48,13 @@ function Navigation() {
         <div className="Navbar">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/"><img src = {petopia} width="200px"/></Navbar.Brand>
+                    <Navbar.Brand href="/"><img src={petopia} width="200px" /></Navbar.Brand>
                     <Form className="d-flex justify-content-end">
                         <FormControl
                             type="search"
                             placeholder="Search"
                             className="me-2"
+                            class="search-bar"
                             aria-label="Search"
                             onChange={searchHandler}
                             onKeyPress={handleKeyPress}
@@ -61,9 +65,9 @@ function Navigation() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/" className="me-2">🏠</Nav.Link>
-                        <Nav.Link href="/mypage" className="me-2">🙋🏻‍♂️</Nav.Link>
-                        <Nav.Link href="/hospital" className="me-2">🏥</Nav.Link>
+                        <Nav.Link href="/" className="me-2"><FontAwesomeIcon size="lg" icon={faHouse} /></Nav.Link>
+                        <Nav.Link href="/hospital" className="me-2"><FontAwesomeIcon size="lg" icon={faStethoscope} /></Nav.Link>
+                        <Nav.Link href="/mypage" className="me-2"><FontAwesomeIcon size="lg" icon={faUser} /></Nav.Link>
                         <Button onClick={handleRemoveToken}>Disconnect</Button>
                     </Nav>
                 </Container>
