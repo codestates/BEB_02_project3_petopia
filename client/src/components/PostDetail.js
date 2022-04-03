@@ -46,11 +46,11 @@ function PostDetail({ token }) {
                         }
                     </p>
                     <LikeButton postId={token.postInfo._id} userId={userId} />
-                    <div className="comments" id={`comments_${token.postInfo._id}`}>
+                    {/*<div className="comments" id={`comments_${token.postInfo._id}`}>
                         <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
-                    </div>
+                    </div>*}
                 </div>
-                 <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                 {/* <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} /> */}
             </div>
         </div>
         // </div>
