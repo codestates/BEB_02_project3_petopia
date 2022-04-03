@@ -44,10 +44,8 @@ function HospitalList() {
                     ?
                     hospitalList.map(info => {
                         return (
-
                                 <div key={info._id} className="hospital-Container">
                                 {/* <div key={info._id} className={info._id} > */}
-
                                     <img className = "hospital-img" src={info.hospital_profile} onClick={moveReservePage} data-id={info._id} ></img>
                                     <div className = "hospital-contants-Container">
                                         <h6 className = "hospital-title">{info.hospital_name}</h6>
@@ -78,7 +76,6 @@ function HospitalList() {
                                         </div>
                                     </div>
                                 </div>
-
                         )
                     })
                     : <Nodata />

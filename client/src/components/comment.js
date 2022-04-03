@@ -134,14 +134,12 @@ const Comment = ({ postId, userId, postUser }) => {
                 <div className = "comment-user-wrapper">
                     <img className="rounded-circle" src=${newComment.user.profile_image} alt="profile" width="45"/>
                     <div className = "comment-comment-wrapper">
-
                             <span class="comment-user">
                                 ${newComment.user.user_name.length > 10 ?
                                 newComment.user.user_name.slice(0, 4) + '···' + newComment.user.user_name.slice(-4)
                                 : newComment.user.user_name
                             }
                             </span>
-
                         <p className="comment-contents">${newComment.contents}</p>
                     </div>
                 </div>
