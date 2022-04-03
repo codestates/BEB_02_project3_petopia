@@ -218,7 +218,7 @@ function Mypage() {
                                                 <tr>
                                                     <td>Username</td>
                                                     <td>
-                                                        <input className='input-box' type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} defaultValue={userInfo.user_name} placeholder={userInfo.user_name}></input> <span id='username-check'></span>
+                                                        <input className='input-box' type="textbox" id="username" onChange={changeUsername} style={{ width: "200px" }} defaultValue={userInfo.user_name} placeholder={userInfo.user_name}></input> <span id='username-check'></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -260,12 +260,7 @@ function Mypage() {
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
-
-
                 </div>
-
-
-
             </div>
 
 

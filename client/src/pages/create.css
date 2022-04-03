@@ -54,7 +54,6 @@ img {
 }
 
 
-
 .input_text {
   opacity: 80%;
   margin: auto;
@@ -66,12 +65,11 @@ TEXTAREA {
   font-size: 30px;
 }
 
-
 .input_file {
   width: 402px;
   height: 411px;
   border: solid 0.5px #5e5e5e;
-  margin: auto;
+  /* margin: auto; */
   /* width: 100%; */
   object-fit: cover;
 }
