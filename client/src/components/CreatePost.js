@@ -47,7 +47,7 @@ function CreatePost() {
         const metadata = {
             "description": inputText,
             "image": `${ipfsUrl}${imagePath}`,
-            "name": "test_name",
+            "name": "PETO_NFT",
         };
         const metadataPath = await uploadIPFS(JSON.stringify(metadata));
         createNFT(`${ipfsUrl}${metadataPath}`);
