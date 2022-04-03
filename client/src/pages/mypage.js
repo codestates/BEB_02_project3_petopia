@@ -9,6 +9,12 @@ import MyFollowList from "../components/MyFollowList";
 import TxHistoryList from '../components/TxHistoryList'
 import Caver from 'caver-js';
 import './mypage.css';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
+const kip7CA = process.env.REACT_APP_KIP7_CA
 
 function Mypage() {
     const caver = new Caver(window.klaytn);
@@ -32,27 +38,27 @@ function Mypage() {
 
 
     useEffect(async () => {
-        await axios.get(`http://localhost:4000/user/${userId}`)
+        await axios.get(`${host}/user/${userId}`)
             .then((res) => {
                 setUserInfo(res.data.data);
             });
 
-        await axios.get(`http://localhost:4000/reserve/${userId}`)
+        await axios.get(`${host}/reserve/${userId}`)
             .then((res) => {
                 setMyReservations(res.data.data);
             });
 
-        await axios.get(`http://localhost:4000/user/getNames/${userId}`)
+        await axios.get(`${host}/user/getNames/${userId}`)
             .then((res) => {
                 setGetName(res.data.data)
             });
 
-        const ki7Instance = new caver.kct.kip7('0x70C0327f5A6F2fb72C084055f9E5C05f5a1A4560');
+        const ki7Instance = new caver.kct.kip7(kip7CA);
         await ki7Instance.balanceOf(account).then((res) => {
             setBallance(res.toNumber()/1E18)
         });
 
-        setTxHistoryList(await (await axios.get(`http://localhost:4000/contract/${account}`)).data.data.items);
+        setTxHistoryList(await (await axios.get(`${host}/contract/${account}`)).data.data.items);
 
     }, []);
 
@@ -118,7 +124,7 @@ function Mypage() {
             profileimage = userInfo.profile_image;
         }
 
-        axios.post('http://localhost:4000/user/update', {
+        axios.post(`${host}/user/update`, {
             '_id': userId,
             'user_name': username,
             'wallet_address': userInfo.wallet_address,
@@ -128,7 +134,7 @@ function Mypage() {
         })
         setShowModal(false)
 
-        window.location.replace('http://localhost:3000/mypage')
+        window.location.replace(`${domain}/mypage`)
     }
 
     const uploadIPFS = async (file) => {

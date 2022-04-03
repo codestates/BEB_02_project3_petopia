@@ -9,12 +9,14 @@ import './login.css';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
+
 function Login() {
   const [web3, setWeb3] = useState('');
   const [caver, setCaver] = useState('');
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_KIP17_CA)
     // if (typeof window.ethereum !== "undefined") {
     //   try {
     //     const web = new Web3(window.ethereum);
@@ -46,7 +48,7 @@ function Login() {
     const your_address = (await web3.eth.getAccounts())[0];
     let username = '';
 
-    await axios.post('http://localhost:4000/user/login', { address: your_address })
+    await axios.post(`${host}/user/login`, { address: your_address })
       .then((res) => {
         const userInfo = res.data.data;
         if (userInfo !== null) {
@@ -85,7 +87,7 @@ function Login() {
   };
 
   const signup = async (address) => {
-    await axios.post('http://localhost:4000/user/signup', {
+    await axios.post(`${host}/user/signup`, {
       address: address,
       image: 'https://ipfs.io/ipfs/QmbLqHKBnwSUg6xS7aRUDShjwz34Gj5dg97aQqstM5xFHz?filename=dogdogdog.png'
     })
@@ -98,7 +100,7 @@ function Login() {
     const accounts = await window.klaytn.enable();
     let username = '';
 
-    await axios.post('http://localhost:4000/user/login', { address: accounts[0] })
+    await axios.post(`${host}/user/login`, { address: accounts[0] })
       .then((res) => {
         const userInfo = res.data.data;
         if (userInfo !== null) {
@@ -119,7 +121,7 @@ function Login() {
           localStorage.setItem('account', JSON.stringify(accounts[0]));
           localStorage.setItem('networkType', 1);
           alert(`Welcome, ${username}!`);
-          window.location.href = 'http://localhost:3000/mypage';
+          window.location.href = `${domain}/mypage`;
         }
       });
   }

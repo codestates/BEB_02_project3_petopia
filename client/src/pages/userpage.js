@@ -4,7 +4,10 @@ import MyNFTList from '../components/MyNFTList';
 import MyFollowList from "../components/MyFollowList";
 import './mypage.css'
 import './userpage.css'
+import dotenv from 'dotenv';
+dotenv.config();
 
+const host = process.env.REACT_APP_DB_HOST;
 
 function Userpage() {
     const userId = localStorage.getItem('userId');
@@ -24,12 +27,12 @@ function Userpage() {
 
     const getInfoList = async () => {
 
-        await axios.get(`http://localhost:4000/follow/${userId}`)
+        await axios.get(`${host}/follow/${userId}`)
             .then((res) => {
                 setFollowList(res.data.data);
             });
 
-        await axios.get(`http://localhost:4000/user/${selectedUser}`)
+        await axios.get(`${host}/user/${selectedUser}`)
             .then((res) => {
                 setUserInfo(res.data.data)
             })
@@ -43,7 +46,7 @@ function Userpage() {
         };
 
         if (btnText === 'follow') {
-            const follow = await axios.post('http://localhost:4000/follow/', followInfo)
+            const follow = await axios.post(`${host}/follow/`, followInfo)
                 .then((res) => {
                     const result = res.data.data;
                     if (result !== null) {
@@ -52,7 +55,7 @@ function Userpage() {
                 });
 
         } else {
-            const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+            const unfollow = await axios.post(`${host}/follow/unfollow/`, followInfo)
                 .then((res) => {
                     const result = res.data.data;
                     if (result) {

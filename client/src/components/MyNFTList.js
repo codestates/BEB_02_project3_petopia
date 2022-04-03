@@ -8,6 +8,10 @@ import { Modal } from "react-bootstrap";
 import PostDetail from "./PostDetail";
 import Nodata from "./Nodata";
 import Loading from "./Loading.js";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
 
 function MyNFTList({ account }) {
     const [NFTList, setNFTList] = useState([]);
@@ -42,7 +46,7 @@ function MyNFTList({ account }) {
             const metadata = await (await axios.get(`${tokenURI}`)).data;
             setIsLoading(true);
 
-            const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
+            const postInfo = await (await axios.get(`${host}/post/${tokenId}/${networkType}`)).data.data;
             if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
 
                 setNFTList((prevState) => {

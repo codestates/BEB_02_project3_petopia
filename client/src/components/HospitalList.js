@@ -2,6 +2,11 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import Nodata from "./Nodata";
 import Loading from "./Loading.js";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
 
 function HospitalList() {
 
@@ -14,7 +19,7 @@ function HospitalList() {
 
     const getHospital = async () => {
         setIsLoading(true);
-        await axios.get(`http://localhost:4000/hospital/`)
+        await axios.get(`${host}/hospital/`)
             .then((res) => {
                 setHospitalList(res.data.data);
             })
@@ -29,12 +34,12 @@ function HospitalList() {
         const id = e.target.getAttribute('data-id')
         localStorage.setItem('hospital_id', id)
 
-        await axios.get(`http://localhost:4000/hospital/${id}`)
+        await axios.get(`${host}/hospital/${id}`)
             .then((res) => {
                 localStorage.setItem('hospitalInfo', JSON.stringify(res.data.data));
             })
 
-        window.location.href = `http://localhost:3000/hospital/${id}`
+        window.location.href = `${domain}/hospital/${id}`
     }
 
     return (
