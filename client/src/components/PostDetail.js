@@ -18,16 +18,16 @@ function PostDetail({ token }) {
     }, [])
 
     return (
-        <div className="PostDetail" style={{ display: "flex" }}>
+        <div className="PostDetail" style={{ display: "flex"}}>
             {/* <div class="right-col"> */}
-            <div className="post-image">
-                <img width="500px" src={token.metadata.image} className="post-image" alt={token.tokenId} />
+            <div className="post-image" style={{ width:"393px", height:"393px", marginRight:"4px"}}>
+                <img src={token.metadata.image} class="post-image-resize"  alt={token.tokenId} width="393px" height="393px"/>
             </div>
             <div className="post-info">
                 <div className="user">
-                    <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                    <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom" style={{ width:"390px"}}>
                         <div className="d-flex flex-row align-items-center feed-text px-2">
-                            <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" />
+                            <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" height="45"/>
                             <div className="d-flex flex-column flex-wrap ml-2"><span class="username">{token.postInfo.user.user_name}</span></div>
                         </div>
                         <div className="post-time">
@@ -50,7 +50,7 @@ function PostDetail({ token }) {
                         <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                     </div>
                 </div>
-                <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
+                 {/* <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} /> */}
             </div>
         </div>
         // </div>

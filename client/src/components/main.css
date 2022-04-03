@@ -79,18 +79,31 @@
     border: none;
 }
 
+
+
 .post-image{
-    width: 300px;
-    height: 300px;
+    width: 393px;
+    height: 393px;
     object-fit: cover;
     border-right : 1px solid #dfdfdf;
 }
 
+.post-image-resize{
+  width: 393px;
+  height: 393px;
+  object-fit: cover;
+  border-right : 1px solid #dfdfdf;
+}
+
+
+
+.PostDetail {
+
+}
 .post-content{
 
     display : flex;
     flex-direction: column;
-
     width: 100%;
     padding: 20px;
 }
@@ -126,7 +139,6 @@
 .comment-btn-wrapper,
 .comments-wrapper{
     margin-left : 56px;
-
 }
 
 /* comment & reply user wrapper */
@@ -182,6 +194,7 @@
 
 .comment-wrapper .icon{
     height: 45px;
+    
 }
 
 .comment-username{
