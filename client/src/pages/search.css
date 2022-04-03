@@ -5,22 +5,29 @@
 
 .search-component{
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .search-image{
-    height: 50px;
-    width : 50px;
+    height: 54px;
+    width : 54px;
     border-radius: 50%;
 }
 
 .search-username{
-    margin-left: 40px;
     font-size: 20px;
     font-weight: bold;
+    margin-bottom : 0px;
 }
 
-.follow-btn{
-    width: 70px;
+.search-greeting{
+    font-size: 16px;
+    
+}
+
+.search-follow-btn{
+    width: 100px;
     height: 100%;
     background: none;
     border: none;
@@ -29,4 +36,14 @@
     font-size: 20px;
     color: rgb(0, 162, 255);
     opacity: 0.5;
+    margin-top : 12px;
 }
+
+.search-text-wrapper{
+    display: flex;
+    flex-direction: column;
+    height : 100%;
+    margin-left: 40px;
+    width : 150px
+}
+

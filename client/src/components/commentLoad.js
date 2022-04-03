@@ -91,13 +91,14 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                     <span>└</span>
                     <img className="rounded-circle" src=${reply.user.profile_image} alt="profile" width="45"/>
                     <div className="reply-comment-wrapper">
-                        ${
-                            reply.user.user_name.length > 10 ?
-                            reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
-                            : reply.user.user_name
-                        }
-                    </span>
-                    <p className="replyUser">${reply.contents}</p>
+                        <span class="reply-user">
+                            ${
+                                reply.user.user_name.length > 10 ?
+                                reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
+                                : reply.user.user_name
+                            }
+                        </span>
+                    <p className="reply-contents">${reply.contents}</p>
                 </div>  
             </div>
             <div className = "reply-btn-wrapper">
@@ -127,14 +128,14 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                         
                         <img className="rounded-circle" src={comment.user.profile_image} alt={"profile"} width="45"/>
                             <div className = "comment-comment-wrapper">
-                                <span class="font-weight-bold">
+                                <span class="comment-user">
                                 {
                                     comment.user.user_name.length > 10 ?
                                     comment.user.user_name.slice(0, 4) + '···' + comment.user.user_name.slice(-4)
                                     : comment.user.user_name
                                 }
                                 </span>
-                                <p className="comment-content">{comment.contents}</p>
+                                <p className="comment-contents">{comment.contents}</p>
                             </div>
 
                         </div>

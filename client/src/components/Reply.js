@@ -26,14 +26,14 @@ const Reply = ({userId, postUser, commentId, replyDelete}) => {
                                 <span>└</span>
                                 <img className="rounded-circle" src={reply.user.profile_image} alt="profile" width="45"/>
                                     <div className="reply-comment-wrapper">
-                                        <span class="font-weight-bold">
+                                        <span class="reply-user">
                                         {
                                             reply.user.user_name.length > 10 ?
                                             reply.user.user_name.slice(0, 4) + '···' + reply.user.user_name.slice(-4)
                                             : reply.user.user_name
                                         }
                                         </span>
-                                        <p className="replyUser">{reply.contents}</p>
+                                        <p className="reply-contents">{reply.contents}</p>
                                     </div>
                                 
                             </div>
