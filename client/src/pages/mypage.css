@@ -151,3 +151,23 @@
     display: flex;
     flex-direction: column;
 }
+
+.PostDetail-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.posting-top-wrapper{
+    display: flex;
+    flex-direction: row;
+    height: 393px;
+}
+
+.posting-description{
+    margin: 10px 30px;
+    height: 200px;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: 'Roboto';   
+}

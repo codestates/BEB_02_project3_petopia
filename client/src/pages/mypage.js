@@ -165,7 +165,7 @@ function Mypage() {
                     <div className='Info'>
 
                         <div className="Info-header-wrapper">
-                            <h6 className="Info-header-greeting">{userInfo.greetings}</h6>
+                            <h6 className="Info-header-greeting">"{userInfo.greetings}"</h6>
 
                             <div className = "Info-content-wrapper">
                                 <div >

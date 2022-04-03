@@ -67,7 +67,18 @@ function Userpage() {
 
     return (
         <div class='Userpage'>
-            <h1 className ="header">{userInfo.user_name}</h1>
+            <h1 className ="header">
+                {
+                    userInfo.user_name.length > 10 ?
+                    userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+                    : userInfo.user_name
+                }
+            </h1>
+            <button className = "follow-button">
+                <div className="follow" data-user={userInfo._id} onClick={followHandler}>
+                    {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
+                </div>
+            </button>
             <div className = "user-wrapper">
                 <div className = "mypage-left-wrapper">
                     <div className = "profile-img-wrapper">
@@ -78,7 +89,7 @@ function Userpage() {
                 </div>
                 <div className="user-Info">
                     <div className="user-header-wrapper">
-                        <h6 className="user-header-greeting">{userInfo.greetings}</h6>
+                        <h6 className="user-header-greeting">"{userInfo.greetings}"</h6>
 
                         <div className = "Info-content-wrapper">
                             <div >
