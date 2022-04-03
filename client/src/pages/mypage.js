@@ -271,7 +271,6 @@ function Mypage() {
 
             {/* 내 게시물 */}
             <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
-                <h3 className="header">My Post</h3>
                 <hr></hr>
                 <div>
                     <MyNFTList account={account} />
