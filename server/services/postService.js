@@ -20,10 +20,9 @@ const getPostInfo = async(params) => {
      }
 }
 
-const getAllPostInfo = async(params) => {
-    const { networkType} = params;
+const getAllPostInfo = async(type) => {
     try {
-        return await Post.find({network_type:networkType}).populate('user').exec();
+        return await Post.find({network_type:type}).sort({'post_date': -1}).populate('user').exec();
      } catch (error) {
          throw Error(error);
      }
@@ -31,7 +30,7 @@ const getAllPostInfo = async(params) => {
 
 const deletePost = async(id) => {
     try {
-        return await Post.findByIdAndUpdate({id}, {isDelete:true});
+        return await Post.findByIdAndUpdate(id, {isDelete:true});
     } catch (error) {
         throw Error(error);
     }

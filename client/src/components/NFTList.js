@@ -161,6 +161,19 @@ function NFTList({ account, isAll }) {
     setShowModal(false)
   }
 
+  const deletePostHandler = async(e) => {
+    const id = e.target.getAttribute('data-id');
+    const el = document.getElementById(`post_${id}`);
+    
+    await axios.post(`${host}/post/${id}`)
+    .then((res) => {
+      const result = res.data.data;
+      if (result !== null) {
+        el.remove();
+      }
+    });
+  }
+
   return (
     <div className="nftList">
       {
@@ -169,7 +182,7 @@ function NFTList({ account, isAll }) {
           NFTList.map((token) => {
             return (
               <div class="right-col">
-                <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`}>
+                <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`} id={`post_${token.postInfo._id}`}>
 
                 <div className = "post-wrapper">
                   <div className="post-image">
@@ -195,7 +208,7 @@ function NFTList({ account, isAll }) {
                             {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
                           </div>
                         </button>
-                        :<></>
+                        :<button className = "follow-button" data-id={token.postInfo._id} onClick={deletePostHandler}>delete</button>
                       }
                       
                     </div>
