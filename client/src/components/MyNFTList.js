@@ -29,6 +29,7 @@ function MyNFTList({ account }) {
 
     const loadNFT = async () => {
         setIsLoading(true);
+        const postList = await (await axios.get(`${host}/post/${networkType}`)).data.data;
         // const tokenContract = await new web3.eth.Contract(erc721Abi, contractAddress);
         const tokenContract = await new caver.klay.Contract(kip17Abi, contractAddress);
         const totalSupply = await tokenContract.methods.totalSupply().call();
@@ -40,19 +41,23 @@ function MyNFTList({ account }) {
         }
         arr = arr.map(el => el).reverse()
         let cnt = 0;
-        for (let tokenId of arr) {
-            let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
-            let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
-            const metadata = await (await axios.get(`${tokenURI}`)).data;
-            setIsLoading(true);
 
-            const postInfo = await (await axios.get(`${host}/post/${tokenId}/${networkType}`)).data.data;
-            if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
-
-                setNFTList((prevState) => {
-                    return [...prevState, { tokenId, metadata, postInfo }];
-                });
-                cnt += 1;
+        for(let postInfo of postList) {
+            for (let tokenId of arr) {
+                if(tokenId === postInfo.token_id && !postInfo.isDelete) {
+                    let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
+                    let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
+                    const metadata = await (await axios.get(`${tokenURI}`)).data;
+                    setIsLoading(true);
+        
+                    if (String(tokenOwner).toLowerCase() === account.toLowerCase()) {
+        
+                        setNFTList((prevState) => {
+                            return [...prevState, { tokenId, metadata, postInfo }];
+                        });
+                        cnt += 1;
+                    }
+                }
             }
         }
         localStorage.setItem('postCnt', cnt);
