@@ -2,9 +2,11 @@ import { Table } from 'react-bootstrap';
 import Nodata from "./Nodata";
 import moment from 'moment';
 
+
 function ReceiptTxList({txList}) {
 
     return (
+
         <div className="txReceiptList">
             <Table bordered>
                 <thead>
@@ -26,7 +28,7 @@ function ReceiptTxList({txList}) {
                                     <td>{`${tx.from.slice(0, 4)}···${tx.from.slice(-4)}`}</td>
                                     <td>{parseInt(tx.value, 16)/1E18}</td>
                                     <td>
-                                        <button onClick={()=>{window.open(`https://baobab.scope.klaytn.com/tx/${tx.transaction.transactionHash}?tabId=tokenTransfer`)}}>SCOPE</button>
+                                    <button onClick={()=>{window.open(`https://baobab.scope.klaytn.com/tx/${tx.transaction.transactionHash}?tabId=tokenTransfer`)}}>SCOPE</button>
                                     </td>
                                 </tr>
                             )
