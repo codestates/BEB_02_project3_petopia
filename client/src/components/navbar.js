@@ -1,5 +1,7 @@
 import { Container, FormControl, Navbar, Form, Button, Nav } from "react-bootstrap";
 import { useState } from "react";
+import petopia from '../css/image/petopia.png';
+
 
 function Navigation() {
 
@@ -43,7 +45,7 @@ function Navigation() {
         <div className="Navbar">
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/">🐻 PETOPIA</Navbar.Brand>
+                    <Navbar.Brand href="/"><img src = {petopia}/></Navbar.Brand>
                     <Form className="d-flex justify-content-end">
                         <FormControl
                             type="search"
