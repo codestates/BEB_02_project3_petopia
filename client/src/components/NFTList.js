@@ -53,13 +53,13 @@ function NFTList({ account, isAll }) {
       const metadata = await (await axios.get(`${tokenURI}`)).data;
       const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
 
-      if (String(tokenOwner).toLowerCase() !== account.toLowerCase()) {
-        // isAll이 true면 본인 제외 전체 피드 로드
-        if (isAll) {
-          setNFTList((prevState) => {
-            return [...prevState, { postInfo, tokenId, metadata }];
-          });
-        } else {  // false면 팔로워 피드만 로드(...정상작동하지 않음 전체 피드만 불러옴)
+      // isAll이 true면 전체 피드 로드
+      if (isAll) {
+        setNFTList((prevState) => {
+          return [...prevState, { postInfo, tokenId, metadata }];
+        });
+      } else {  // false면 팔로워 피드만 로드
+        if (String(tokenOwner).toLowerCase() !== account.toLowerCase()) {
           for (let follow of followList) {
             if (postInfo.user._id === follow.follower._id) {
               setNFTList((prevState) => {
@@ -69,6 +69,7 @@ function NFTList({ account, isAll }) {
           }
         }
       }
+      
     }
     setIsLoading(false);
   };
@@ -162,21 +163,19 @@ function NFTList({ account, isAll }) {
                             }
                           </span>
                       </div>
-
+                      {
+                        userId !== token.postInfo.user._id ?
+                        <button className = "follow-button">
+                          <div class="follow" className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                            {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
+                          </div>
+                        </button>
+                        :<></>
+                      }
                       <div className="post-time">
                         <span>{token.postInfo.post_date.split('T')[0]}</span>
                       </div>
-
-                        {/* <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
-                          {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
-                        </button> */}
-                      <button className = "follow-button"><div class="follow" className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
-                          {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
-                        </div></button>
-
-
                     </div>
-
 
                   <div className="post-content">
                   <p className="description">
