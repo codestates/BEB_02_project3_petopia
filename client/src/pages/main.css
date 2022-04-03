@@ -1,7 +1,35 @@
+.main{
+    background-color: rgba(var(--b3f,250,250,250),1);
+}
+.nftList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
 .right-col{
 
-    padding: 5px 200px 5px;
+    width: 650px;
+    margin-bottom: 10px; 
+
 }
+
+.post-wrapper{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.right-contentWrapper
+{
+
+    display : flex;
+    flex-direction: column;
+    width : 348px;
+    height: 300px;
+}
+
 
 .post{
     width: 100%;
@@ -20,12 +48,14 @@
     padding: 0 20px;
 }
 
-.info .username{
+.content-username{
     width: auto;
     font-weight: bold;
     color: #000;
-    font-size: 14px;
+    font-size: 16px;
     margin-left: 10px;
+    padding:0 5px; 
+    font-family: 'Roboto';
 }
 
 .info .options{
@@ -50,12 +80,17 @@
 }
 
 .post-image{
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
+    border-right : 1px solid #dfdfdf;
 }
 
 .post-content{
+
+    display : flex;
+    flex-direction: column;
+    
     width: 100%;
     padding: 20px;
 }
@@ -65,19 +100,72 @@
 }
 
 .description{
-    margin: 10px 0;
-    font-size: 14px;
+    margin: 10px 30px;
+    height: 120px;
+    font-size: 16px;
     line-height: 20px;
+    font-family: 'Roboto';
 }
 
 .description span{
-    font-weight: bold;
     margin-right: 10px;
 }
 
 .post-time{
     color: rgba(0, 0, 0, 0.5);
     font-size: 12px;
+
+}
+
+/* comment diffrent └ */
+.reply-btn-wrapper{
+    margin-left : 70px;
+}
+
+/* comment total wrapper */
+.comment-btn-wrapper,
+.comments-wrapper{
+    margin-left : 56px;
+    
+}
+
+/* comment & reply user wrapper */
+.reply-user-wrapper,
+.comment-user-wrapper{
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+}
+
+/* comment & reply comment wrapper */
+.reply-comment-wrapper,
+.comment-comment-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-left: 11px;
+}
+
+
+
+.replyForm-wrapper
+{
+    margin-left : 28px;
+    margin-top : 2px;
+    margin-bottom: 2px;
+}
+
+.commentForm_wrapper{
+    margin-left : 56px;
+    margin-top : 2px;
+    margin-bottom: 2px;
+}
+
+.reply-wrapper{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .comment-wrapper{
@@ -87,10 +175,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid #dfdfdf;
+    
+    
 }
 
 .comment-wrapper .icon{
-    height: 30px;
+    height: 45px;
+}
+
+.comment-username{
+    font-weight: bold;
+    
 }
 
 .comment-box{
@@ -101,7 +197,66 @@
     font-size: 14px;
 }
 
-.deleteButton,
+button[class|="follow"]
+{
+    width: 70px;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    text-transform: capitalize;
+    font-size: 16px;
+    color: rgb(0, 162, 255);
+    opacity: 0.5;
+}
+
+.postSelect-wrapper{
+    display: flex;
+    justify-content: center;
+    height : 67px;
+    background-color: rgba(var(--b3f,250,250,250),1);
+}
+
+.postbtn-All,
+.postbtn-Follow
+{
+    font-family: 'Roboto';
+    font-size: 18px;
+    /* font-style: Roboto; */
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    margin: 0px 40px;
+    color: rgb(0, 162, 255);
+    opacity: 0.8;
+    font-family: 'Roboto';
+}
+
+
+.comment-username{
+    font-weight: bold;
+    
+}
+
+.reply-btn-reply,
+.comment-btn-delete,
+.comment-btn-reply{
+    margin-left: 5px;
+    width: 50px;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    text-transform: capitalize;
+    color: rgb(68, 79, 85);
+    opacity: 0.5;
+    font-weight: bold;
+    font-family: 'Roboto';
+
+}
+
+
 .comment-btn,
 .action-btn{
     width: 70px;
@@ -115,11 +270,13 @@
     opacity: 0.5;
 }
 
+
+
 .reaction-wrapper{
     width: 100%;
-    height: 50px;
+    height: 100px;
     display: flex;
-    margin-top: -20px;
+    flex-direction: row;
     align-items: center;
 }
 
@@ -138,3 +295,23 @@
     height : 16;
 }
 
+.comment-user,
+.reply-user{
+    font-weight: bold;
+}
+
+.spinner-wrapper{
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.loading-spinner{
+    height : 60px;
+    width:  60px;
+    margin-top : 150px;
+    margin-bottom : 500px;
+    color: rgb(0, 162, 255);
+    opacity: 0.8;
+}

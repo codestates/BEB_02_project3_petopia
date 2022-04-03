@@ -1,0 +1,36 @@
+.jumbotron{
+    margin-top: 170px;
+    margin-bottom: 170px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;     */
+}
+
+.homepage-wrapper{
+    
+    text-align: center;
+}
+
+.left-beforeLogin{
+    width : 400px;
+    height : 400px;
+    flex-direction: column;
+    align-items: center;  
+}
+
+.right-beforeLogin{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin : 50px;
+    width: 300px;
+    height: 300px;
+    flex-direction: column;
+    align-items: center; 
+} 

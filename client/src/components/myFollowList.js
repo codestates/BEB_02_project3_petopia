@@ -132,15 +132,15 @@ function MyFollowList({ userId, account }) {
 
     return (
         <div className="MyFollowList" >
-            <span style={{ padding: "10px" }}>
+            <span className="Info-text" style={{ padding: "30px" }}>
                 게시물 : {postCnt}
             </span>
 
-            <span style={{ padding: "10px" }} onClick={followerBtn}>
+            <span className="Info-text" style={{ padding: "30px" }} onClick={followerBtn}>
                 팔로워 : {followerList.length}
             </span>
 
-            <span style={{ padding: "10px" }} onClick={followBtn} >
+            <span className="Info-text" style={{ padding: "30px" }} onClick={followBtn} >
                 팔로잉 : {followList.length}
             </span>
 

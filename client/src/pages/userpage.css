@@ -1,0 +1,37 @@
+.Userpage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(var(--b3f,250,250,250),1);
+}
+
+.user-wrapper{
+    display: flex;
+    flex-direction: row;
+    height : 300px;
+    width : 900px;
+    border: 1px solid #dfdfdf;
+    background-color: white;
+}
+
+.user-header-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content : space-evenly;
+    align-items: center;
+    
+}
+
+.user-header-greeting{
+    font-size: 28px;
+    font-family: 'Roboto';
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.user-Info{
+    margin: 50px;
+    width : 600px;
+    height : 100%;
+
+}
