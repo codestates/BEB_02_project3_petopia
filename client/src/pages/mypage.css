@@ -133,3 +133,21 @@
     border: 1px solid #dfdfdf;
     background-color: #ebebeb;
 }
+
+.input-box{
+    width: 70%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.upadate-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.input-table {
+    display: flex;
+    flex-direction: column;
+}

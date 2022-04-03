@@ -97,11 +97,14 @@ const CommentLoad = ({postId, userId, postUser}) =>{
     }
 
     const insertReply = async(commentId) => {
+        const replyText = document.getElementById(`input_${commentId}`).value;
+        if(replyText === null || replyText === 'undefined' || replyText === '') return alert('텍스트를 입력하세요.')
+        
         await axios.post('http://localhost:4000/reply',{       // POST
             commentId: commentId,
             userId: userId,
             replyDate: new Date().toLocaleDateString('ko-KR'),
-            contents : document.getElementById(`input_${commentId}`).value })
+            contents : replyText })
         .then((res) =>{
             localStorage.setItem('isOpenReply', false);
             const reply = res.data.data;
@@ -204,9 +207,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
                                 <button className = "comment-btn-reply" onClick={addReplyhandler} data-user={comment.user._id} data-id={comment._id}> reply </button>
                             </div>
                         </div>
-                        <div className='replies' id={`replies_${comment._id}`}>
-                            <Reply userId={userId} postUser={postUser} commentId={comment._id} replyDelete={replyDelete}/>
-                        </div>
+                        <Reply userId={userId} postUser={postUser} commentId={comment._id} replyDelete={replyDelete}/>
                     </div>
                 )
             })}

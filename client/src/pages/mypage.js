@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import MyNFTList from '../components/MyNFTList';
 import ReserveList from '../components/ReserveList';
 import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Table } from 'react-bootstrap';
 import { create } from "ipfs-http-client";
 import MyFollowList from "../components/MyFollowList";
 import TxHistoryList from '../components/TxHistoryList'
@@ -17,10 +17,10 @@ function Mypage() {
     const [userInfo, setUserInfo] = useState({user_name:'', wallet_address:''});
     const [showModal, setShowModal] = useState(false)
     const [showReserveModal, setShowReserveModal] = useState(false)
-    const [username, setUsername] = useState(userInfo.user_name)
-    const [email, setEmail] = useState(userInfo.email)
-    const [greetings, setGreetings] = useState(userInfo.greetings)
-    const [image, setImage] = useState(userInfo.profile_image)
+    const [username, setUsername] = useState()
+    const [email, setEmail] = useState()
+    const [greetings, setGreetings] = useState()
+    const [image, setImage] = useState()
     const [uploadImage, setUploadImage] = useState('')
     const [myReservations, setMyReservations] = useState([]);
     const [getName, setGetName] = useState([]);
@@ -118,10 +118,6 @@ function Mypage() {
             profileimage = userInfo.profile_image;
         }
 
-        if (isCheck) {
-            alert('노노');
-            return
-        }
         axios.post('http://localhost:4000/user/update', {
             '_id': userId,
             'user_name': username,
@@ -151,7 +147,6 @@ function Mypage() {
                                 {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
                                 {/* <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img> */}
                                 {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
-
                         </div>
 
                         <div className = "profile-left-down-wrapper">
@@ -192,9 +187,7 @@ function Mypage() {
 
                         <div className='mypage-btn-wrapper'>
                             <div className='Token' >
-
                                 <Button type="button" class="btn btn-primary" value="history" onClick={historyModalOpen}>히스토리</Button>
-                                {/* <button value="history" onClick={historyModalOpen}/> */}
                             </div>
 
                             <div>
@@ -215,20 +208,40 @@ function Mypage() {
                                     <Modal.Title>Edit Profile</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    <label for="file">
-                                        {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
-                                    </label>
-                                    <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
-                                    Username : <input type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} placeholder={userInfo.user_name}></input> <span id='username-check'></span><br />
-                                    Address : <h7>{userInfo.wallet_address}</h7> <br></br>
-                                    E-MAIL : <input type="textbox" onChange={changeEmail} placeholder={userInfo.email}></input>
-                                    Greeting : <input type="textbox" onChange={changeGreeting} style={{ width: "410px" }} placeholder={userInfo.greetings}></input>
+                                    <div className='upadate-form'>
+                                        <label for="file">
+                                            {<img style={{ width: "200px", height: "200px" }} src={uploadImage === '' ? userInfo.profile_image : URL.createObjectURL(uploadImage)} />}
+                                        </label>
+                                        <input id="file" name="file" type="file" onChange={changeImgae} accept="image/png, image/jpeg" style={{ display: "none" }} /> <br />
+                                        <div className='input-table'>
+                                            <Table>
+                                                <tr>
+                                                    <td>Username</td>
+                                                    <td>
+                                                        <input className='input-box' type="textbox" id="username" onChange={changeUsername} style={{ width: "400px" }} defaultValue={userInfo.user_name} placeholder={userInfo.user_name}></input> <span id='username-check'></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>E-MAIL</td>
+                                                    <td>
+                                                        <input className='input-box' type="textbox" onChange={changeEmail} style={{ width: "400px" }} defaultValue={userInfo.email} placeholder={userInfo.email}></input><br/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Greeting</td>
+                                                    <td>
+                                                        <textarea className='input-box' onChange={changeGreeting} style={{ width: "400px", height: "100px", resize:"none"}} defaultValue={userInfo.greetings} placeholder={userInfo.greetings}></textarea>
+                                                    </td>
+                                                </tr>
+                                            </Table>
+                                        </div>
+                                    </div>
                                 </Modal.Body>
                                 <Modal.Footer>
                                     <Button variant="secondary" onClick={modalClose}>
                                         Close
                                     </Button>
-                                    <Button variant="primary" onClick={SubmitInfo} >
+                                    <Button variant="primary" onClick={SubmitInfo} disabled={isCheck? true : false}>
                                         Save Changes
                                     </Button>
                                 </Modal.Footer>
