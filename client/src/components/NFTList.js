@@ -5,12 +5,14 @@ import axios from "axios";
 import Web3 from "web3";
 import Caver from 'caver-js';
 import useLocalStorage from '../storage/useLocalStorage';
+import { Modal } from "react-bootstrap";
 
 import LikeButton from './Likebutton.js';
 import Comment from './Comment.js';
 import CommentLoad from './CommentLoad.js';
 import Nodata from '../components/Nodata';
 import Loading from "./Loading.js";
+import Create from '../components/CreatePost.js';
 
 function NFTList({ account, isAll }) {
   const [NFTList, setNFTList] = useState([]);
@@ -22,7 +24,7 @@ function NFTList({ account, isAll }) {
   const caver = new Caver(window.klaytn);
   const isOpenReply = useLocalStorage('isOpenReply', false);
   const [isLoading, setIsLoading] = useState(null);
-  const [test, setTest] = useState([])
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(async () => {
     // 팔로워 목록 조회
@@ -141,6 +143,14 @@ function NFTList({ account, isAll }) {
     }
   }
 
+  const modalOpen = () => {
+    setShowModal(true)
+  }
+
+  const modalClose = () => {
+    setShowModal(false)
+  }
+
   return (
     <div className="nftList">
       {
@@ -209,7 +219,15 @@ function NFTList({ account, isAll }) {
           })
           : <Nodata />
       }
-      <div className = "modal-start"><button className="create-modal-all">+</button></div> 
+      <div className = "modal-start"><button className="create-modal-all" onClick={modalOpen}>+</button></div> 
+      <Modal show={showModal} onHide={modalClose} size='lg'>
+        <Modal.Header closeButton>
+          <Modal.Title>Create a Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="create-post-modal">
+          <Create />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
