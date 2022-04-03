@@ -170,7 +170,7 @@ function NFTList({ account, isAll }) {
                   {/* <div className="user"> */}
                     <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                       <div className="d-flex flex-row align-items-center feed-text px-2" >
-                        <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}></img>
+                        <img className="rounded-circle" src={token.postInfo.user.profile_image} alt={"profile"} width="45" height="45" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}></img>
                           <span class="content-username" onClick={UserSelected} data-selectuser-id={token.postInfo.user._id} data-selectuser-wallet={token.postInfo.user.wallet_address}>
                             {token.postInfo.user.user_name.length > 10 ?
                               token.postInfo.user.user_name.slice(0, 4) + '···' + token.postInfo.user.user_name.slice(-4) :
@@ -187,23 +187,22 @@ function NFTList({ account, isAll }) {
                         </button>
                         :<></>
                       }
-                      <div className="post-time">
-                        <span>{token.postInfo.post_date.split('T')[0]}</span>
-                      </div>
+                      
                     </div>
 
                   <div className="post-content">
-                  <p className="description">
-                      {
-                        token.metadata.description.split("\n").map((line) => {
-                          return (
-                            <span>{line}<br /></span>
-                          );
-                        })
-                      }
-                  </p>
-                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} />
+                    <p className="description">
+                        {
+                          token.metadata.description.split("\n").map((line) => {
+                            return (
+                              <span>{line}<br /></span>
+                            );
+                          })
+                        }
+                    </p>
+                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} postDate={token.postInfo.post_date.split('T')[0]}/>
                     </div>
+                    
                   </div>
                   </div>
 

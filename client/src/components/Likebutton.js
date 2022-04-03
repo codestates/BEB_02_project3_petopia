@@ -3,7 +3,7 @@ import Heart from "react-animated-heart";
 import axios from 'axios';
 import './NFTList.js'
 
-const LikeButton = ({postId, userId, postUser, postAddress}) => {
+const LikeButton = ({postId, userId, postUser, postAddress, postDate}) => {
   const [isClick, setClick] = useState(false);
   const [likeCnt, setlikeCnt] = useState(0);
 
@@ -42,7 +42,11 @@ const LikeButton = ({postId, userId, postUser, postAddress}) => {
   return (
     <div className="reaction-wrapper">
       <Heart isClick={isClick} onClick={LikeButtonClick} />
-      <p className="likes"> {likeCnt} likes</p>
+      <h className="likes"> {likeCnt} likes</h>
+      <div className="post-time">
+        <span>{postDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      
     </div>
   );
 

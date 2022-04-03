@@ -44,8 +44,8 @@ img {
   /* margin-top: 114px;
     margin-right: 140px; */
   /* border: solid 0.5px rgb(182, 182, 182); */
-  /* display: flex; */
-  /* flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   width: 50%;
   height: 411px;
@@ -57,7 +57,7 @@ img {
 
 .input_text {
   opacity: 80%;
-  margin: auto;
+  /* margin-top: 6px; */
   object-fit: cover;
 }
 
@@ -71,7 +71,7 @@ TEXTAREA {
   width: 402px;
   height: 411px;
   border: solid 0.5px #5e5e5e;
-  margin: auto;
+  /* margin: auto; */
   /* width: 100%; */
   object-fit: cover;
 }
