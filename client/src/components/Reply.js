@@ -39,7 +39,7 @@ const Reply = ({userId, postUser, commentId, replyDelete}) => {
                             </div>
                             <div className = "reply-btn-wrapper">
                                 <div className="post-time">
-                                    <span>${reply.reply_date.split('T')[0]}</span>
+                                    <span>{reply.reply_date.split('T')[0]}</span>
 
                                 {
                                     userId === reply.user._id || userId === postUser ?
