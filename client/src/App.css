@@ -90,6 +90,51 @@
 
     }
 
+    .txSendButton:hover {
+      color: black;
+      background-color: #6c757d;
+      border-color: blue;
+      border-radius: 0.25rem;
+      border: solid 1px #6c757d;
+      margin-left: 7px;
+      margin-bottom: 7px;
+
+    }
+
+    .txReceiptButton:hover{
+      color: black;
+      background-color: #6c757d;
+      border-color: #6c757d;
+      border-radius: 0.25rem;
+      border: solid 1px #6c757d;
+      margin-bottom: 7px;
+    }
+
+
+    .txSendButton:focus {
+      color: white;
+      background-color: black;
+      border-color: blue;
+      border-radius: 0.25rem;
+      border: solid 1px #6c757d;
+      margin-left: 7px;
+      margin-bottom: 7px;
+
+    }
+
+    .txReceiptButton:focus{
+      color: white;
+      background-color: black;
+      border-color: #6c757d;
+      border-radius: 0.25rem;
+      border: solid 1px #6c757d;
+      margin-bottom: 7px;
+    }
+
+    .scope{
+      text-align: center;
+    }
+
     .scopeButton {
       background-color: white;
       border: solid 1px white;
@@ -97,7 +142,8 @@
 
     .txDate,
     .txTo,
-    .txAmount {
+    .txAmount,
+    .txFrom {
       text-align: center;
     }
 
