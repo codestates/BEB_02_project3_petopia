@@ -84,12 +84,15 @@ const Comment = ({ postId, userId, postUser }) => {
     }
 
     const insertReply = async (commentId) => {
+        const replyText = document.getElementById(`input_${commentId}`).value;
+        if(replyText === null || replyText === 'undefined' || replyText === '') return alert('텍스트를 입력하세요.')
+
         await axios.post('http://localhost:4000/reply', {       // POST
             commentId: commentId,
             userId: userId,
             // replyDate: new Date().toLocaleDateString('ko-KR'),
             replyDate: moment().format('YYYY-MM-DD'),
-            contents: document.getElementById(`input_${commentId}`).value
+            contents: replyText
         })
             .then((res) => {
                 localStorage.setItem('isOpenReply', false);
@@ -124,6 +127,13 @@ const Comment = ({ postId, userId, postUser }) => {
                 const pContent = document.createElement('p');
                 pContent.className = 'reply-contents';
                 pContent.textContent = reply.contents;
+
+                divEl.appendChild(divReplyUser)
+                divReplyUser.appendChild(spanReply)
+                divReplyUser.appendChild(img)
+                divReplyUser.appendChild(divReplyComment)
+                divReplyComment.appendChild(spanRelyUser)
+                divReplyComment.appendChild(pContent)
     
                 const divReplyBtn = document.createElement('div');
                 divReplyBtn.className = 'reply-btn-wrapper';
@@ -140,14 +150,7 @@ const Comment = ({ postId, userId, postUser }) => {
                 btnDelete.textContent = 'delete';
                 btnDelete.setAttribute('data-user', reply.user._id);
                 btnDelete.setAttribute('data-id', reply._id);
-    
-                divEl.appendChild(divReplyUser)
-                divReplyUser.appendChild(spanReply)
-                divReplyUser.appendChild(img)
-                divReplyUser.appendChild(divReplyComment)
-                divReplyComment.appendChild(spanRelyUser)
-                divReplyComment.appendChild(pContent)
-    
+       
                 divEl.appendChild(divReplyBtn)
                 divReplyBtn.appendChild(divPostTime)
                 divPostTime.appendChild(spanDate)
@@ -175,6 +178,8 @@ const Comment = ({ postId, userId, postUser }) => {
     }
 
     const commentButtonClick = async () => {
+        if(msg === null || msg === 'undefined' || msg === '') return alert('텍스트를 입력하세요.')
+
         await axios.post('http://localhost:4000/comment', {       // POST
             postId: postId,
             userId: userId,
@@ -215,8 +220,14 @@ const Comment = ({ postId, userId, postUser }) => {
                 pContens.className = 'comment-contents"'
                 pContens.textContent = newComment.contents;
 
+                divElWrapper.appendChild(divCommentUser);
+                divCommentUser.appendChild(profileImage)
+                divCommentUser.appendChild(divCommentWrapper)
+                divCommentWrapper.appendChild(spanCommnetUser)
+                divCommentWrapper.appendChild(pContens);
+
                 const divBtnWrapper = document.createElement('div');
-                divBtnWrapper.className = 'comment-btn-wrapper"'
+                divBtnWrapper.className = 'comment-btn-wrapper'
 
                 const divPostTime = document.createElement('div');
                 divPostTime.className = 'post-time'
@@ -237,23 +248,18 @@ const Comment = ({ postId, userId, postUser }) => {
                 btnReply.textContent = 'reply'
                 btnReply.setAttribute('data-user', newComment.user._id)
                 btnReply.setAttribute('data-id', newComment._id)
-
-                const divReplies = document.createElement('div')
-                divReplies.className = 'replies'
-                divReplies.id = `replies_${newComment._id}`
-
-                divElWrapper.appendChild(divCommentUser);
-                divCommentUser.appendChild(profileImage)
-                divCommentUser.appendChild(divCommentWrapper)
-                divCommentWrapper.appendChild(spanCommnetUser)
-                divCommentWrapper.appendChild(pContens);
-
+                
                 divElWrapper.appendChild(divBtnWrapper)
                 divBtnWrapper.appendChild(divPostTime)
                 divPostTime.appendChild(spanDate)
                 divPostTime.appendChild(btnDelete)
                 divPostTime.appendChild(btnReply)
-                divPostTime.appendChild(divReplies)
+
+                const divReplies = document.createElement('div')
+                divReplies.className = 'replies'
+                divReplies.id = `replies_${newComment._id}`
+
+                divElWrapper.appendChild(divReplies)
 
                 parent.append(divElWrapper);
 

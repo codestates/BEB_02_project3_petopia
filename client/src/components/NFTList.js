@@ -133,7 +133,12 @@ function NFTList({ account, isAll }) {
 
     localStorage.setItem('selectedUser', targetId)
     localStorage.setItem('selectedUserWallet', targetWallet);
-    window.location.replace(`http://localhost:3000/${targetId}`);
+
+    if(targetId === userId) {
+      window.location.href = `http://localhost:3000/mypage`;  
+    } else {
+      window.location.href = `http://localhost:3000/${targetId}`;  
+    }
   }
 
   return (
@@ -148,7 +153,7 @@ function NFTList({ account, isAll }) {
 
                 <div className = "post-wrapper">
                   <div className="post-image">
-                          <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
+                    <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
                   </div>
                   <div class="right-contentWrapper">
 
@@ -187,7 +192,7 @@ function NFTList({ account, isAll }) {
                         })
                       }
                   </p>
-                    <LikeButton postId={token.postInfo._id} userId={userId} postAddress={token.postInfo.user.wallet_address} />
+                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} />
                     </div>
                   </div>
                   </div>
@@ -204,6 +209,7 @@ function NFTList({ account, isAll }) {
           })
           : <Nodata />
       }
+      <div className = "modal-start"><button className="create-modal-all">+</button></div> 
     </div>
   );
 }

@@ -16,7 +16,7 @@ const Reply = ({userId, postUser, commentId, replyDelete}) => {
     }
 
     return(
-        <div className="replies">
+        <div className="replies" id={`replies_${commentId}`}>
             {
                 replies.map((reply) => {
                     return (

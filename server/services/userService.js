@@ -48,7 +48,7 @@ const getUserList = async (userName) => {
 
 const getUserNames = async (id)  => {
     try {
-        await User.find({_id: {$ne: id}}).select('user_name');
+        return await User.find({_id: {$ne: id}}).select('user_name');
     } catch (error) {
         throw Error(error)
     }
