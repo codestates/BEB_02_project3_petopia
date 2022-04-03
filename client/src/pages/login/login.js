@@ -6,13 +6,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginCarousel from './loginCarousel';
 import './login.css';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 function Login() {
   const [web3, setWeb3] = useState('');
   const [caver, setCaver] = useState('');
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_KIP17_CA)
     // if (typeof window.ethereum !== "undefined") {
     //   try {
     //     const web = new Web3(window.ethereum);
@@ -100,19 +102,26 @@ function Login() {
       .then((res) => {
         const userInfo = res.data.data;
         if (userInfo !== null) {
-          username = userInfo.user_name;
+          const username = userInfo.user_name === accounts[0] ?
+            userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
+            : userInfo.user_name;
+
           localStorage.setItem('userId', userInfo._id);
+          localStorage.setItem('isConnected', true);
+          localStorage.setItem('account', JSON.stringify(accounts[0]));
+          localStorage.setItem('networkType', 1);
+          alert(`Welcome, ${username}!`);
+          window.location.reload();
         } else {
           signup(accounts[0]);
-          username = accounts[0];
+          const username = accounts[0].slice(0, 4) + '···' + accounts[0].slice(-4)
+          localStorage.setItem('isConnected', true);
+          localStorage.setItem('account', JSON.stringify(accounts[0]));
+          localStorage.setItem('networkType', 1);
+          alert(`Welcome, ${username}!`);
+          window.location.href = 'http://localhost:3000/mypage';
         }
       });
-
-    localStorage.setItem('isConnected', true);
-    localStorage.setItem('account', JSON.stringify(accounts[0]));
-    localStorage.setItem('networkType', 1);
-    alert(`Welcome, ${username}!`);
-    window.location.reload();
   }
 
   return (
