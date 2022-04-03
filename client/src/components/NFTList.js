@@ -144,13 +144,13 @@ function NFTList({ account, isAll }) {
             return (
               <div class="right-col">
                 <div key={token.tokenId} className="post" name={`post_${token.postInfo.user._id}`}>
-                  
+
                 <div className = "post-wrapper">
                   <div className="post-image">
                           <img src={token.metadata.image}  className="post-image" alt={token.tokenId}/>
                   </div>
                   <div class="right-contentWrapper">
-                  
+
                   {/* <div className="user"> */}
                     <div className="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                       <div className="d-flex flex-row align-items-center feed-text px-2" >
@@ -166,18 +166,18 @@ function NFTList({ account, isAll }) {
                       <div className="post-time">
                         <span>{token.postInfo.post_date.split('T')[0]}</span>
                       </div>
-                      
+
                         {/* <button className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
                           {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
                         </button> */}
-                      <button class="follow" className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
+                      <button className = "follow-button"><div class="follow" className={`follow_${token.postInfo.user._id}`} data-user={token.postInfo.user._id} onClick={followHandler}>
                           {followList.filter(follow => (follow.follower._id === token.postInfo.user._id)).length > 0 ? "unfollow" : "follow"}
-                        </button>
+                        </div></button>
 
-                      
+
                     </div>
-                  
-                  
+
+
                   <div className="post-content">
                   <p className="description">
                       {
@@ -195,7 +195,7 @@ function NFTList({ account, isAll }) {
 
 
                   <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
-                
+
                 <div className="comments" id={`comments_${token.postInfo._id}`}>
                       <CommentLoad postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
                     </div>
