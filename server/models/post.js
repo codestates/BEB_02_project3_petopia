@@ -14,6 +14,9 @@ const postSchema = new mongoose.Schema({
     },
     network_type: {
         type: String
+    },
+    isDelete: {
+        type: Boolean
     }
 });
 
