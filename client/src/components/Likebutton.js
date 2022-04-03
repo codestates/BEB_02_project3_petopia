@@ -28,7 +28,7 @@ const LikeButton = ({postId, userId, postUser, postAddress}) => {
       if(userId === postUser) {
         return alert('본인 게시물은 좋아요를 누를 수 없습니다.');
       }
-
+      
       const txResult = await axios.post(('http://localhost:4000/contract/like'), { address : postAddress });
       
       if(txResult.data.data) {

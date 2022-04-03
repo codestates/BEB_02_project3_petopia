@@ -15,6 +15,7 @@ import Caver from "caver-js";
 import './detailhospital.css';
 import './hospital.css';
 
+
 function DetailHospital() {
 
     const hospital_id = localStorage.getItem('hospital_id')
@@ -183,71 +184,78 @@ function DetailHospital() {
 
     return (
         <div className='DetailHospital'>
-            <h1 className="header">예약하기</h1>
+            <h1 className="header">Reserve</h1>
             {/* 병원 정보 */}
             <div class="">
-            <div className="hospital-Container">
-                    <img className = "hospital-img" src={hospitalInfo.profile_image}></img>
-                    <div className = "hospital-contants-Container">
-                        <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
-                            <div className = "hospital-contants-contants">
-                                <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h>
-                                <h className = "hospital-text">전화번호 : {hospitalInfo.hospital_phone}</h>
-                                <h className = "hospital-text">주소 : {hospitalInfo.hospital_address}</h>
-                            </div>
-                    </div>
+                <div className="hospital-Container">
+                    <img className = "hospital-img" src={hospitalInfo.hospital_profile}></img>
+                        <div className = "hospital-contants-Container">
+                            <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
+                                <div className = "hospital-contants-contants">
+                                    <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h>
+                                    <h className = "hospital-text">전화번호 : {hospitalInfo.hospital_phone}</h>
+                                    <h className = "hospital-text">주소 : {hospitalInfo.hospital_address}</h>
+                                </div>
+                        </div>
                 </div>
             </div>
                 {/* 예약하기 */}
-                <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "center" }}>
-                    <h1>Reserve</h1>
-                    <div className="Reservation" style={{ display: "flex" }} >
-                        <DatePicker
-                            inline
-                            selected={''}
-                            onChange={dateChangeHandler}
-                            locale={ko}
-                            minDate={new Date()}
-                            maxDate={addMonths(new Date(), 5)}
-                            filterDate={isWeekday}
-                            showDisabledMonthNavigation
-                         />
-                        <form onSubmit={SubmitInfo}>
+                    <div className="reserve-container">
+                        <div className="Reservation" >
                             <DatePicker
-                                placeholderText="시간 선택"
-                                selected={startTime}
-                                onChange={(time) => setStartTime(time)}
-                                showTimeSelect
-                                showTimeSelectOnly
-                                timeIntervals={30}
-                                minTime={initSetMinTime()}
-                                maxTime={initSetMaxTime()}
-                                excludeTimes={timeList}
-                                timeCaption="Time"
-                                dateFormat="h:mm aa"
+                                inline
+                                selected={''}
+                                onChange={dateChangeHandler}
+                                locale={ko}
+                                minDate={new Date()}
+                                maxDate={addMonths(new Date(), 5)}
+                                filterDate={isWeekday}
+                                showDisabledMonthNavigation
                             />
-                            예약자명 : <input type="textbox" name="reservename" style={{ width: "400px" }}  ></input> <br />
-                            반려동물명 : <input type="textbox" name="petname" style={{ width: "400px" }} ></input> <br />
-                            휴대폰번호 : <input type="textbox" name="reservephone" style={{ width: "400px" }} ></input> <br />
-                            <input type="submit" value={'예약하기'}></input>
-                        </form>
-                    </div >
-                    <Modal show={showModal} onHide={modalClose} size='lg'>
-                        <Modal.Header closeButton>
-                            <Modal.Title>예약 완료</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            병원 : {hospitalInfo.hospital_name} <br />
-                            예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br />
-                            예약자명 : {reserveInfo.reserveName} <br />
-                            반려동물명 : {reserveInfo.petName} <br />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={modalClose}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+                            <form className="reserve-container-contants" onSubmit={SubmitInfo}>
+                                        <DatePicker
+                                            className="datepicker"
+                                            placeholderText="시간 선택"
+                                            selected={startTime}
+                                            onChange={(time) => setStartTime(time)}
+                                            showTimeSelect
+                                            showTimeSelectOnly
+                                            timeIntervals={30}
+                                            minTime={initSetMinTime()}
+                                            maxTime={initSetMaxTime()}
+                                            excludeTimes={timeList}
+                                            timeCaption="Time"
+                                            dateFormat="h:mm aa"
+                                        />
+
+                                   <div className="reserve-text">
+                                    예약자명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type="textbox" name="reservename" style={{ width: "430px" }}  ></input> <br />
+                                    </div>
+                                    <div className="reserve-text">
+                                    반려동물명 &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="textbox" name="petname" style={{ width: "430px" }} ></input> <br />
+                                    </div>
+                                    <div className="reserve-text">
+                                    휴대폰번호 &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="textbox" name="reservephone" style={{ width: "430px" }} ></input> <br />
+                                    </div>
+                                 <Button class="btn btn-primary" type="submit" value={'예약하기'}>예약하기</Button>
+                            </form>
+                        </div >
+                            <Modal show={showModal} onHide={modalClose} size='lg'>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>예약 완료</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    병원 : {hospitalInfo.hospital_name} <br />
+                                    예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br />
+                                    예약자명 : {reserveInfo.reserveName} <br />
+                                    반려동물명 : {reserveInfo.petName} <br />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={modalClose}>
+                                        Close
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                 </div>
 
             </div>
