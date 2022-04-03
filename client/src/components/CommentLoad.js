@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Reply from "./Reply";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
 
 const CommentLoad = ({postId, userId, postUser}) =>{
     const [userInfo, setUserInfo] = useState({})
     const [comments, setComments] = useState([]);
 
     useEffect(async() => {
-        await axios.get(`http://localhost:4000/user/${userId}`)
+        await axios.get(`${host}/user/${userId}`)
             .then((res) => {
                 setUserInfo(res.data.data);
             });
@@ -16,7 +20,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
     }, [])
 
     const loadComment = async() =>{
-        await axios.get(`http://localhost:4000/comment/${postId}`)
+        await axios.get(`${host}/comment/${postId}`)
         .then((res) => {
             setComments(res.data.data);
         });
@@ -28,7 +32,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const element = document.getElementById(commentId)
 
         if((commentUser === userId) || (userId === postUser)){
-            await axios.post(`http://localhost:4000/comment/${commentId}`)
+            await axios.post(`${host}/comment/${commentId}`)
             element.remove()
         }
     }
@@ -39,7 +43,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const element = document.getElementById(replyId)
 
         if((replyUser === userId) || (userId === postUser)){
-            await axios.post(`http://localhost:4000/reply/${replyId}`)
+            await axios.post(`${host}/reply/${replyId}`)
             element.remove()
         }
     }
@@ -100,7 +104,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         const replyText = document.getElementById(`input_${commentId}`).value;
         if(replyText === null || replyText === 'undefined' || replyText === '') return alert('텍스트를 입력하세요.')
         
-        await axios.post('http://localhost:4000/reply',{       // POST
+        await axios.post(`${host}/reply`,{       // POST
             commentId: commentId,
             userId: userId,
             replyDate: new Date().toLocaleDateString('ko-KR'),

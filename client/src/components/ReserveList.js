@@ -3,6 +3,10 @@ import axios from "axios"
 import { useEffect, useState } from "react";
 import { Table } from 'react-bootstrap';
 import Nodata from "./Nodata";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
 
 function ReserveList() {
 
@@ -14,7 +18,7 @@ function ReserveList() {
     }, [])
 
     const getList = async () => {
-        await axios.get(`http://localhost:4000/reserve/${id}`)
+        await axios.get(`${host}/reserve/${id}`)
             .then((res) => {
                 console.log(res.data.data)
                 setReserveList(res.data.data)
@@ -30,7 +34,7 @@ function ReserveList() {
         if (confirmAction) {
             alert("예약이 취소 되었습니다.")
             element.remove();
-            axios.post(`http://localhost:4000/reserve/${reverve_id}`)
+            axios.post(`${host}/reserve/${reverve_id}`)
                 .then((res) => (res.data.data))
         } else {
             alert("예약을 취소하지 않았습니다.")

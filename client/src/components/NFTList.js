@@ -13,6 +13,11 @@ import CommentLoad from './CommentLoad.js';
 import Nodata from '../components/Nodata';
 import Loading from "./Loading.js";
 import Create from '../components/CreatePost.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
 
 function NFTList({ account, isAll }) {
   const [NFTList, setNFTList] = useState([]);
@@ -28,7 +33,7 @@ function NFTList({ account, isAll }) {
 
   useEffect(async () => {
     // 팔로워 목록 조회
-    await axios.get(`http://localhost:4000/follow/${userId}`)
+    await axios.get(`${host}/follow/${userId}`)
       .then((res) => {
         setFollowList(res.data.data);
       });
@@ -53,7 +58,7 @@ function NFTList({ account, isAll }) {
       let tokenOwner = await tokenContract.methods.ownerOf(tokenId).call();
       let tokenURI = await tokenContract.methods.tokenURI(tokenId).call();
       const metadata = await (await axios.get(`${tokenURI}`)).data;
-      const postInfo = await (await axios.get(`http://localhost:4000/post/${tokenId}/${networkType}`)).data.data;
+      const postInfo = await (await axios.get(`${host}/post/${tokenId}/${networkType}`)).data.data;
 
       // isAll이 true면 전체 피드 로드
       if (isAll) {
@@ -90,7 +95,7 @@ function NFTList({ account, isAll }) {
     };
 
     if (btnText === 'follow') {
-      const follow = await axios.post('http://localhost:4000/follow/', followInfo)
+      const follow = await axios.post(`${host}/follow/`, followInfo)
         .then((res) => {
           const result = res.data.data;
           if (result !== null) {
@@ -100,7 +105,7 @@ function NFTList({ account, isAll }) {
           }
         });
     } else {
-      const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+      const unfollow = await axios.post(`${host}/follow/unfollow/`, followInfo)
         .then((res) => {
           const result = res.data.data;
           if (result) {
@@ -123,7 +128,7 @@ function NFTList({ account, isAll }) {
     }
 
     // followList 재지정
-    await axios.get(`http://localhost:4000/follow/${userId}`)
+    await axios.get(`${host}/follow/${userId}`)
       .then((res) => {
         setFollowList(res.data.data);
       });
@@ -136,11 +141,15 @@ function NFTList({ account, isAll }) {
     localStorage.setItem('selectedUser', targetId)
     localStorage.setItem('selectedUserWallet', targetWallet);
 
-    if(targetId === userId) {
-      window.location.href = `http://localhost:3000/mypage`;  
-    } else {
-      window.location.href = `http://localhost:3000/${targetId}`;  
-    }
+    console.log(host)
+    console.log(domain)
+    console.log(targetId)
+    console.log(userId)
+    // if(targetId === userId) {
+    //   window.location.href = `${domain}/mypage`;  
+    // } else {
+    //   window.location.href = `${domain}/${targetId}`;  
+    // }
   }
 
   const modalOpen = () => {

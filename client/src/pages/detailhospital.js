@@ -14,7 +14,11 @@ import Web3 from "web3";
 import Caver from "caver-js";
 import './detailhospital.css';
 import './hospital.css';
+import dotenv from 'dotenv';
+dotenv.config();
 
+const host = process.env.REACT_APP_DB_HOST;
+const kip7CA = process.env.REACT_APP_KIP7_CA;
 
 function DetailHospital() {
 
@@ -71,7 +75,7 @@ function DetailHospital() {
         const txResult = await sendToken(hospitalWallet);
 
         if(txResult) {
-            axios.post('http://localhost:4000/reserve', reserveInfo);
+            axios.post(`${host}/reserve`, reserveInfo);
             setReserveInfo(reserveInfo);
             setIsReserve(true);
             window.location.reload();
@@ -82,7 +86,6 @@ function DetailHospital() {
     }
 
     const sendToken = async (recipient) => {
-        const kip7CA = '0x70C0327f5A6F2fb72C084055f9E5C05f5a1A4560';
         const sender = JSON.parse(localStorage.getItem('account'));
         const amount = 1;
         const decimal = 18;
@@ -140,7 +143,7 @@ function DetailHospital() {
         setStartDate(date);
         setStartTime();
 
-        await axios.post('http://localhost:4000/reserve/getReserveList', { reserveDate: moment(date).format().slice(0, 10), hospitalId: hospital_id })
+        await axios.post(`${host}/reserve/getReserveList`, { reserveDate: moment(date).format().slice(0, 10), hospitalId: hospital_id })
             .then((res) => {
                 const reserves = res.data.data;
                 reserves.map((reserve) => {

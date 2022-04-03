@@ -5,6 +5,11 @@ import kip17Abi from "../abi/kip17Abi.js";
 import noImage from '../css/image/PETO.png';
 import Caver from 'caver-js';
 import '../pages/create.css'
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
 
 function CreatePost() {
 
@@ -73,12 +78,12 @@ function CreatePost() {
             "networkType": localStorage.getItem('networkType')
         };
 
-        await axios.post('http://localhost:4000/post/', postInfo)
+        await axios.post(`${host}/post/`, postInfo)
             .then((res) => {
                 const postInfo = res.data.data;
                 if (postInfo !== null) {
                     alert(res.data.message);
-                    window.location.replace('http://localhost:3000/');
+                    window.location.replace(`${domain}`);
                 } else {
                     alert(res.data.message);
                 }

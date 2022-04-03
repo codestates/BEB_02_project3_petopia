@@ -2,13 +2,17 @@ import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.css';
 import moment from 'moment';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
 
 const Comment = ({ postId, userId, postUser }) => {
     const [userInfo, setUserInfo] = useState({})
     const [msg, setMsg] = useState('');
 
     useEffect(async () => {
-        await axios.get(`http://localhost:4000/user/${userId}`)
+        await axios.get(`${host}/user/${userId}`)
             .then((res) => {
                 setUserInfo(res.data.data);
             });
@@ -22,7 +26,7 @@ const Comment = ({ postId, userId, postUser }) => {
         const element = document.getElementById(commentId);
 
         if ((commentUser === userId)) {
-            await axios.post(`http://localhost:4000/comment/${commentId}`);
+            await axios.post(`${host}/comment/${commentId}`);
             element.remove();
         }
     }
@@ -87,7 +91,7 @@ const Comment = ({ postId, userId, postUser }) => {
         const replyText = document.getElementById(`input_${commentId}`).value;
         if(replyText === null || replyText === 'undefined' || replyText === '') return alert('텍스트를 입력하세요.')
 
-        await axios.post('http://localhost:4000/reply', {       // POST
+        await axios.post(`${host}/reply`, {       // POST
             commentId: commentId,
             userId: userId,
             // replyDate: new Date().toLocaleDateString('ko-KR'),
@@ -172,7 +176,7 @@ const Comment = ({ postId, userId, postUser }) => {
         const element = document.getElementById(replyId)
 
         if ((replyUser === userId) || (userId === postUser)) {
-            await axios.post(`http://localhost:4000/reply/${replyId}`)
+            await axios.post(`${host}/reply/${replyId}`)
             element.remove()
         }
     }
@@ -180,7 +184,7 @@ const Comment = ({ postId, userId, postUser }) => {
     const commentButtonClick = async () => {
         if(msg === null || msg === 'undefined' || msg === '') return alert('텍스트를 입력하세요.')
 
-        await axios.post('http://localhost:4000/comment', {       // POST
+        await axios.post(`${host}/comment`, {       // POST
             postId: postId,
             userId: userId,
             // commentDate: new Date().toLocaleDateString('ko-KR'),

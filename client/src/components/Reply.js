@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
 
 const Reply = ({userId, postUser, commentId, replyDelete}) => {
     const [replies, setReplies] = useState([]);
@@ -9,7 +13,7 @@ const Reply = ({userId, postUser, commentId, replyDelete}) => {
     }, []);
 
     const loadReplies = async() =>{
-        await axios.get(`http://localhost:4000/reply/${commentId}`)
+        await axios.get(`${host}/reply/${commentId}`)
         .then((res) => {
             setReplies(res.data.data);
         });

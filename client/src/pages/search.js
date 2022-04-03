@@ -3,6 +3,11 @@ import axios from 'axios';
 import Nodata from '../components/Nodata';
 import './search.css'
 import './mypage.css'
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
 
 function Search() {
     const userId = localStorage.getItem('userId');
@@ -16,12 +21,12 @@ function Search() {
     }, [])
 
     const getInfoList = async () => {
-        await axios.get(`http://localhost:4000/follow/${userId}`)
+        await axios.get(`${host}/follow/${userId}`)
             .then((res) => {
                 setFollowList(res.data.data);
             });
 
-        await axios.get(`http://localhost:4000/user/search/${searchname}`)
+        await axios.get(`${host}/user/search/${searchname}`)
             .then((res) => {
                 setInfoList(res.data.data)
             });
@@ -34,9 +39,9 @@ function Search() {
         localStorage.setItem('selectedUserWallet', wallet)
 
         if (wallet !== localStorage.getItem('account')) {
-            window.location.replace(`http://localhost:3000/${userId}`);
+            window.location.replace(`${domain}/${userId}`);
         } else {
-            window.location.replace('http://localhost:3000/mypage');
+            window.location.replace(`${domain}/mypage`);
         }
 
     }
@@ -49,7 +54,7 @@ function Search() {
         };
 
         if (btnText === 'follow') {
-            const follow = await axios.post('http://localhost:4000/follow/', followInfo)
+            const follow = await axios.post(`${host}/follow/`, followInfo)
                 .then((res) => {
                     const result = res.data.data;
                     if (result !== null) {
@@ -58,7 +63,7 @@ function Search() {
                 });
 
         } else {
-            const unfollow = await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+            const unfollow = await axios.post(`${host}/follow/unfollow/`, followInfo)
                 .then((res) => {
                     const result = res.data.data;
                     if (result) {

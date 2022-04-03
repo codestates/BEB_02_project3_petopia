@@ -5,6 +5,11 @@ import erc721Abi from "../abi/erc721Abi.js";
 import kip17Abi from '../abi/kip17Abi.js';
 import Caver from "caver-js";
 import Web3 from "web3";
+import dotenv from 'dotenv';
+dotenv.config();
+
+const host = process.env.REACT_APP_DB_HOST;
+const domain = process.env.REACT_APP_DOMAIN;
 
 function MyFollowList({ userId, account }) {
     const [followerModal, setFollowerModal] = useState(false);
@@ -24,13 +29,13 @@ function MyFollowList({ userId, account }) {
     useEffect(async () => {
         // await loadNFT();
         // 내가 팔로우하는사람(팔로잉)
-        await axios.get(`http://localhost:4000/follow/${userId}`)
+        await axios.get(`${host}/follow/${userId}`)
             .then((res) => {
                 setFollowList(res.data.data);
             });
 
         //나를 팔로우하는사람 (팔로워)
-        await axios.get(`http://localhost:4000/follow/follower/${userId}`)
+        await axios.get(`${host}/follow/follower/${userId}`)
             .then((res) => {
                 setFollowerList(res.data.data);
             });
@@ -79,11 +84,11 @@ function MyFollowList({ userId, account }) {
         const loginId = localStorage.getItem('userId');
 
         if (targetId === loginId) {
-            window.location.replace(`http://localhost:3000/mypage`);
+            window.location.replace(`${domain}/mypage`);
         } else {
             localStorage.setItem('selectedUser', targetId)
             localStorage.setItem('selectedUserWallet', targetWallet);
-            window.location.replace(`http://localhost:3000/${targetId}`);
+            window.location.replace(`${domain}/${targetId}`);
         }
     }
 
@@ -96,7 +101,7 @@ function MyFollowList({ userId, account }) {
         };
 
         if (btnText === 'follow') {
-            await axios.post('http://localhost:4000/follow/', followInfo)
+            await axios.post(`${host}/follow/`, followInfo)
                 .then((res) => {
                     const result = res.data.data;
                     if (result !== null) {
@@ -105,7 +110,7 @@ function MyFollowList({ userId, account }) {
                     }
                 });
         } else {
-            await axios.post('http://localhost:4000/follow/unfollow/', followInfo)
+            await axios.post(`${host}/follow/unfollow/`, followInfo)
                 .then(async (res) => {
                     if (res.data.data) {
                         document.getElementById(`follow_${e.target.getAttribute('data-id')}`).remove();
@@ -120,7 +125,7 @@ function MyFollowList({ userId, account }) {
             follower: userId
         };
 
-        await axios.post('http://localhost:4000/follow/delete/', followInfo)
+        await axios.post(`${host}/follow/delete/`, followInfo)
             .then(async (res) => {
                 if (res.data.data) {
                     document.getElementById(`follow_${e.target.getAttribute('data-id')}`).remove();
