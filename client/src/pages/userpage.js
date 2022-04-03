@@ -89,7 +89,13 @@ function Userpage() {
                 </div>
                 <div className="user-Info">
                     <div className="user-header-wrapper">
-                        <h6 className="user-header-greeting">"{userInfo.greetings}"</h6>
+                        <h6 className="user-header-greeting">
+                            {
+                                userInfo.greetings === '' || userInfo.greetings === null || userInfo.greetings === 'undefined'
+                                ? `"소개글이 없습니다."`
+                                : `"${userInfo.greetings}"`
+                            }
+                        </h6>
 
                         <div className = "Info-content-wrapper">
                             <div >
