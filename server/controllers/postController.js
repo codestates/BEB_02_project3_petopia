@@ -26,10 +26,8 @@ const getPostInfo = async(req, res) => {
 }
 
 const getAllPostInfo = async(req, res) => {
-    const params = {
-        networkType: req.params.type
-    }
-    const postList = await postService.getAllPostInfo(params);
+
+    const postList = await postService.getAllPostInfo(req.params.type);
 
     if(postList !== null) {
         return res.status(200).json({ data: postList, message: "success!" });
@@ -39,10 +37,8 @@ const getAllPostInfo = async(req, res) => {
 }
 
 const deletePost = async(req, res) => {
-    const params = {
-        id: req.params.id
-    }
-    const post = await postService.deletePost(params);
+   
+    const post = await postService.deletePost(req.params.id);
 
     if(post !== null) {
         return res.status(200).json({ data: post, message: "success!" });
