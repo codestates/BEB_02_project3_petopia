@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLocation } from "react";
 import axios from 'axios';
 import '../pages/main.css';
+import iconReply from '../css/image/icon-reply.png';
 import moment from 'moment';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -45,10 +46,11 @@ const Comment = ({ postId, userId, postUser }) => {
             divEl.className = 'Reply-wrapper';
 
             const img = document.createElement('img');
-            img.className = 'icon';
+            img.className = 'rounded-circle';
             img.src = userInfo.profile_image;
             img.alt = userInfo._id;
             img.width = '45';
+            img.height = '45';
 
             const input = document.createElement('input');
             input.className = 'Reply-box';
@@ -110,14 +112,17 @@ const Comment = ({ postId, userId, postUser }) => {
                 const divReplyUser = document.createElement('div');
                 divReplyUser.className = 'reply-user-wrapper';
     
-                const spanReply = document.createElement('span');
-                spanReply.textContent = '┗';
+                const replyIcon = document.createElement('img')
+                replyIcon.className = 'icon-reply';
+                replyIcon.src = iconReply;
     
                 const img = document.createElement('img');
                 img.className = 'rounded-circle';
                 img.src = reply.user.profile_image;
                 img.alt = 'profile';
                 img.width = '45'
+                img.height = '45'
+                img.style = {'margin-top' : '3px'}
     
                 const divReplyComment = document.createElement('div');
                 divReplyComment.className = 'reply-comment-wrapper';
@@ -133,7 +138,7 @@ const Comment = ({ postId, userId, postUser }) => {
                 pContent.textContent = reply.contents;
 
                 divEl.appendChild(divReplyUser)
-                divReplyUser.appendChild(spanReply)
+                divReplyUser.appendChild(replyIcon)
                 divReplyUser.appendChild(img)
                 divReplyUser.appendChild(divReplyComment)
                 divReplyComment.appendChild(spanRelyUser)
@@ -210,6 +215,8 @@ const Comment = ({ postId, userId, postUser }) => {
                 profileImage.src = newComment.user.profile_image;
                 profileImage.alt = "profile"
                 profileImage.width = "45"
+                profileImage.height = "45"
+                profileImage.style = {'margin-top' : '3px'}
 
                 const divCommentWrapper = document.createElement('div');
                 divCommentWrapper.className = "comment-comment-wrapper"
@@ -280,8 +287,8 @@ const Comment = ({ postId, userId, postUser }) => {
 
     return (
         <div className="comment-wrapper">
-            <img src={userInfo.profile_image} class="icon" alt={userInfo._id} />
-            <input defaultValue={""} type="text" class="comment-box" placeholder="Add a comment" onChange={handleChangeMsg} value={msg} />
+            <img src={userInfo.profile_image} className="rounded-circle" alt={userInfo._id} width="45" height="45"/>
+            <input defaultValue={""} type="text" className="comment-box" placeholder="Add a comment" onChange={handleChangeMsg} value={msg} />
             <button className="comment-btn" onClick={commentButtonClick}>post</button>
         </div>
     );

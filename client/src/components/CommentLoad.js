@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Reply from "./Reply";
+import iconReply from '../css/image/icon-reply.png';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -57,10 +58,11 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             divEl.className = 'Reply-wrapper';
 
             const img = document.createElement('img');
-            img.className = 'icon';
+            img.className = 'rounded-circle';
             img.src = userInfo.profile_image;
             img.alt = userInfo._id;
             img.width = '45';
+            img.height = '45';
 
             const input = document.createElement('input');
             input.className = 'Reply-box';
@@ -121,14 +123,16 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             const divReplyUser = document.createElement('div');
             divReplyUser.className = 'reply-user-wrapper';
 
-            const spanReply = document.createElement('span');
-            spanReply.textContent = '┗';
+            const replyIcon = document.createElement('img')
+            replyIcon.className = 'icon-reply';
+            replyIcon.src = iconReply;
 
             const img = document.createElement('img');
             img.className = 'rounded-circle';
             img.src = reply.user.profile_image;
             img.alt = 'profile';
             img.width = '45'
+            img.height = '45'
 
             const divReplyComment = document.createElement('div');
             divReplyComment.className = 'reply-comment-wrapper';
@@ -160,7 +164,7 @@ const CommentLoad = ({postId, userId, postUser}) =>{
             btnDelete.setAttribute('data-id', reply._id);
 
             divEl.appendChild(divReplyUser)
-            divReplyUser.appendChild(spanReply)
+            divReplyUser.appendChild(replyIcon)
             divReplyUser.appendChild(img)
             divReplyUser.appendChild(divReplyComment)
             divReplyComment.appendChild(spanRelyUser)
@@ -181,13 +185,18 @@ const CommentLoad = ({postId, userId, postUser}) =>{
         })
     }
 
+    // const addReplyIcon = () =>{
+    //     return (
+    //         <FontAwesomeIcon className="icon-reply" icon={faReply} />
+    //     )
+    // }
     return(
         <div className="comments" id={`comments_${postId}`}>
             {comments.map((comment) => {
                 return (
                     <div key={comment._id} className = "commentForm_wrapper" id= {comment._id} >
                         <div className = "comment-user-wrapper">
-                            <img className="rounded-circle" src={comment.user.profile_image} alt={"profile"} width="45"/>
+                            <img className="rounded-circle" src={comment.user.profile_image} alt={"profile"} width="45" height="45" style={{"margin-top":"3px"}}/>
                             <div className = "comment-comment-wrapper">
                                 <span class="comment-user">
                                 {
