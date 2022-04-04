@@ -243,7 +243,7 @@ function DetailHospital() {
                                  <Button class="btn btn-primary" type="submit" value={'예약하기'}>예약하기</Button>
                             </form>
                         </div >
-                            <Modal show={showModal} onHide={modalClose} size='lg'>
+                            <Modal show={showModal} onHide={modalClose} size='sm'>
                                 <Modal.Header closeButton>
                                     <Modal.Title>예약 완료</Modal.Title>
                                 </Modal.Header>

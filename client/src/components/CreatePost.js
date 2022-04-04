@@ -82,10 +82,10 @@ function CreatePost() {
             .then((res) => {
                 const postInfo = res.data.data;
                 if (postInfo !== null) {
-                    alert(res.data.message);
+                    alert(`우리 아기 추억 저장 완료!`);
                     window.location.replace(`${domain}`);
                 } else {
-                    alert(res.data.message);
+                    alert(`게시물 작성이 실패하였습니다.\n관리자에게 문의하세요.`);
                 }
             });
     };
@@ -96,7 +96,7 @@ function CreatePost() {
                 <div className='input_file'>
                     <label for="file">
                         {uploadImage !== null ?
-                            <img src={uploadImage} alt="preview" style={{ width: "400px", height: "400px" }} /> :
+                            <img src={uploadImage} alt="preview" style={{ width: "400px", height: "409px" }} /> :
                             <div className='uploader'>
                                 <img src={noImage} alt="noImage" style={{ width: "200px", height: "200px" }} />
                             </div>

@@ -112,7 +112,7 @@ function Login() {
           localStorage.setItem('isConnected', true);
           localStorage.setItem('account', JSON.stringify(accounts[0]));
           localStorage.setItem('networkType', 1);
-          alert(`Welcome, ${username}!`);
+          alert(`${username} 님!\n다시 돌아오신 것을 환영합니다!`);
           window.location.reload();
         } else {
           signup(accounts[0]);
@@ -120,7 +120,7 @@ function Login() {
           localStorage.setItem('isConnected', true);
           localStorage.setItem('account', JSON.stringify(accounts[0]));
           localStorage.setItem('networkType', 1);
-          alert(`Welcome, ${username}!`);
+          alert(`${username} 님!\nPETOPIA 구성원이 되신 것을 축하합니다~~\n회원정보는 마이페이지에서 수정하실 수 있습니다.`);
           window.location.href = `${domain}/mypage`;
         }
       });
