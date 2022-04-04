@@ -211,15 +211,40 @@ button[class|="follow"]
     color: rgb(0, 162, 255);
     opacity: 0.5; */
     background-color : rgb(0, 162, 255);
-    width : 60px;
+    width : 65px;
     height : 25px;
     border : solid 1px white;
     font-size: 12px;
+    text-align: center;
     color: white;
     font-weight: bold;
     border-radius: 5px;
     margin-right: 10px;
+    padding-bottom: 0.12rem;
+
 }
+
+
+button[class|="user-follow"]
+{
+   
+    background-color : rgb(255, 255, 255);
+    width : 75px;
+    height : 25px;
+    border : solid 1px white;
+    font-size: 12px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    border: solid 0.01rem rgb(151, 151, 151);
+    border-radius: 5px;
+    margin-left: 300px;
+    margin-top: -63.5px;
+    margin-bottom: 60px;
+    padding-bottom: 0.12rem;
+
+}
+
 
 .postSelect-wrapper{
     display: flex;

@@ -13,7 +13,7 @@ function TxHistoryList({txHistoryList}) {
         <div className="txHistoryList">
             <button className ="txReceiptButton" onClick={()=>{setIsSend(!isSend)}}>Receipt</button>
             <button className ="txSendButton" onClick={()=>{setIsSend(!isSend)}}>Send</button>
-            { isSend ? <ReceiptTxList txList={receiptList} /> : <SendTxList txList={sendList} /> }
+            { !isSend ? <ReceiptTxList txList={receiptList} /> : <SendTxList txList={sendList} /> }
         </div >
     )
 }

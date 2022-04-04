@@ -74,8 +74,10 @@ function Userpage() {
                     : userInfo.user_name
                 }
             </h1>
-            <button className = "follow-button">
-                <div className="follow" data-user={userInfo._id} onClick={followHandler}>
+            
+
+            <button className= "user-follow">
+                <div class= "user-follow" className="user-follow" data-user={userInfo._id} onClick={followHandler}>
                     {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
                 </div>
             </button>
