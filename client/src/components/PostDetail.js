@@ -105,14 +105,7 @@ function PostDetail({ token }) {
                             }
                         </p>
                     </div>
-                        <div className="comments" id={`comments_${token.postInfo._id}`}>
-                            <LikeButton postId={token.postInfo._id} postUser={token.postInfo.user._id} postUserName={token.postInfo.user.user_name} userId={userId} postDate={token.postInfo.post_date.split('T')[0]}/>
-                            {/* <div className="post-time">
-                                <span>{token.postInfo.post_date.split('T')[0]}</span>
-                            </div> */}
-                        </div>
-                    
-                    
+                    <LikeButton postId={token.postInfo._id} postUser={token.postInfo.user._id} postUserName={token.postInfo.user.user_name} userId={userId} postDate={token.postInfo.post_date.split('T')[0]}/>
                 </div>
             </div>
             <Comment postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} />
