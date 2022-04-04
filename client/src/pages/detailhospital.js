@@ -187,7 +187,7 @@ function DetailHospital() {
 
     return (
         <div className='DetailHospital'>
-            <h1 className="header">Reserve</h1>
+            <h1 className="header">Reservation</h1>
             {/* 병원 정보 */}
             <div class="">
                 <div className="hospital-Container">
@@ -195,7 +195,31 @@ function DetailHospital() {
                         <div className = "hospital-contants-Container">
                             <h5 className = "hospital-title">{hospitalInfo.hospital_name}</h5>
                                 <div className = "hospital-contants-contants">
-                                    <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}</h>
+                                    <h className = "hospital-text">진료시간 : {hospitalInfo.hospital_open} ~ {hospitalInfo.hospital_close}&nbsp;
+                                        <span className = "hospital-text">
+                                            (휴무일 : 
+                                            {
+                                                hospitalInfo.hospital_dayoff.length > 0 ?
+                                                hospitalInfo.hospital_dayoff.map(data => {
+                                                    let day = '';
+                                                    switch (data) {
+                                                        case 0: day = "일"; break;
+                                                        case 1: day = "월"; break;
+                                                        case 2: day = "화"; break;
+                                                        case 3: day = "수"; break;
+                                                        case 4: day = "목"; break;
+                                                        case 5: day = "금"; break;
+                                                        case 6: day = "토"; break;
+                                                    }
+                                                    return (
+                                                        <span key={data}>{day}&nbsp;</span>
+                                                    )
+                                                })
+                                                : "없음"
+                                            }
+                                            )
+                                        </span>
+                                    </h>
                                     <h className = "hospital-text">전화번호 : {hospitalInfo.hospital_phone}</h>
                                     <h className = "hospital-text">주소 : {hospitalInfo.hospital_address}</h>
                                 </div>
@@ -232,7 +256,7 @@ function DetailHospital() {
                                         />
 
                                    <div className="reserve-text">
-                                    예약자명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <input type="textbox" name="reservename" style={{ width: "430px" }}  ></input> <br />
+                                    예약자명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="textbox" name="reservename" style={{ width: "430px" }}  ></input> <br />
                                     </div>
                                     <div className="reserve-text">
                                     반려동물명 &nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="textbox" name="petname" style={{ width: "430px" }} ></input> <br />
@@ -249,7 +273,7 @@ function DetailHospital() {
                                 </Modal.Header>
                                 <Modal.Body>
                                     병원 : {hospitalInfo.hospital_name} <br />
-                                    예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime}<br />
+                                    예약일시 : {reserveInfo.reserveDate} {reserveInfo.reserveTime} <br/>
                                     예약자명 : {reserveInfo.reserveName} <br />
                                     반려동물명 : {reserveInfo.petName} <br />
                                 </Modal.Body>

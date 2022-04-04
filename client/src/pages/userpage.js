@@ -67,24 +67,29 @@ function Userpage() {
 
     return (
         <div class='Userpage'>
-            <h1 className ="header">
+            <h1 className ="header" style={{float:"left", display:"flex"}}>
+                [
                 {
                     userInfo.user_name.length > 10 ?
                     userInfo.user_name.slice(0, 4) + '···' + userInfo.user_name.slice(-4)
                     : userInfo.user_name
                 }
+                 ]'s PETO BOOK
             </h1>
-            <button className= "user-follow">
-                <div class= "user-follow" className="user-follow" data-user={userInfo._id} onClick={followHandler}>
-                    {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
-                </div>
-            </button>
+            {/* <span style={{}}>님의 PETO BOOK</span> */}
             <div className = "user-wrapper">
                 <div className = "mypage-left-wrapper">
                     <div className = "profile-img-wrapper">
                             {/* {userInfo.profile_image !== null ? <img className = "profile-img"style={{ width: "250px", height: "250px" }} src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />} */}
                             {/* <img style={{ width: "250px", height: "250px" }} src={userInfo.profile_image}></img> */}
                             {userInfo.profile_image !== null ? <img className = "profile-img" src={userInfo.profile_image} /> : <img src="https://bafybeidktemjjnwwjqh2c7yjiauho63xzxwcxmbrxyp5mxsj2tyvrfelea.ipfs.infura-ipfs.io/" />}
+                    </div>
+                    <div className = "profile-left-down-wrapper">
+                        <button className="btn-user-follow" data-user={userInfo._id} onClick={followHandler}>
+                            {/* <div className="user-follow" data-user={userInfo._id} onClick={followHandler} > */}
+                                {followList.filter(follow => (follow.follower._id === userInfo._id)).length > 0 ? "unfollow" : "follow"}
+                            {/* </div> */}
+                        </button>
                     </div>
                 </div>
                 <div className="user-Info">

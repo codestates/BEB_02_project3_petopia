@@ -7,7 +7,7 @@ function Hospital() {
 
     return (
         <div className='Hospital'>
-            <h1 className="header">Hospital</h1>
+            <h1 className="header">Animal Medical Service</h1>
             <div>
                 <HospitalList />
             </div>

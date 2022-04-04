@@ -34,3 +34,17 @@
     height : 100%;
 }
 
+.btn-user-follow{
+    background-color : rgb(0, 162, 255);
+    width : 75px;
+    height : 25px;
+    border : solid 1px white;
+    font-size: 12px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 60px;
+
+}
+
