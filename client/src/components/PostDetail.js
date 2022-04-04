@@ -50,15 +50,17 @@ function PostDetail({ token }) {
     }
 
     const deletePostHandler = async(e) => {
-        const id = e.target.getAttribute('data-id');
-        
-        await axios.post(`${host}/post/${id}`)
-        .then((res) => {
-          const result = res.data.data;
-          if (result !== null) {
-            document.location.reload();
-          }
-        });
+        if (window.confirm("게시물을 삭제하시겠습니까?")) {
+            const id = e.target.getAttribute('data-id');
+            
+            await axios.post(`${host}/post/${id}`)
+            .then((res) => {
+              const result = res.data.data;
+              if (result !== null) {
+                document.location.reload();
+              }
+            });
+        }
       }
 
     return (
