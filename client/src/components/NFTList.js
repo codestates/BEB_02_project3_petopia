@@ -223,7 +223,7 @@ function NFTList({ account, isAll }) {
                           })
                         }
                     </p>
-                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} postDate={token.postInfo.post_date.split('T')[0]}/>
+                    <LikeButton postId={token.postInfo._id} userId={userId} postUser={token.postInfo.user._id} postAddress={token.postInfo.user.wallet_address} postDate={token.postInfo.post_date.split('T')[0]} postUserName={token.postInfo.user.user_name} />
                     </div>
                     
                   </div>
