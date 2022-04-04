@@ -11,9 +11,28 @@ function TxHistoryList({txHistoryList}) {
 
     return (
         <div className="txHistoryList">
-            <button className ="txReceiptButton" onClick={()=>{setIsSend(!isSend)}}>Receipt</button>
-            <button className ="txSendButton" onClick={()=>{setIsSend(!isSend)}}>Send</button>
-            { !isSend ? <ReceiptTxList txList={receiptList} /> : <SendTxList txList={sendList} /> }
+            { !isSend  
+            ? <div className="txReceipt" style={{fontSize:"18px", fontWeight:"bold", width:"220px", borderRadius:"10px", padding:"0px", background:"white", color:"black"}}>
+                Receiving Transaction
+              </div>
+            : <div className="txSend" style={{fontSize:"18px",  fontWeight:"bold", width:"220px", borderRadius:"10px", padding:"0px", background:"white", color:"black"}}>
+                Sending Transaction
+              </div>
+            }
+            { !isSend
+            ? <div className ="txReceiptButton1" onClick={()=>{setIsSend(!isSend)}} style={{fontSize:"14px", marginTop:"5px", marginBottom:"30px", color:"gray", textDecoration:"underline"}}>
+                Click to View Your <b>Sending Transaction</b>
+              </div>
+            : <div className ="txSendButton1" onClick={()=>{setIsSend(!isSend)}} style={{fontSize:"14px", marginTop:"5px", marginBottom:"30px", color:"gray", textDecoration:"underline"}}>
+                Click to View Your <b>Receiving Transaction</b>
+              </div>
+            }
+            {/* <button className ="txReceiptButton" onClick={()=>{setIsSend(!isSend)}}>Receipt</button>
+            <button className ="txSendButton" onClick={()=>{setIsSend(!isSend)}}>Send</button>*/}
+            { !isSend  
+            ? <ReceiptTxList txList={receiptList} /> 
+            : <SendTxList txList={sendList} /> 
+            }
         </div >
     )
 }
