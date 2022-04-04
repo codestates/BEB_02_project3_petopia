@@ -195,13 +195,17 @@ function MyFollowList({ userId, account }) {
                                                 info.followee.user_name
                                             }
                                         </span>
-                                        <button data-user={info.followee._id} data-id={info._id} onClick={deleteFollowHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"20px"}}>delete</button>
+                                        {
+                                            userId === localStorage.getItem('userId') ?
+                                            <button data-user={info.followee._id} data-id={info._id} onClick={deleteFollowHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"20px"}}>delete</button>
+                                            :<></>
+                                        }
+                                        
                                         {
                                             userId === localStorage.getItem('userId') && followList.filter(follow => (follow.follower._id === info.followee._id)).length === 0
                                                 ? <button data-user={info.followee._id} data-id={info._id} name="follower" onClick={followHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"10px"}}>follow</button>
                                                 : ''
                                         }
-
                                     </div>
                                 )
                             })
