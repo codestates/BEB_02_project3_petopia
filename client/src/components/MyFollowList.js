@@ -159,7 +159,7 @@ function MyFollowList({ userId, account }) {
                         followList.map((info) => {
                             return (
                                 <div key={info._id} id={`follow_${info._id}`}>
-                                    <img style={{ width: "50px", height: "50px" }} src={info.follower.profile_image} data-id={info.follower._id} data-wallet={info.follower.wallet_address} onClick={userSelect} />
+                                    <img style={{ width: "50px", height: "50px", borderRadius:"50%", marginRight:"20px" }} src={info.follower.profile_image} data-id={info.follower._id} data-wallet={info.follower.wallet_address} onClick={userSelect} />
                                     <span data-id={info.follower._id} onClick={userSelect}>
                                         {info.follower.user_name.length > 10 ?
                                             info.follower.user_name.slice(0, 4) + '···' + info.follower.user_name.slice(-4) :
@@ -168,7 +168,7 @@ function MyFollowList({ userId, account }) {
                                     </span>
                                     {
                                         userId === localStorage.getItem('userId')
-                                            ? <button data-user={info.follower._id} data-id={info._id} name="following" onClick={followHandler}>unfollow</button>
+                                            ? <button data-user={info.follower._id} data-id={info._id} name="following" onClick={followHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"20px"}}>unfollow</button>
                                             : ''
                                     }
                                 </div>
@@ -188,17 +188,17 @@ function MyFollowList({ userId, account }) {
                             followerList.map((info) => {
                                 return (
                                     <div key={info._id} id={`follow_${info._id}`}>
-                                        <img style={{ width: "50px", height: "50px" }} src={info.followee.profile_image} data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect} />
+                                        <img style={{ width: "50px", height: "50px", borderRadius:"50%", marginRight:"20px" }} src={info.followee.profile_image} data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect} />
                                         <span data-id={info.followee._id} data-wallet={info.followee.wallet_address} onClick={userSelect}>
                                             {info.followee.user_name.length > 10 ?
                                                 info.followee.user_name.slice(0, 4) + '···' + info.followee.user_name.slice(-4) :
                                                 info.followee.user_name
                                             }
                                         </span>
-                                        <button data-user={info.followee._id} data-id={info._id} onClick={deleteFollowHandler}>delete</button>
+                                        <button data-user={info.followee._id} data-id={info._id} onClick={deleteFollowHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"20px"}}>delete</button>
                                         {
                                             userId === localStorage.getItem('userId') && followList.filter(follow => (follow.follower._id === info.followee._id)).length === 0
-                                                ? <button data-user={info.followee._id} data-id={info._id} name="follower" onClick={followHandler}>follow</button>
+                                                ? <button data-user={info.followee._id} data-id={info._id} name="follower" onClick={followHandler} style={{background:"rgb(0, 162, 255)", fontSize:"12px",color:"white",fontWeight:"bold",borderRadius:"5px", border:"solid 1px white", width:"65px", height:"25px", marginLeft:"10px"}}>follow</button>
                                                 : ''
                                         }
 
