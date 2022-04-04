@@ -3,6 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react";
 import { Table } from 'react-bootstrap';
 import Nodata from "./Nodata";
+import '../pages/main.css';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -67,7 +68,7 @@ function ReserveList() {
                                     <td>{info.hospital.hospital_phone}</td>
                                     <td>
                                         {
-                                            now < future ? <button onClick={reserveCancle} data-id={info._id}>예약 취소</button> : ''
+                                            now < future ? <button className="btn-cancle" onClick={reserveCancle} data-id={info._id}>예약 취소</button> : ''
                                         }
                                     </td>
                                 </tr>

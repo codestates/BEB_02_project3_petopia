@@ -440,3 +440,15 @@ button[class|="user-follow"]
     transform: rotate(180deg);
 }
 
+.btn-cancle{
+    background: rgb(0, 162, 255);
+    font-size:12px;
+    color: white;
+    font-weight:bold;
+    border-radius:5px;
+    border: solid 1px white;
+    width: 65px;
+    height:25px;
+    margin-left:35px;
+}
+
