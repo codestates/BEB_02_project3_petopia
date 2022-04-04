@@ -5,6 +5,11 @@ import petopia from '../css/image/petopia_text.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faStethoscope, faUser } from '@fortawesome/free-solid-svg-icons'
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+const domain = process.env.REACT_APP_DOMAIN;
+
 
 function Navigation() {
 
@@ -17,7 +22,7 @@ function Navigation() {
     const searchBtn = () => {
         if (search !== '') {
             localStorage.setItem('searchName', search);
-            window.location.replace('http://localhost:3000/user/' + search);
+            window.location.replace(`${domain}/user/` + search);
         } else {
             alert('검색어를 입력해주세요.')
         }
@@ -33,7 +38,7 @@ function Navigation() {
         // localStorage.removeItem('userId');
         // localStorage.removeItem('networkType');
         localStorage.clear();
-        window.location.replace('http://localhost:3000/');
+        window.location.replace(`${domain}`);
     };
 
     const handleKeyPress = (e) => {
