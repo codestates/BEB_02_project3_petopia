@@ -71,9 +71,9 @@ const LikeButton = ({ postId, userId, postUser, postAddress, postDate, postUserN
         <span>{postDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       </div>
 
-      <Modal show={isTransacted} onHide={!isTransacted} size='sm'>
+      <Modal show={isTransacted} onHide={!isTransacted}>
         <Modal.Body>
-          {postUserName === postAddress ? postUserName.slice(0, 4) + '···' + postUserName.slice(-4) : postUserName} 님께 $PETO를 지급중입니다.
+          [{postUserName === postAddress ? postUserName.slice(0, 4) + '···' + postUserName.slice(-4) : postUserName}] 님에게 $PETO를 지급중입니다.
           <br></br>
           잠시만 기다려주세요...
         </Modal.Body>

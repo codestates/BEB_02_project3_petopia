@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import iconReply from '../css/image/icon-reply.png'
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -26,8 +27,8 @@ const Reply = ({userId, postUser, commentId, replyDelete}) => {
                     return (
                         <div key={reply._id} className="replyForm-wrapper" id={reply._id}>
                             <div className = "reply-user-wrapper">
-                                <span>┗</span>
-                                <img className="rounded-circle" src={reply.user.profile_image} alt="profile" width="45"/>
+                                <img className="icon-reply" src={iconReply} />
+                                <img className="rounded-circle" src={reply.user.profile_image} alt="profile" width="45" height="45" style={{"margin-top":"3px"}}/>
                                 <div className="reply-comment-wrapper">
                                     <span class="reply-user">
                                     {
