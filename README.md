@@ -13,20 +13,20 @@ PETOPIA는 사용자의 데이터 소유에 대한 web3 본질에 대해 생각�
 
 ## Stack
 <img src="https://user-images.githubusercontent.com/93478413/163537724-f80ce164-6781-46d5-a544-f3eca486b175.png" width="1000" />
-- Front-end : `React`, `Javascript`, `Bootstrap`<br/>
-- Back-end : `Mongoose`, `Caver`, `Kas`, `NodeJs`, `Express`, `IPFS`<br/>
-- Deploy : `EC2`, `S3`, `Load balencer`, `Cloud Front`, `AWS Certificate Manager`, `Router53`<br/>
-- Tool : `Github`, `Notion`, `Discord`<br/>
+- Front-end : React, Javascript, Bootstrap <br/>
+- Back-end : Mongoose, Caver, KAS, NodeJs', Express, IPFS <br/>
+- Deploy : EC2, S3, Load balencer, Cloud Front, AWS Certificate Manager, Router53 <br/>
+- Tool : Github, Notion, Discord <br/>
 
 ## Prerequisite
-$ cd server/npm install
-$ cd client/npm install
+$ cd server/npm install <br/>
+$ cd client/npm install <br/>
 
 ## Usage
 
 ### Run
-$ cd server/npm start
-$ cd client/npm start
+$ cd server/npm start <br/>
+$ cd client/npm start <br/>
 
 ### Login & Sign-Up
 <img src="https://user-images.githubusercontent.com/93478413/163531669-bb2f50d5-adc0-405c-8042-58cf2f01d45f.gif" width="1000" />
