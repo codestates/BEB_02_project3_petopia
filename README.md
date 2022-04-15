@@ -1,4 +1,5 @@
 # PETOPIA
+Deploy : https://petopia.info <br/>
 
 ## Description
 <img src="https://user-images.githubusercontent.com/93478413/163529570-e03ec6ab-55ce-46ca-8d86-fdf85b014771.png" width="1000" />
@@ -9,11 +10,24 @@ PETOPIA는 사용자의 데이터 소유에 대한 web3 본질에 대해 생각�
 이렇게 지급 받은 토큰은 동물병원 예약에 사용할 수 있도록 명확한 토큰의 사용처를 마련해 놓았습니다.<br/>
 이러한 토큰 이코노미를 통해 양육인들의 반려동물 진료비 부담을 경감해줄 뿐만 아니라,<br/>
 이를 통해 반려동물들의 활발한 의료 서비스 이용을 촉진시켜 궁극적으로 반려동물의 건강 증진을 가져올 것으로 기대합니다.<br/>
-Deploy : https://petopia.info
+
+## Stack
+<img src="https://user-images.githubusercontent.com/93478413/163537724-f80ce164-6781-46d5-a544-f3eca486b175.png" width="1000" />
+- Front-end : `React`, `Javascript`, `Bootstrap`<br/>
+- Back-end : `Mongoose`, `Caver`, `Kas`, `NodeJs`, `Express`, `IPFS`<br/>
+- Deploy : `EC2`, `S3`, `Load balencer`, `Cloud Front`, `AWS Certificate Manager`, `Router53`<br/>
+- Tool : `Github`, `Notion`, `Discord`<br/>
 
 ## Prerequisite
+$ cd server/npm install
+$ cd client/npm install
 
 ## Usage
+
+### Run
+$ cd server/npm start
+$ cd client/npm start
+
 ### Login & Sign-Up
 <img src="https://user-images.githubusercontent.com/93478413/163531669-bb2f50d5-adc0-405c-8042-58cf2f01d45f.gif" width="1000" />
 - 카이카스 지갑을 통해 로그인 및 회원가입을 할 수 있습니다.<br/>
